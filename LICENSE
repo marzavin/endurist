@@ -1,21 +1,31 @@
-MIT License
+Endurist App – Open Source License
 
 Copyright (c) 2025 Artsiom Marzavin
+All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This project is licensed under a dual license model:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. **GNU Affero General Public License v3 (AGPL-3.0)**
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+   This software is free to use, modify, and distribute under the terms of the
+   GNU Affero General Public License v3, published by the Free Software Foundation.
+   A copy of this license can be found at:
+   https://www.gnu.org/licenses/agpl-3.0.html
+
+   Under this license, any software or service that uses, modifies, or distributes
+   this code (including network services or SaaS applications) must also make its
+   source code available under the same AGPL terms.
+
+2. **Commercial License**
+
+   Commercial use of this software — including use in proprietary applications,
+   closed-source systems, or any service provided for profit — requires a separate
+   commercial license agreement.
+
+   To obtain a commercial license, please contact:
+   marzavin@gmail.com
+
+   The author reserves all rights to grant or deny such licenses at their discretion.
+
+---
+SPDX-License-Identifier: AGPL-3.0-or-later
