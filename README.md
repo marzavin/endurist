@@ -1,4 +1,5 @@
 # Endurist App
+
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 
 [Endurist App](https://endurist.app) is a sports statistics analytics service.
@@ -14,10 +15,15 @@ This project uses a **dual licensing** model.
 
 - **Commercial License:**  
   If you wish to use this project in a **commercial context** (including SaaS, resale, or integration into a paid product)  
-  you must obtain a **commercial license** from the author.  
+  you must obtain a **commercial license** from the author.
 
 Contact: **marzavin@gmail.com**
 
-**Summary:**  
-- Free for personal or open use.  
+**Summary:**
+
+- Free for personal or open use.
 - License required for closed-source or commercial use.
+
+## Contribution
+
+By contributing to this project, you agree to the terms of the [Contributor License Agreement](CLA.md).
