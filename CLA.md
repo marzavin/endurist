@@ -65,8 +65,8 @@ All subsequent contributions You make will also be covered by this Agreement.
 
 ---
 
-**Project Owner:** Artsiom Marzavin
-**Contact:** marzavin@gmail.com
+**Project Owner:** Artsiom Marzavin  
+**Contact:** marzavin@gmail.com  
 **Effective Date:** The date of the contributor’s first submission covered by this Agreement.
 
 ---
