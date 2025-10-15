@@ -28,9 +28,9 @@ This means the Project Owner may include your Contribution in both open-source a
 
 ---
 
-### 3. No Right to Commercially License
+### 3. Exclusive Commercial Licensing Rights
 
-You acknowledge that **only the Project Owner** has the right to offer the Project or any of its parts under a commercial license.  
+You acknowledge that **only the Project Owner** has the right to offer the Project or any part of it under a commercial license.  
 You may not issue, sell, or distribute the Project (or any derivative work based on it) under a commercial license without written permission from the Project Owner.
 
 ---
@@ -58,9 +58,16 @@ If You are contributing on behalf of a company, You confirm that You have the au
 
 ---
 
-**Project Owner:** Artsiom Marzavin  
-**Contact:** marzavin@gmail.com  
-**Effective Date:** October 15, 2025
+### 7. Effective Date
+
+This Agreement becomes effective for You on the **date of your first contribution** to the Project.  
+All subsequent contributions You make will also be covered by this Agreement.
+
+---
+
+**Project Owner:** Artsiom Marzavin
+**Contact:** marzavin@gmail.com
+**Effective Date:** The date of the contributor’s first submission covered by this Agreement.
 
 ---
 
