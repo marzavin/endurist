@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SideEffect.Messaging;
+using SideEffect.Messaging.Redis;
 using System.Reflection;
 
 const string AllowedOriginsPolicy = "AllowedOrigins";
@@ -53,6 +55,9 @@ services.AddAuthorization();
 //TODO:AMZ: Move to a separate extension file
 services.AddSingleton<IEncryptionService, EncryptionService>();
 services.AddSingleton<TokenProvider>();
+
+services.AddConfiguration<RedisStorageConfiguration>(configuration, "RedisStorage");
+services.AddSingleton<IServiceBus, RedisServiceBus>();
 
 services.AddHttpContextAccessor();
 services.AddScoped<Endurist.Core.Services.ExecutionContext>();

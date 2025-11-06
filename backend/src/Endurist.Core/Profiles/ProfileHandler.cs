@@ -92,15 +92,6 @@ public class ProfileHandler : HandlerBase,
             data.Name = document.Name;
         }
 
-        //filter.DistanceGte = Constants.HalfMarathonDistance;
-        //queryFilter = Storage.Activities.BuildFilter(filter);
-        //var halfMarathonActivities = await Storage.Activities.SearchAsync(x => x, queryFilter, cancellationToken: cancellationToken);
-
-        //var halfMarathonProgressFeature = new DistanceProgressFeature(Constants.HalfMarathonDistance);
-        //var halfMarathonProrgessModel = await halfMarathonProgressFeature.BuildModelAsync(halfMarathonActivities);
-
-        //data.DistanceProgress = [halfMarathonProrgessModel];
-
         return new DataResponse<ProfileModel> { Data = data };
     }
 }

@@ -1,3 +1,4 @@
+using Endurist.Core.Events;
 using Endurist.Data;
 using SideEffect.Messaging;
 
@@ -16,17 +17,17 @@ internal class TrainingVolumeCalculationWorker : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await _serviceBus.SubscribeToEventAsync<TrainingVolumeCalculationInput>(Calculate, cancellationToken);
+        await _serviceBus.SubscribeToEventAsync<TrainingVolumeCalculationEvent>(Calculate, cancellationToken);
     }
 
     public async Task StopAsync(CancellationToken cancellationToken)
     {
-        await _serviceBus.UnsubscribeFromEventAsync<TrainingVolumeCalculationInput>(cancellationToken: cancellationToken);
+        await _serviceBus.UnsubscribeFromEventAsync<TrainingVolumeCalculationEvent>(cancellationToken: cancellationToken);
     }
 
-    private async Task Calculate(TrainingVolumeCalculationInput input, CancellationToken cancellationToken)
+    private async Task Calculate(TrainingVolumeCalculationEvent message, CancellationToken cancellationToken)
     {
         var task = new TrainingVolumeCalculationTask(_storage);
-        await task.ExecuteAsync(input, cancellationToken);
+        await task.ExecuteAsync(new TrainingVolumeCalculationInput { ProfileId = message.ProfileId }, cancellationToken);
     }
 }

@@ -109,7 +109,7 @@ public class TrainingVolumeWidget : WidgetBase
             var weeklyVolume = activities
                  .Where(x => x.Key >= firstDayOfWeek && x.Key < firstDayOfNextWeek)
                  .Sum(x => x.Value);
-            trainingVolume.Monthly.Add(new KeyValueModel<DateOnly, double> { Key = DateOnly.FromDateTime(firstDayOfWeek), Value = weeklyVolume });
+            trainingVolume.Weekly.Add(new KeyValueModel<DateOnly, double> { Key = DateOnly.FromDateTime(firstDayOfWeek), Value = weeklyVolume });
 
             firstDayOfNextWeek = firstDayOfWeek;
             firstDayOfWeek = firstDayOfWeek.AddDays(-7);

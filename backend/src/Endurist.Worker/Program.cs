@@ -2,6 +2,7 @@ using Endurist.Core.Services;
 using Endurist.Data;
 using Endurist.Data.Mongo.Repositories;
 using Endurist.Hosting.Settings;
+using Endurist.Worker.Tasks.Profiles.TrainingVolume;
 using SideEffect.Messaging;
 using SideEffect.Messaging.Redis;
 using System.Reflection;
@@ -38,6 +39,7 @@ public class Program
 
         services.AddHostedService<FileProcessingWorker>();
         services.AddHostedService<FileParsingWorker>();
+        services.AddHostedService<TrainingVolumeCalculationWorker>();
 
         var host = builder.Build();
         host.Run();

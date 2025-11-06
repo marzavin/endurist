@@ -40,7 +40,7 @@ function TrainingVolumeWidget({ profileId }: Props) {
         const widgetModel: TrainingVolumeWidgetModel = {
           id: widgetId,
           title: result.name,
-          volumes: parsedData
+          data: parsedData
         };
         setWidgetData(widgetModel);
       });
@@ -81,9 +81,9 @@ function TrainingVolumeWidget({ profileId }: Props) {
           </div>
         </div>
       ) : null}
-      {widgetData && widgetData.volumes.length > 0 ? (
+      {widgetData && widgetData.data.monthly.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={widgetData.volumes}>
+          <BarChart data={widgetData.data.monthly}>
             <XAxis dataKey="key" />
             <YAxis tickFormatter={tickFormatterY} />
             <Tooltip

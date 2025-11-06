@@ -1,3 +1,4 @@
+using Endurist.Core.Events;
 using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Enums;
@@ -120,7 +121,7 @@ internal class FileProcessingWorker : BackgroundService
 
         await _storage.Activities.InsertAsync(document, cancellationToken);
 
-        await _serviceBus.PublishEventAsync(new TrainingVolumeCalculationInput { ProfileId = file.ProfileId.ToString() }, cancellationToken);
+        await _serviceBus.PublishEventAsync(new TrainingVolumeCalculationEvent { ProfileId = file.ProfileId.ToString() }, cancellationToken);
     }
 
     private static SegmentDocument MapSegment(int startIndex, int finishIndex, List<TrackPoint> track)

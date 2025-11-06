@@ -18,14 +18,14 @@ public class FileHandler : HandlerBase,
     IRequestHandler<UploadFileRequest, DataResponse<FileUploadModel>>,
     IRequestHandler<DownloadFileRequest, DataResponse<FileDownloadModel>>
 {
-    private IEncryptionService EncryptionService { get; }
     protected ExecutionContext Context { get; }
-
+    private IEncryptionService EncryptionService { get; }
+    
     public FileHandler(Storage storage, ExecutionContext context, IEncryptionService encryptionService)
         : base(storage)
     {
+        Context = context ?? throw new ArgumentNullException(nameof(context));
         EncryptionService = encryptionService ?? throw new ArgumentNullException(nameof(encryptionService));
-        Context = context ?? throw new ArgumentNullException(nameof(context)); 
     }
 
     public async Task<DataPageResponse<FilePreviewModel>> Handle(GetFilesRequest request, CancellationToken cancellationToken)

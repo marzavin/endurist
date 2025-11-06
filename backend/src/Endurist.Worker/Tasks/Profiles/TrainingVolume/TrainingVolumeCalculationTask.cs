@@ -19,7 +19,7 @@ internal class TrainingVolumeCalculationTask : ProfileBackgroundTaskBase<Trainin
     public override async Task ExecuteAsync(TrainingVolumeCalculationInput input, CancellationToken cancellationToken = default)
     {
         var widget = new TrainingVolumeWidget();
-        var data = widget.CalculateWidgetDataAsync(_storage, input.ProfileId, cancellationToken);
+        var data = await widget.CalculateWidgetDataAsync(_storage, input.ProfileId, cancellationToken);
 
         var profileWidgetFilter = new ProfileWidgetFilter
         {
@@ -35,14 +35,14 @@ internal class TrainingVolumeCalculationTask : ProfileBackgroundTaskBase<Trainin
             {
                 ProfileId = ObjectId.Parse(input.ProfileId),
                 WidgetId = ObjectId.Parse(Constants.WidgetIdentifiers.TrainingVolume),
-                Data = SerializeData(data)
+                Data = data
             };
 
             await _storage.ProfileWidgets.InsertAsync(profileWidget, cancellationToken);
         }
         else
         {
-            profileWidget.Data = SerializeData(data);
+            profileWidget.Data = data;
 
             await _storage.ProfileWidgets.UpdateAsync(profileWidget, cancellationToken);
         }

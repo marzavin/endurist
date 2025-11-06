@@ -3,7 +3,10 @@ import KeyValueModel from "../KeyValueModel";
 interface TrainingVolumeWidgetModel {
   id: string;
   title: string;
-  volumes: KeyValueModel<string, number>[];
+  data: {
+    weekly: KeyValueModel<string, number>[];
+    monthly: KeyValueModel<string, number>[];
+  };
 }
 
 export default TrainingVolumeWidgetModel;
