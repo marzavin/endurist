@@ -4,7 +4,7 @@ using Endurist.Data.Mongo.Repositories;
 using Endurist.Hosting.Settings;
 using SideEffect.Messaging;
 using SideEffect.Messaging.Redis;
-using RedisStorageConfiguration = Endurist.Hosting.Settings.RedisStorageConfiguration;
+using System.Reflection;
 
 namespace Endurist.Worker;
 
@@ -12,6 +12,8 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+
         var builder = Host.CreateApplicationBuilder(args);
 
         var services = builder.Services;
@@ -19,8 +21,6 @@ public class Program
 
         services.AddConfiguration<MongoStorageConfiguration>(configuration, "MongoStorage");
         services.AddConfiguration<FileStorageConfiguration>(configuration, "FileStorage");
-
-        //TODO:AMZ: == SideEffect.Messaging
         services.AddConfiguration<RedisStorageConfiguration>(configuration, "RedisStorage");
 
         services.AddSingleton<IEncryptionService, EncryptionService>();

@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 const string AllowedOriginsPolicy = "AllowedOrigins";
+
+Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,9 +34,7 @@ services.AddCors(options =>
 services.AddRouteConstraints();
 services.AddMongoStorage(configuration);
 
-var authenticationConfig = new AuthenticationConfiguration();
-configuration.GetSection("Authentication").Bind(authenticationConfig);
-services.AddSingleton(authenticationConfig);
+var authConfig = services.AddConfiguration<AuthenticationConfiguration>(configuration, "Authentication");
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -41,9 +42,9 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = TokenProvider.GetSecurityKey(authenticationConfig.Secret),
-            ValidIssuer = authenticationConfig.Issuer,
-            ValidAudience = authenticationConfig.Audience,
+            IssuerSigningKey = TokenProvider.GetSecurityKey(authConfig.Secret),
+            ValidIssuer = authConfig.Issuer,
+            ValidAudience = authConfig.Audience,
             ClockSkew = TimeSpan.Zero
         };
     });

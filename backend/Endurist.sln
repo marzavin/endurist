@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endurist.Web", "src\Enduris
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endurist.Hosting", "src\Endurist.Hosting\Endurist.Hosting.csproj", "{A1DC0D28-E8F3-451C-B0A8-DAAAE3929ACF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endurist.AppHost", "src\Endurist.AppHost\Endurist.AppHost.csproj", "{3FEE2CB1-5B51-4C18-B1DD-080C87533FF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A1DC0D28-E8F3-451C-B0A8-DAAAE3929ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1DC0D28-E8F3-451C-B0A8-DAAAE3929ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1DC0D28-E8F3-451C-B0A8-DAAAE3929ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FEE2CB1-5B51-4C18-B1DD-080C87533FF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FEE2CB1-5B51-4C18-B1DD-080C87533FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FEE2CB1-5B51-4C18-B1DD-080C87533FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FEE2CB1-5B51-4C18-B1DD-080C87533FF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
