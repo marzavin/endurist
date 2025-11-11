@@ -6,11 +6,11 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["backend/src/Endurist.Web/Endurist.Web.csproj", "Endurist.Web/"]
-RUN dotnet restore "./src/Endurist.Web/Endurist.Web.csproj"
+WORKDIR "/build"
+COPY ["backend/", "./"]
+RUN dotnet restore "src/Endurist.Web/Endurist.Web.csproj"
 COPY . .
-WORKDIR "/src/Endurist.Web"
+WORKDIR "/build/src/Endurist.Web"
 RUN dotnet build "./Endurist.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

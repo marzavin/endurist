@@ -4,11 +4,11 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["backend/src/Endurist.Worker/Endurist.Worker.csproj", "Endurist.Worker/"]
-RUN dotnet restore "./src/Endurist.Worker/Endurist.Worker.csproj"
+WORKDIR /build
+COPY ["backend/", "./"]
+RUN dotnet restore "src/Endurist.Worker/Endurist.Worker.csproj"
 COPY . .
-WORKDIR "/src/Endurist.Worker"
+WORKDIR "/build/src/Endurist.Worker"
 RUN dotnet build "./Endurist.Worker.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
