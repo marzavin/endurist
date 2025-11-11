@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>latestmajor</LangVersion>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Authors>Artsiom Marzavin</Authors>
+		<Title>SideEffect.Sport</Title>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SideEffect.Files" Version="0.4.2" />
+	</ItemGroup>
+
+</Project>

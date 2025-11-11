@@ -1,0 +1,164 @@
+@import "Colors.less";
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: @main-bg-color;
+  font-family: Tahoma, Verdana, sans-serif;
+  //font-family: Tahoma, sans-serif;
+  //font-family: Verdana, sans-serif;
+  //font-family: "Trebuchet MS", sans-serif;
+  //font-family: "Courier New", monospace;
+}
+
+main {
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+.app-border-bottom {
+  border-bottom: 1px solid @border-color;
+}
+
+.app-border-right {
+  border-right: 1px solid @border-color;
+}
+
+.app-table table tr th {
+  text-transform: uppercase;
+}
+
+.app-table-layout {
+  background-color: @panel-bg-color;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.app-activity-list,
+.app-profile-list,
+.app-file-list {
+  .app-table table tr th,
+  .app-table table tr td {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .app-badge {
+    font-size: 0.75rem;
+    &:not(:last-of-type) {
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+.app-activity .app-table {
+  max-height: 300px;
+}
+
+.app-alert {
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.app-file-uploader {
+  background-color: @panel-bg-color;
+  padding: 1rem;
+  border-radius: 1rem;
+  border-style: dashed;
+  border-width: 1px;
+
+  .app-alert {
+    margin-bottom: 0.5rem;
+  }
+
+  .app-progress {
+    margin-top: 1rem;
+    height: 1.5rem;
+  }
+
+  small {
+    margin: 0.75rem;
+  }
+}
+
+.app-osm-map > div {
+  height: 360px;
+}
+
+.app-error-text {
+  color: @error-color;
+}
+
+.app-icon {
+  font-size: 1.25rem;
+
+  &.app-main-color {
+    color: @main-logo-color;
+  }
+}
+
+.app-error-label {
+  background-color: @error-color;
+  color: @main-white-color;
+}
+
+.app-warning-label {
+  background-color: @warning-color;
+  color: @main-white-color;
+}
+
+.app-info-label {
+  background-color: @info-color;
+  color: @main-white-color;
+}
+
+.app-success-label {
+  background-color: @success-color;
+  color: @main-white-color;
+}
+
+.app-widget {
+  background-color: @panel-bg-color;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid @border-color;
+
+  .app-widget-header {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.app-summary {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid @border-color;
+}
+
+.app-font-xs {
+  font-size: 0.5rem;
+}
+
+.app-font-s {
+  font-size: 0.75rem;
+}
+
+.app-font-n {
+  font-size: 1rem;
+}
+
+.app-font-l {
+  font-size: 1.25rem;
+}
+
+.app-font-xl {
+  font-size: 1.5rem;
+}
+
+.app-font-xxl {
+  font-size: 2rem;
+}
