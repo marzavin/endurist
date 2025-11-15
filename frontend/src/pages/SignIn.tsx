@@ -59,7 +59,7 @@ function SignIn() {
                 <form onSubmit={handleSubmitEvent}>
                   <div className="form-group">
                     <div className="icon d-flex align-items-center justify-content-center">
-                      <span className="app-icon app-main-color icon-user" />
+                      <i className="bi bi-person-fill" />
                     </div>
                     <input
                       type="email"
@@ -72,7 +72,7 @@ function SignIn() {
                   </div>
                   <div className="form-group">
                     <div className="icon d-flex align-items-center justify-content-center">
-                      <span className="app-icon app-main-color icon-lock" />
+                      <i className="bi bi-lock-fill" />
                     </div>
                     <input
                       type="password"

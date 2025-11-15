@@ -22,7 +22,7 @@ function Header() {
           aria-controls="navbarCollapsableContent"
           aria-expanded="false"
         >
-          <span className="app-icon app-main-color icon-menu" />
+          <i className="bi bi-list" />
         </button>
         <div className="navbar-collapse collapse" id="navbarCollapsableContent">
           <hr className="d-md-none" />
@@ -47,7 +47,7 @@ function Header() {
           <ul className="navbar-nav flex-row flex-wrap ms-md-auto">
             <li className="nav-item col-12 col-md-auto">
               <a className="nav-link" href="/notifications">
-                <span className="app-icon icon-bell" />
+                <i className="bi bi-bell" />
               </a>
             </li>
           </ul>

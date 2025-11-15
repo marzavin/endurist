@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Files from "./pages/Files";
 import SignIn from "./pages/SignIn";
 import "./App.less";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import { BrowserRouter, Routes, Route } from "react-router";
 
