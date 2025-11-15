@@ -35,21 +35,30 @@ function ActivityPreviewPanel({ activity }: Props) {
             ) : null}
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Start Time:</div>
-          <div className="col-6 d-flex justify-content-end">
-            <strong>{dayjs(activity.startTime).format("YYYY-MM-DD")}</strong>
-            <p>{dayjs(activity.startTime).format("HH:mm")}</p>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-4 d-flex justify-content-start">
+            <strong>Start Time:</strong>
+          </div>
+          <div className="col-8 d-flex justify-content-end">
+            <span>
+              {dayjs(activity.startTime).format("YYYY-MM-DD") +
+                " " +
+                dayjs(activity.startTime).format("HH:mm")}
+            </span>
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Distance:</div>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-6 d-flex justify-content-start">
+            <strong>Distance:</strong>
+          </div>
           <div className="col-6 d-flex justify-content-end">
             {toKilometersLabel(activity.distance)}
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Duration:</div>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-6 d-flex justify-content-start">
+            <strong>Duration:</strong>
+          </div>
           <div className="col-6 d-flex justify-content-end">
             {toTimeSpanLabel(activity.duration)}
           </div>

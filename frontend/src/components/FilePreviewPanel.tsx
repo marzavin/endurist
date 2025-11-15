@@ -26,14 +26,18 @@ function FilePreviewPanel({ file }: Props) {
             </span>
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Status:</div>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-6 d-flex justify-content-start">
+            <strong>Status:</strong>
+          </div>
           <div className="col-6 d-flex justify-content-end">
-            <p>{FileStatus[file.status]}</p>
+            {FileStatus[file.status]}
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Size:</div>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-6 d-flex justify-content-start">
+            <strong>Size:</strong>
+          </div>
           <div className="col-6 d-flex justify-content-end">
             {(file.size / 1024).toFixed(2)} KB
           </div>
@@ -45,7 +49,7 @@ function FilePreviewPanel({ file }: Props) {
               title="Download source file"
               onClick={handleFileDownload}
             >
-              <i className="app-icon bi bi-download" />
+              <i className="bi bi-download" />
             </a>
           </div>
         </div>

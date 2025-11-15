@@ -17,16 +17,20 @@ function ProfilePreviewPanel({ profile }: Props) {
             </a>
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Distance:</div>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-6 d-flex justify-content-start">
+            <strong>Distance:</strong>
+          </div>
           <div className="col-6 d-flex justify-content-end">
-            <p>{toKilometersLabel(profile.distance)}</p>
+            <span>{toKilometersLabel(profile.distance)}</span>
           </div>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Duration:</div>
+        <div className="app-panel-line app-font-s row">
+          <div className="col-6 d-flex justify-content-start">
+            <strong>Duration:</strong>
+          </div>
           <div className="col-6 d-flex justify-content-end">
-            {toTimeSpanLabel(profile.duration)}
+            <span>{toTimeSpanLabel(profile.duration)}</span>
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ html {
 
 body {
   min-height: 100%;
-  background-color: @main-bg-color;
+  background-color: var(--main-bg-color);
+  color: var(--font-color);
   font-family: Tahoma, Verdana, sans-serif;
   //font-family: Tahoma, sans-serif;
   //font-family: Verdana, sans-serif;
@@ -20,11 +21,11 @@ main {
 }
 
 .app-border-bottom {
-  border-bottom: 1px solid @border-color;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .app-border-right {
-  border-right: 1px solid @border-color;
+  border-right: 1px solid var(--border-color);
 }
 
 .app-table table tr th {
@@ -32,7 +33,7 @@ main {
 }
 
 .app-table-layout {
-  background-color: @panel-bg-color;
+  background-color: var(--panel-bg-color);
   padding: 1rem;
   border-radius: 0.5rem;
 }
@@ -65,7 +66,7 @@ main {
 }
 
 .app-file-uploader {
-  background-color: @panel-bg-color;
+  background-color: var(--panel-bg-color);
   padding: 1rem;
   border-radius: 1rem;
   border-style: dashed;
@@ -90,42 +91,34 @@ main {
 }
 
 .app-error-text {
-  color: @error-color;
-}
-
-.app-icon {
-  font-size: 1.25rem;
-
-  &.app-main-color {
-    color: @main-logo-color;
-  }
+  color: var(--error-color);
 }
 
 .app-error-label {
-  background-color: @error-color;
-  color: @main-white-color;
+  background-color: var(--error-color);
+  color: var(--main-white-color);
 }
 
 .app-warning-label {
-  background-color: @warning-color;
-  color: @main-white-color;
+  background-color: var(--warning-color);
+  color: var(--main-white-color);
 }
 
 .app-info-label {
-  background-color: @info-color;
-  color: @main-white-color;
+  background-color: var(--info-color);
+  color: var(--main-white-color);
 }
 
 .app-success-label {
-  background-color: @success-color;
-  color: @main-white-color;
+  background-color: var(--success-color);
+  color: var(--main-white-color);
 }
 
 .app-widget {
-  background-color: @panel-bg-color;
+  background-color: var(--panel-bg-color);
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid @border-color;
+  border: 1px solid var(--border-color);
 
   .app-widget-header {
     font-size: 1.25rem;
@@ -136,7 +129,7 @@ main {
 .app-summary {
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid @border-color;
+  border: 1px solid var(--border-color);
 }
 
 .app-font-xs {
@@ -161,10 +154,6 @@ main {
 
 .app-font-xxl {
   font-size: 2rem;
-}
-
-i.app-icon {
-  font-size: 1.25rem;
 }
 
 .app-sorting-panel {

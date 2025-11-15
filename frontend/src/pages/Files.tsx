@@ -1,9 +1,10 @@
 import FilePreviewModel from "../interfaces/FilePreviewModel";
+import SortingModel from "../interfaces/SortingModel";
 import FilePreviewPanel from "../components/FilePreviewPanel";
 import FileUploader from "../components/FileUploader";
 import { useEffect, useState, CSSProperties, ChangeEvent } from "react";
 import { useData } from "../services/DataProvider";
-import SortingModel from "../interfaces/SortingModel";
+
 import { PropagateLoader } from "react-spinners";
 import "./Files.less";
 
