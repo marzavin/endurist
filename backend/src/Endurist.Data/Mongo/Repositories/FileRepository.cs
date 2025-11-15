@@ -20,7 +20,8 @@ public class FileRepository : RepositoryBase<FileDocument>
         new()
         {
             { nameof(FileDocument.UploadedAt).ToUpperInvariant(), x => x.UploadedAt },
-            { nameof(FileDocument.ProcessedAt).ToUpperInvariant(), x => x.ProcessedAt }
+            { nameof(FileDocument.ProcessedAt).ToUpperInvariant(), x => x.ProcessedAt },
+            { nameof(FileDocument.ActivityStartedAt).ToUpperInvariant(), x => x.ActivityStartedAt }
         };
 
     public FilterDefinition<FileDocument> BuildFilter(FileFilter filter)

@@ -4,7 +4,6 @@ using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Enums;
 using Endurist.Data.Mongo.Filters;
 using Endurist.Data.Mongo.Interfaces;
-using Endurist.Worker.Tasks.Profiles.TrainingVolume;
 using SideEffect.Extensions;
 using SideEffect.Messaging;
 using SideEffect.Sport.Activities;
@@ -13,15 +12,15 @@ using SideEffect.Sport.Activities.Models;
 
 namespace Endurist.Worker;
 
-internal class FileProcessingWorker : BackgroundService
+internal class FileAnalysisWorker : BackgroundService
 {
     private const int Interval = 1000;
 
     private readonly Storage _storage;
     private readonly IServiceBus _serviceBus;
-    private readonly ILogger<FileProcessingWorker> _logger;
+    private readonly ILogger<FileAnalysisWorker> _logger;
     
-    public FileProcessingWorker(Storage storage, IServiceBus serviceBus, ILogger<FileProcessingWorker> logger)
+    public FileAnalysisWorker(Storage storage, IServiceBus serviceBus, ILogger<FileAnalysisWorker> logger)
     {
         _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         _serviceBus = serviceBus ?? throw new ArgumentNullException(nameof(serviceBus));
@@ -43,6 +42,8 @@ internal class FileProcessingWorker : BackgroundService
                 var data = Convert.FromBase64String(fileToProcess.Content);
                 var tcx = new TrainingCenterFileContainer(data);
 
+                DateTime? activityStartedAt = null;
+
                 var activities = await tcx.LoadAsync();
                 if (!activities.IsEmpty())
                 {
@@ -50,12 +51,17 @@ internal class FileProcessingWorker : BackgroundService
 
                     foreach (var activity in activities)
                     {
-                        await MapAndInsertActivityAsync(fileToProcess, activity, cancellationToken);
-                    }
+                        var document = await MapAndInsertActivityAsync(fileToProcess, activity, cancellationToken);
+
+                        if (activityStartedAt is null || document.StartTime < activityStartedAt)
+                        {
+                            activityStartedAt = document.StartTime;
+                        }
+                    }            
                 }
 
                 //TODO:AMZ: Process negative case here
-                await SetProcessingResultAsync(fileToProcess, null, cancellationToken);
+                await SetProcessingResultAsync(fileToProcess, null, activityStartedAt, cancellationToken);
             }
 
             await Task.Delay(Interval, cancellationToken);
@@ -70,11 +76,16 @@ internal class FileProcessingWorker : BackgroundService
         return await _storage.Files.SetStatusAndReturnAsync(queryFilter, FileStatus.Processing, cancellationToken);
     }
 
-    private async Task SetProcessingResultAsync(FileDocument file, string message, CancellationToken cancellationToken = default)
+    private async Task SetProcessingResultAsync(
+        FileDocument file, 
+        string message, 
+        DateTime? activityStartedAt, 
+        CancellationToken cancellationToken = default)
     {
         if (message.IsEmpty())
         {
             file.Status = FileStatus.Parsed;
+            file.ActivityStartedAt = activityStartedAt;
         }
         else
         {
@@ -95,13 +106,13 @@ internal class FileProcessingWorker : BackgroundService
         await _storage.Activities.DeleteAsync(queryFilter, cancellationToken);
     }
 
-    private async Task MapAndInsertActivityAsync(FileDocument file, Activity activity, CancellationToken cancellationToken = default)
+    private async Task<ActivityDocument> MapAndInsertActivityAsync(FileDocument file, Activity activity, CancellationToken cancellationToken = default)
     {
         var category = TryParseActivityCategory(activity.Category);
         if (!category.HasValue)
         {
             _logger.LogWarning("Activity category '{category}' is not supported. Activity will be ignored.", activity.Category);
-            return;
+            return null;
         }
 
         var track = activity.Track;
@@ -122,6 +133,8 @@ internal class FileProcessingWorker : BackgroundService
         await _storage.Activities.InsertAsync(document, cancellationToken);
 
         await _serviceBus.PublishEventAsync(new TrainingVolumeCalculationEvent { ProfileId = file.ProfileId.ToString() }, cancellationToken);
+
+        return document;
     }
 
     private static SegmentDocument MapSegment(int startIndex, int finishIndex, List<TrackPoint> track)

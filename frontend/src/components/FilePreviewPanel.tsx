@@ -42,9 +42,10 @@ function FilePreviewPanel({ file }: Props) {
           <div className="col-12 d-flex justify-content-end">
             <a
               className="nav-link app-download-link"
+              title="Download source file"
               onClick={handleFileDownload}
             >
-              <span className="app-icon icon-download" />
+              <i className="app-icon bi bi-download" />
             </a>
           </div>
         </div>

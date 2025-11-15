@@ -37,7 +37,10 @@ public class FileHandler : HandlerBase,
                 Name = document.Name,
                 Extension = document.Extension,
                 Size = document.Size,
-                Status = document.Status
+                Status = document.Status,
+                UploadedAt = document.UploadedAt,
+                ProcessedAt = document.ProcessedAt,
+                ActivityStartedAt = document.ActivityStartedAt
             };
 
         var filter = new FileFilter { ProfileIdIn = [Context.UserId] };
@@ -89,6 +92,8 @@ public class FileHandler : HandlerBase,
             file.Status = FileStatus.UploadFailed;
             file.Error = operationResult.Error;
         }
+
+        file.UploadedAt = DateTime.UtcNow;
 
         await Storage.Files.InsertAsync(file, cancellationToken);
 

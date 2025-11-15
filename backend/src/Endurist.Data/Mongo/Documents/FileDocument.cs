@@ -26,4 +26,6 @@ public class FileDocument : DocumentBase
     public DateTime UploadedAt { get; set; }
 
     public DateTime? ProcessedAt { get; set; }
+
+    public DateTime? ActivityStartedAt { get; set; }
 }
