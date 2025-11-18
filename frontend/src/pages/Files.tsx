@@ -1,11 +1,10 @@
 import FilePreviewModel from "../interfaces/FilePreviewModel";
+import SortingModel from "../interfaces/SortingModel";
 import FilePreviewPanel from "../components/FilePreviewPanel";
 import FileUploader from "../components/FileUploader";
 import { useEffect, useState, CSSProperties, ChangeEvent } from "react";
 import { useData } from "../services/DataProvider";
-import SortingModel from "../interfaces/SortingModel";
 import { PropagateLoader } from "react-spinners";
-import "./Files.less";
 
 const override: CSSProperties = {
   display: "block",
@@ -115,9 +114,14 @@ function Files() {
           <div className="col-12">No information to display.</div>
         </div>
       ) : null}
-      <div className="row">
+      <div className="app-list row">
         {items.map((item) => (
-          <FilePreviewPanel key={item.id} file={item} />
+          <div
+            key={item.id}
+            className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+          >
+            <FilePreviewPanel file={item} />
+          </div>
         ))}
       </div>
     </div>

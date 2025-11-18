@@ -2,11 +2,25 @@ import avatar from "../assets/avatar.png";
 import logo from "../assets/logo.png";
 import "./Header.less";
 import { useAuth } from "../services/AuthProvider";
+import { useState } from "react";
+import ApplicationTheme from "../enums/ApplicationTheme";
 
 function Header() {
   const authProvider = useAuth();
   const profile = authProvider.getAccount();
   const profileUrl = `/profiles/${profile?.sub}`;
+
+  const [theme, setTheme] = useState<ApplicationTheme>(ApplicationTheme.Light);
+
+  function handleThemeChange() {
+    if (theme === ApplicationTheme.Light) {
+      document.querySelector("body")?.setAttribute("data-theme", "dark");
+      setTheme(ApplicationTheme.Dark);
+    } else {
+      document.querySelector("body")?.removeAttribute("data-theme");
+      setTheme(ApplicationTheme.Light);
+    }
+  }
 
   return (
     <header className="app-header app-border-bottom navbar navbar-expand-md">
@@ -46,8 +60,17 @@ function Header() {
           <hr className="d-md-none" />
           <ul className="navbar-nav flex-row flex-wrap ms-md-auto">
             <li className="nav-item col-12 col-md-auto">
+              <a className="nav-link" onClick={handleThemeChange}>
+                {theme === ApplicationTheme.Light ? (
+                  <i className=".app-font-l bi bi-moon" />
+                ) : (
+                  <i className=".app-font-l bi bi-sun" />
+                )}
+              </a>
+            </li>
+            <li className="nav-item col-12 col-md-auto">
               <a className="nav-link" href="/notifications">
-                <i className="bi bi-bell" />
+                <i className=".app-font-l bi bi-bell" />
               </a>
             </li>
           </ul>

@@ -4,7 +4,6 @@ import { useEffect, useState, CSSProperties } from "react";
 import { useData } from "../services/DataProvider";
 import SortingModel from "../interfaces/SortingModel";
 import { PropagateLoader } from "react-spinners";
-import "./Activities.less";
 
 const override: CSSProperties = {
   display: "block",
@@ -53,9 +52,14 @@ function Activities() {
           <div className="col-12">No information to display.</div>
         </div>
       ) : null}
-      <div className="row">
+      <div className="app-list row">
         {items.map((item) => (
-          <ActivityPreviewPanel key={item.id} activity={item} />
+          <div
+            key={item.id}
+            className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+          >
+            <ActivityPreviewPanel activity={item} />
+          </div>
         ))}
       </div>
     </div>

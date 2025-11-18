@@ -3,13 +3,13 @@
 .app-sign-in {
   .app-panel {
     position: relative;
-    background: #ffffff;
+    background: var(--panel-bg-color);
     border-radius: 0.5rem;
     padding: 0 2rem;
-    border: solid 1px @main-logo-color;
+    border: solid 1px var(--main-logo-color);
 
     span {
-      color: @main-logo-color;
+      color: var(--main-logo-color);
     }
 
     h3 {
@@ -25,8 +25,7 @@
         top: 8px;
         left: 4px;
         i {
-          font-size: 1.25rem;
-          color: @main-logo-color;
+          color: var(--main-logo-color);
         }
       }
     }
@@ -43,7 +42,7 @@
 
     button.form-control {
       margin-top: 1rem;
-      background-color: @main-logo-color;
+      background-color: var(--main-logo-color);
 
       &:hover,
       &:active,
@@ -54,9 +53,15 @@
 
     input.form-control {
       border-radius: 0;
-      border-bottom: 1px solid @main-logo-color;
+      border-bottom: 1px solid var(--main-logo-color);
+      background-color: var(--panel-bg-color);
+      color: var(--font-color);
       padding-left: 30px;
       padding-right: 0;
+
+      &::placeholder {
+        color: var(--placeholder-color);
+      }
     }
   }
 }
