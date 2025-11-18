@@ -17,7 +17,6 @@ function Activities() {
   const dataProvider = useData();
   const [items, setItems] = useState<ActivityPreviewModel[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
   const [sorting, setSorting] = useState<SortingModel>({
     key: "startTime",
     descending: true
@@ -25,10 +24,8 @@ function Activities() {
   const pageSize: number = 48;
 
   useEffect(() => {
-    setLoading(true);
     setHasMore(true);
     dataProvider.getActivities(0, pageSize, sorting).then((result) => {
-      setLoading(false);
       if (result.length < pageSize) {
         setHasMore(false);
       }
@@ -56,18 +53,7 @@ function Activities() {
         </div>
         <div className="col-md-auto col-12"></div>
       </div>
-      {loading ? (
-        <div className="row">
-          <div className="col-12">
-            <PropagateLoader
-              color="#f48221"
-              cssOverride={override}
-              loading={loading}
-            ></PropagateLoader>
-          </div>
-        </div>
-      ) : null}
-      {items.length === 0 && !loading ? (
+      {items.length === 0 ? (
         <div className="row">
           <div className="col-12">No information to display.</div>
         </div>
@@ -78,15 +64,11 @@ function Activities() {
         next={handleNextPage}
         hasMore={hasMore}
         loader={
-          <div className="row">
-            <div className="col-12">
-              <PropagateLoader
-                color="#f48221"
-                cssOverride={override}
-                loading={true}
-              ></PropagateLoader>
-            </div>
-          </div>
+          <PropagateLoader
+            color="#f48221"
+            cssOverride={override}
+            loading={true}
+          ></PropagateLoader>
         }
       >
         {items.map((item) => (

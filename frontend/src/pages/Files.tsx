@@ -18,7 +18,6 @@ function Files() {
   const dataProvider = useData();
   const [items, setItems] = useState<FilePreviewModel[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
   const [sorting, setSorting] = useState<SortingModel>({
     key: "uploadedAt",
     descending: true
@@ -26,10 +25,8 @@ function Files() {
   const pageSize: number = 48;
 
   useEffect(() => {
-    setLoading(true);
     setHasMore(true);
     dataProvider.getFiles(0, pageSize, sorting).then((result) => {
-      setLoading(false);
       if (result.length < pageSize) {
         setHasMore(false);
       }
@@ -113,18 +110,7 @@ function Files() {
           </div>
         </div>
       </div>
-      {loading ? (
-        <div className="row">
-          <div className="col-12">
-            <PropagateLoader
-              color="#f48221"
-              cssOverride={override}
-              loading={loading}
-            ></PropagateLoader>
-          </div>
-        </div>
-      ) : null}
-      {items.length === 0 && !loading ? (
+      {items.length === 0 ? (
         <div className="row">
           <div className="col-12">No information to display.</div>
         </div>
@@ -135,15 +121,11 @@ function Files() {
         next={handleNextPage}
         hasMore={hasMore}
         loader={
-          <div className="row">
-            <div className="col-12">
-              <PropagateLoader
-                color="#f48221"
-                cssOverride={override}
-                loading={true}
-              ></PropagateLoader>
-            </div>
-          </div>
+          <PropagateLoader
+            color="#f48221"
+            cssOverride={override}
+            loading={true}
+          ></PropagateLoader>
         }
       >
         {items.map((item) => (

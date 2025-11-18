@@ -109,21 +109,6 @@ public abstract class RepositoryBase<TDocument> : RepositoryBase
         return Collection.DeleteManyAsync(filter, cancellationToken);
     }
 
-    private Expression<Func<TDocument, object>> GetSortExpression(string key)
-    {
-        if (key.IsEmpty())
-        {
-            return DefaultSorting;
-        }
-
-        if (SortingFields.TryGetValue(key, out var sortExpression))
-        {
-            return sortExpression;
-        }
-
-        return DefaultSorting;
-    }
-
     protected IFindFluent<TDocument, TDocument> ApplySorting(IFindFluent<TDocument, TDocument> search, SortingInfo sorting)
     {
         var descending = sorting?.Descending ?? false;
