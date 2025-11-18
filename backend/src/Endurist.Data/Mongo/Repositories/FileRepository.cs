@@ -17,11 +17,11 @@ public class FileRepository : RepositoryBase<FileDocument>
         : base(settings) { }
 
     protected override Dictionary<string, Expression<Func<FileDocument, object>>> SortingFields =>
-        new()
+        new(StringComparer.OrdinalIgnoreCase)
         {
-            { nameof(FileDocument.UploadedAt).ToUpperInvariant(), x => x.UploadedAt },
-            { nameof(FileDocument.ProcessedAt).ToUpperInvariant(), x => x.ProcessedAt },
-            { nameof(FileDocument.ActivityStartedAt).ToUpperInvariant(), x => x.ActivityStartedAt }
+            { nameof(FileDocument.UploadedAt), x => x.UploadedAt },
+            { nameof(FileDocument.ProcessedAt), x => x.ProcessedAt },
+            { nameof(FileDocument.ActivityStartedAt), x => x.ActivityStartedAt }
         };
 
     public FilterDefinition<FileDocument> BuildFilter(FileFilter filter)

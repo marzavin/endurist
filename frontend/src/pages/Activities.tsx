@@ -4,6 +4,7 @@ import { useEffect, useState, CSSProperties } from "react";
 import { useData } from "../services/DataProvider";
 import SortingModel from "../interfaces/SortingModel";
 import { PropagateLoader } from "react-spinners";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const override: CSSProperties = {
   display: "block",
@@ -15,17 +16,33 @@ const override: CSSProperties = {
 function Activities() {
   const dataProvider = useData();
   const [items, setItems] = useState<ActivityPreviewModel[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [sorting, setSorting] = useState<SortingModel>({
+    key: "startTime",
+    descending: true
+  });
   const pageSize: number = 48;
-  const sorting: SortingModel = { key: "startTime", descending: true };
 
   useEffect(() => {
-    setLoading(true);
-    dataProvider.getActivities(pageSize, sorting).then((result) => {
-      setLoading(false);
+    setHasMore(true);
+    dataProvider.getActivities(0, pageSize, sorting).then((result) => {
+      if (result.length < pageSize) {
+        setHasMore(false);
+      }
       setItems(result);
     });
-  }, []);
+  }, [sorting]);
+
+  function handleNextPage() {
+    dataProvider
+      .getActivities(items.length, pageSize, sorting)
+      .then((result) => {
+        if (result.length < pageSize) {
+          setHasMore(false);
+        }
+        setItems((previousItems) => [...previousItems, ...result]);
+      });
+  }
 
   return (
     <div className="app-activity-list">
@@ -36,23 +53,24 @@ function Activities() {
         </div>
         <div className="col-md-auto col-12"></div>
       </div>
-      {loading ? (
-        <div className="row">
-          <div className="col-12">
-            <PropagateLoader
-              color="#f48221"
-              cssOverride={override}
-              loading={loading}
-            ></PropagateLoader>
-          </div>
-        </div>
-      ) : null}
-      {items.length === 0 && !loading ? (
+      {items.length === 0 ? (
         <div className="row">
           <div className="col-12">No information to display.</div>
         </div>
       ) : null}
-      <div className="app-list row">
+      <InfiniteScroll
+        className="app-list row"
+        dataLength={items.length}
+        next={handleNextPage}
+        hasMore={hasMore}
+        loader={
+          <PropagateLoader
+            color="#f48221"
+            cssOverride={override}
+            loading={true}
+          ></PropagateLoader>
+        }
+      >
         {items.map((item) => (
           <div
             key={item.id}
@@ -61,7 +79,7 @@ function Activities() {
             <ActivityPreviewPanel activity={item} />
           </div>
         ))}
-      </div>
+      </InfiniteScroll>
     </div>
   );
 }

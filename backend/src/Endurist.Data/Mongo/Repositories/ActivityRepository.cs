@@ -16,9 +16,9 @@ public class ActivityRepository : RepositoryBase<ActivityDocument>
         : base(settings) { }
 
     protected override Dictionary<string, Expression<Func<ActivityDocument, object>>> SortingFields =>
-        new()
+        new(StringComparer.OrdinalIgnoreCase)
         {
-            { nameof(ActivityDocument.StartTime).ToUpperInvariant(), x => x.StartTime }
+            { nameof(ActivityDocument.StartTime), x => x.StartTime }
         };
 
     public Task<List<TModel>> GetActivitySetTotalAsync<TModel>(Expression<Func<ActivityDocument, ObjectId>> key, Expression<Func<ActivityDocument, TModel>> mapper, FilterDefinition<ActivityDocument> filter = null, CancellationToken cancellationToken = default)

@@ -4,6 +4,8 @@ interface FilePreviewModel {
   extension: string;
   size: number;
   status: number;
+  uploadedAt: string;
+  processedAt: string;
 }
 
 export default FilePreviewModel;

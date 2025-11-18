@@ -1,5 +1,6 @@
+import dayjs from "dayjs";
 import FileStatus from "../enums/FileStatus";
-import FilePreviewModel from "../interfaces/FilePreviewModel";
+import FilePreviewModel from "../interfaces/files/FilePreviewModel";
 import { useData } from "../services/DataProvider";
 
 interface Props {
@@ -39,6 +40,30 @@ function FilePreviewPanel({ file }: Props) {
         </div>
         <div>
           <span>{(file.size / 1024).toFixed(2)} KB</span>
+        </div>
+      </div>
+      <div className="app-card-row app-font-s">
+        <div>
+          <strong>Uploaded At:</strong>
+        </div>
+        <div>
+          <span>
+            {dayjs(file.uploadedAt).format("YYYY-MM-DD") +
+              " " +
+              dayjs(file.uploadedAt).format("HH:mm")}
+          </span>
+        </div>
+      </div>
+      <div className="app-card-row app-font-s">
+        <div>
+          <strong>Processed At:</strong>
+        </div>
+        <div>
+          <span>
+            {dayjs(file.processedAt).format("YYYY-MM-DD") +
+              " " +
+              dayjs(file.processedAt).format("HH:mm")}
+          </span>
         </div>
       </div>
       <div className="app-card-row">
