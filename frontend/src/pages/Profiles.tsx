@@ -17,7 +17,7 @@ function Profiles() {
   const dataProvider = useData();
   const [items, setItems] = useState<ProfilePreviewModel[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [sorting, setSorting] = useState<SortingModel>({
+  const [sorting] = useState<SortingModel>({
     key: "name",
     descending: true
   });
