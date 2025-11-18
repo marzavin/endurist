@@ -18,10 +18,10 @@ public abstract class RepositoryBase
     protected RepositoryBase(MongoStorageConfiguration settings)
     {
         ArgumentNullException.ThrowIfNull(settings);
-        
+
         var url = new MongoUrl(settings.ConnectionString);
         var client = new MongoClient(url);
-        
+
         Database = client.GetDatabase(url.DatabaseName);
     }
 }
@@ -35,7 +35,8 @@ public abstract class RepositoryBase<TDocument> : RepositoryBase
         : base(settings)
     { }
 
-    protected virtual Dictionary<string, Expression<Func<TDocument, object>>> SortingFields { get; } = [];
+    protected virtual Dictionary<string, Expression<Func<TDocument, object>>> SortingFields { get; }
+        = new Dictionary<string, Expression<Func<TDocument, object>>>(StringComparer.OrdinalIgnoreCase);
 
     protected virtual Expression<Func<TDocument, object>> DefaultSorting { get; } = x => x.Id;
 
@@ -59,17 +60,14 @@ public abstract class RepositoryBase<TDocument> : RepositoryBase
 
         var search = Collection.Find(queryFilter);
 
-        if (sorting is not null && !sorting.Key.IsEmpty())
+        if (sorting is not null)
         {
-            var sortExpression = GetSortExpression(sorting.Key);
-            search = sorting.Descending
-                ? search.SortByDescending(sortExpression)
-                : search.SortBy(sortExpression);
+            search = ApplySorting(search, sorting);
         }
 
         if (paging is not null)
         {
-            search = search.Skip(paging.Skip).Limit(paging.Take);
+            search = ApplyPaging(search, paging);
         }
 
         return search.Project(projection).ToListAsync(cancellationToken);
@@ -111,18 +109,42 @@ public abstract class RepositoryBase<TDocument> : RepositoryBase
         return Collection.DeleteManyAsync(filter, cancellationToken);
     }
 
-    protected Expression<Func<TDocument, object>> GetSortExpression(string key)
+    private Expression<Func<TDocument, object>> GetSortExpression(string key)
     {
         if (key.IsEmpty())
         {
             return DefaultSorting;
         }
 
-        if (SortingFields.TryGetValue(key.Trim().ToUpperInvariant(), out var sortExpression))
+        if (SortingFields.TryGetValue(key, out var sortExpression))
         {
             return sortExpression;
         }
 
         return DefaultSorting;
+    }
+
+    protected IFindFluent<TDocument, TDocument> ApplySorting(IFindFluent<TDocument, TDocument> search, SortingInfo sorting)
+    {
+        var descending = sorting?.Descending ?? false;
+
+        if (sorting is not null
+            && !sorting.Key.IsEmpty()
+            && !sorting.Key.IsSimilar(nameof(DocumentBase.Id))
+            && SortingFields.TryGetValue(sorting.Key, out var sortExpression))
+        {
+            return descending
+                ? search.SortByDescending(sortExpression).ThenByDescending(DefaultSorting)
+                : search.SortBy(sortExpression).ThenBy(DefaultSorting);
+        }
+
+        return descending
+            ? search.SortByDescending(DefaultSorting)
+            : search.SortBy(DefaultSorting);
+    }
+
+    protected IFindFluent<TDocument, TDocument> ApplyPaging(IFindFluent<TDocument, TDocument> search, PagingInfo paging)
+    {
+        return search.Skip(paging.Skip).Limit(paging.Take);
     }
 }

@@ -6,7 +6,7 @@ import ActivityModel from "../interfaces/activities/ActivityModel";
 import ActivityPreviewModel from "../interfaces/activities/ActivityPreviewModel";
 import ProfilePreviewModel from "../interfaces/profiles/ProfilePreviewModel";
 import ServerResponseModel from "../interfaces/ServerResponseModel";
-import FilePreviewModel from "../interfaces/FilePreviewModel";
+import FilePreviewModel from "../interfaces/files/FilePreviewModel";
 import SortingModel from "../interfaces/SortingModel";
 import ProfileModel from "../interfaces/profiles/ProfileModel";
 import WidgetModel from "../interfaces/widgets/WidgetModel";
@@ -14,17 +14,20 @@ import FileUploadModel from "../interfaces/files/FileUploadModel";
 
 export interface IDataProvider {
   getActivities(
-    pageSize: number,
+    skip: number,
+    take: number,
     sorting: SortingModel
   ): Promise<ActivityPreviewModel[]>;
   getActivity(activityId: string): Promise<ActivityModel>;
   getProfiles(
-    pageSize: number,
+    skip: number,
+    take: number,
     sorting: SortingModel
   ): Promise<ProfilePreviewModel[]>;
   getProfile(profileId: string): Promise<ProfileModel>;
   getFiles(
-    pageSize: number,
+    skip: number,
+    take: number,
     sorting: SortingModel
   ): Promise<FilePreviewModel[]>;
   uploadFile(file: File): Promise<FileUploadModel>;
@@ -60,14 +63,15 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const dataProvider = {
     async getActivities(
-      pageSize: number,
+      skip: number,
+      take: number,
       sorting: SortingModel
     ): Promise<ActivityPreviewModel[]> {
       return axiosInstance
         .get<ServerResponseModel<ActivityPreviewModel[]>>(
           sorting
-            ? `${serverBaseUrl}/api/activities?paging.take=${pageSize}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
-            : `${serverBaseUrl}/api/activities?paging.take=${pageSize}`
+            ? `${serverBaseUrl}/api/activities?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
+            : `${serverBaseUrl}/api/activities?paging.skip=${skip}&paging.take=${take}`
         )
         .then(
           function (response) {
@@ -112,14 +116,15 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
         );
     },
     async getProfiles(
-      pageSize: number,
+      skip: number,
+      take: number,
       sorting: SortingModel
     ): Promise<ProfilePreviewModel[]> {
       return axiosInstance
         .get<ServerResponseModel<ProfilePreviewModel[]>>(
           sorting
-            ? `${serverBaseUrl}/api/profiles?paging.take=${pageSize}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
-            : `${serverBaseUrl}/api/profiles?paging.take=${pageSize}`
+            ? `${serverBaseUrl}/api/profiles?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
+            : `${serverBaseUrl}/api/profiles?paging.skip=${skip}&paging.take=${take}`
         )
         .then(
           function (response) {
@@ -155,14 +160,15 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
         );
     },
     async getFiles(
-      pageSize: number,
+      skip: number,
+      take: number,
       sorting: SortingModel
     ): Promise<FilePreviewModel[]> {
       return axiosInstance
         .get<ServerResponseModel<FilePreviewModel[]>>(
           sorting
-            ? `${serverBaseUrl}/api/files?paging.take=${pageSize}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
-            : `${serverBaseUrl}/api/files?paging.take=${pageSize}`
+            ? `${serverBaseUrl}/api/files?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
+            : `${serverBaseUrl}/api/files?paging.skip=${skip}&paging.take=${take}`
         )
         .then(
           function (response) {

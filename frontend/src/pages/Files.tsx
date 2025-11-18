@@ -1,10 +1,11 @@
-import FilePreviewModel from "../interfaces/FilePreviewModel";
+import FilePreviewModel from "../interfaces/files/FilePreviewModel";
 import SortingModel from "../interfaces/SortingModel";
 import FilePreviewPanel from "../components/FilePreviewPanel";
 import FileUploader from "../components/FileUploader";
 import { useEffect, useState, CSSProperties, ChangeEvent } from "react";
 import { useData } from "../services/DataProvider";
 import { PropagateLoader } from "react-spinners";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const override: CSSProperties = {
   display: "block",
@@ -16,6 +17,7 @@ const override: CSSProperties = {
 function Files() {
   const dataProvider = useData();
   const [items, setItems] = useState<FilePreviewModel[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [sorting, setSorting] = useState<SortingModel>({
     key: "uploadedAt",
@@ -25,11 +27,24 @@ function Files() {
 
   useEffect(() => {
     setLoading(true);
-    dataProvider.getFiles(pageSize, sorting).then((result) => {
+    setHasMore(true);
+    dataProvider.getFiles(0, pageSize, sorting).then((result) => {
       setLoading(false);
+      if (result.length < pageSize) {
+        setHasMore(false);
+      }
       setItems(result);
     });
   }, [sorting]);
+
+  function handleNextPage() {
+    dataProvider.getFiles(items.length, pageSize, sorting).then((result) => {
+      if (result.length < pageSize) {
+        setHasMore(false);
+      }
+      setItems((previousItems) => [...previousItems, ...result]);
+    });
+  }
 
   function handleRadioChange(e: ChangeEvent<HTMLInputElement>) {
     setSorting({ descending: sorting.descending, key: e.target.value });
@@ -114,7 +129,23 @@ function Files() {
           <div className="col-12">No information to display.</div>
         </div>
       ) : null}
-      <div className="app-list row">
+      <InfiniteScroll
+        className="app-list row"
+        dataLength={items.length}
+        next={handleNextPage}
+        hasMore={hasMore}
+        loader={
+          <div className="row">
+            <div className="col-12">
+              <PropagateLoader
+                color="#f48221"
+                cssOverride={override}
+                loading={true}
+              ></PropagateLoader>
+            </div>
+          </div>
+        }
+      >
         {items.map((item) => (
           <div
             key={item.id}
@@ -123,7 +154,7 @@ function Files() {
             <FilePreviewPanel file={item} />
           </div>
         ))}
-      </div>
+      </InfiniteScroll>
     </div>
   );
 }
