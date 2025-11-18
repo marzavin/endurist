@@ -4,7 +4,7 @@ import { useEffect, useState, CSSProperties } from "react";
 import { useData } from "../services/DataProvider";
 import SortingModel from "../interfaces/SortingModel";
 import { PropagateLoader } from "react-spinners";
-import "./Profiles.less";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const override: CSSProperties = {
   display: "block",
@@ -16,17 +16,31 @@ const override: CSSProperties = {
 function Profiles() {
   const dataProvider = useData();
   const [items, setItems] = useState<ProfilePreviewModel[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [sorting, setSorting] = useState<SortingModel>({
+    key: "name",
+    descending: true
+  });
   const pageSize: number = 48;
-  const sorting: SortingModel = { key: "name", descending: true };
 
   useEffect(() => {
-    setLoading(true);
-    dataProvider.getProfiles(pageSize, sorting).then((result) => {
-      setLoading(false);
+    setHasMore(true);
+    dataProvider.getProfiles(0, pageSize, sorting).then((result) => {
+      if (result.length < pageSize) {
+        setHasMore(false);
+      }
       setItems(result);
     });
-  }, []);
+  }, [sorting]);
+
+  function handleNextPage() {
+    dataProvider.getProfiles(items.length, pageSize, sorting).then((result) => {
+      if (result.length < pageSize) {
+        setHasMore(false);
+      }
+      setItems((previousItems) => [...previousItems, ...result]);
+    });
+  }
 
   return (
     <div className="app-profile-list">
@@ -37,27 +51,33 @@ function Profiles() {
         </div>
         <div className="col-md-auto col-12"></div>
       </div>
-      {loading ? (
-        <div className="row">
-          <div className="col-12">
-            <PropagateLoader
-              color="#f48221"
-              cssOverride={override}
-              loading={loading}
-            ></PropagateLoader>
-          </div>
-        </div>
-      ) : null}
-      {items.length === 0 && !loading ? (
+      {items.length === 0 ? (
         <div className="row">
           <div className="col-12">No information to display.</div>
         </div>
       ) : null}
-      <div className="row">
+      <InfiniteScroll
+        className="app-list row"
+        dataLength={items.length}
+        next={handleNextPage}
+        hasMore={hasMore}
+        loader={
+          <PropagateLoader
+            color="#f48221"
+            cssOverride={override}
+            loading={true}
+          ></PropagateLoader>
+        }
+      >
         {items.map((item) => (
-          <ProfilePreviewPanel key={item.id} profile={item} />
+          <div
+            key={item.id}
+            className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+          >
+            <ProfilePreviewPanel profile={item} />
+          </div>
         ))}
-      </div>
+      </InfiniteScroll>
     </div>
   );
 }

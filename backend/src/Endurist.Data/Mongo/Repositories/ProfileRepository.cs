@@ -14,9 +14,9 @@ public class ProfileRepository : RepositoryBase<ProfileDocument>
         : base(settings) { }
 
     protected override Dictionary<string, Expression<Func<ProfileDocument, object>>> SortingFields =>
-        new()
+        new(StringComparer.OrdinalIgnoreCase)
         {
-            { nameof(ProfileDocument.Name).ToUpperInvariant(), x => x.Name }
+            { nameof(ProfileDocument.Name), x => x.Name }
         };
 
     public FilterDefinition<ProfileDocument> BuildFilter(ProfileFilter filter)

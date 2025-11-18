@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latestmajor</LangVersion>
 		<UserSecretsId>dotnet-Endurist.Worker-5be6581e-9dd0-4512-8e88-7f724fe5cb47</UserSecretsId>

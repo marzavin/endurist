@@ -9,20 +9,20 @@ using SideEffect.Extensions;
 
 namespace Endurist.Worker;
 
-internal class FileParsingWorker : BackgroundService
+internal class FileUploadWorker : BackgroundService
 {
     private const int Interval = 1500;
 
     private readonly Storage _storage;
     private readonly FileStorageConfiguration _configuration;
     private readonly IEncryptionService _encryptionService;
-    private readonly ILogger<FileParsingWorker> _logger;
+    private readonly ILogger<FileUploadWorker> _logger;
 
-    public FileParsingWorker(
+    public FileUploadWorker(
         Storage storage,
         FileStorageConfiguration configuration,
         IEncryptionService encryptionService,
-        ILogger<FileParsingWorker> logger)
+        ILogger<FileUploadWorker> logger)
     {
         _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));

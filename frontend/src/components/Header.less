@@ -2,26 +2,34 @@
 
 .app-header {
   padding: 0.75rem 1rem;
-  background-color: @main-white-color;
+  background-color: var(--navbar-bg-color);
 
   .app-navbar {
     max-width: 100%;
 
-    a.app-profile {
-      img {
-        height: 2rem;
-        width: 2rem;
-        border-radius: 50%;
+    a {
+      color: var(--font-color);
+
+      &.app-profile {
+        img {
+          height: 2rem;
+          width: 2rem;
+          border-radius: 50%;
+        }
       }
     }
 
     hr {
-      color: @main-logo-color;
+      color: var(--main-logo-color);
     }
 
     .app-header-toggler {
       border: 0;
       padding: 0;
+
+      i {
+        color: var(--main-logo-color);
+      }
 
       &:focus {
         box-shadow: none;

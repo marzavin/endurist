@@ -13,4 +13,10 @@ public class FilePreviewModel
     public int Size { get; set; }
 
     public FileStatus Status { get; set; }
+
+    public DateTime UploadedAt { get; set; }
+
+    public DateTime? ProcessedAt { get; set; }
+
+    public DateTime? ActivityStartedAt { get; set; }
 }

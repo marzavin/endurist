@@ -1,9 +1,24 @@
-@main-bg-color: #f5f7fa;
-@main-logo-color: #f48221;
-@main-white-color: #ffffff;
-@panel-bg-color: #ffffff;
-@border-color: #cbd0dd;
-@info-color: #3498db;
-@success-color: #07bc0c;
-@warning-color: #f1c40f;
-@error-color: #e74d3c;
+:root {
+  --main-logo-color: #f48221;
+  --main-white-color: #ffffff;
+  --info-color: #3498db;
+  --success-color: #07bc0c;
+  --warning-color: #f1c40f;
+  --error-color: #e74d3c;
+
+  --main-bg-color: #f9fafb;
+  --navbar-bg-color: #ffffff;
+  --panel-bg-color: #ffffff;
+  --border-color: #e4e7ec;
+  --font-color: #1c2939;
+  --placeholder-color: #516169;
+}
+
+[data-theme="dark"] {
+  --main-bg-color: #101828;
+  --navbar-bg-color: #101828;
+  --panel-bg-color: #171f2f;
+  --border-color: #1c2939;
+  --font-color: #e8e8ed;
+  --placeholder-color: #516169;
+}

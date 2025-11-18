@@ -1,5 +1,6 @@
+import dayjs from "dayjs";
 import FileStatus from "../enums/FileStatus";
-import FilePreviewModel from "../interfaces/FilePreviewModel";
+import FilePreviewModel from "../interfaces/files/FilePreviewModel";
 import { useData } from "../services/DataProvider";
 
 interface Props {
@@ -14,39 +15,66 @@ function FilePreviewPanel({ file }: Props) {
   }
 
   return (
-    <div className="app-file-preview-panel col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-      <div>
-        <div className="app-panel-line row">
-          <div className="col-10 d-flex justify-content-start">
-            <strong>{file.name}</strong>
-          </div>
-          <div className="col-2 d-flex justify-content-end">
-            <span className="app-badge badge app-info-label rounded-pill">
-              {file.extension}
-            </span>
-          </div>
+    <div className="app-card">
+      <div className="app-card-row">
+        <div>
+          <strong>{file.name}</strong>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Status:</div>
-          <div className="col-6 d-flex justify-content-end">
-            <p>{FileStatus[file.status]}</p>
-          </div>
+        <div>
+          <span className="app-badge badge app-info-label rounded-pill">
+            {file.extension}
+          </span>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-6 d-flex justify-content-start">Size:</div>
-          <div className="col-6 d-flex justify-content-end">
-            {(file.size / 1024).toFixed(2)} KB
-          </div>
+      </div>
+      <div className="app-card-row app-font-s">
+        <div>
+          <strong>Status:</strong>
         </div>
-        <div className="app-panel-line row">
-          <div className="col-12 d-flex justify-content-end">
-            <a
-              className="nav-link app-download-link"
-              onClick={handleFileDownload}
-            >
-              <span className="app-icon icon-download" />
-            </a>
-          </div>
+        <div>
+          <span>{FileStatus[file.status]}</span>
+        </div>
+      </div>
+      <div className="app-card-row app-font-s">
+        <div>
+          <strong>Size:</strong>
+        </div>
+        <div>
+          <span>{(file.size / 1024).toFixed(2)} KB</span>
+        </div>
+      </div>
+      <div className="app-card-row app-font-s">
+        <div>
+          <strong>Uploaded At:</strong>
+        </div>
+        <div>
+          <span>
+            {dayjs(file.uploadedAt).format("YYYY-MM-DD") +
+              " " +
+              dayjs(file.uploadedAt).format("HH:mm")}
+          </span>
+        </div>
+      </div>
+      <div className="app-card-row app-font-s">
+        <div>
+          <strong>Processed At:</strong>
+        </div>
+        <div>
+          <span>
+            {dayjs(file.processedAt).format("YYYY-MM-DD") +
+              " " +
+              dayjs(file.processedAt).format("HH:mm")}
+          </span>
+        </div>
+      </div>
+      <div className="app-card-row">
+        <div>
+          <a
+            className="app-card-link"
+            title="Download source file"
+            onClick={handleFileDownload}
+          >
+            <i className="bi bi-download" />
+          </a>
         </div>
       </div>
     </div>

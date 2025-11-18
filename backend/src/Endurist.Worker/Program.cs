@@ -37,8 +37,8 @@ public class Program
         services.AddTransient<WidgetRepository>();
         services.AddTransient<Storage>();
 
-        services.AddHostedService<FileProcessingWorker>();
-        services.AddHostedService<FileParsingWorker>();
+        services.AddHostedService<FileAnalysisWorker>();
+        services.AddHostedService<FileUploadWorker>();
         services.AddHostedService<TrainingVolumeCalculationWorker>();
 
         var host = builder.Build();
