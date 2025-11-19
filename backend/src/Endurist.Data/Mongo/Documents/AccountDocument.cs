@@ -14,11 +14,6 @@ public class AccountDocument : DocumentBase
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets user account email.
-    /// </summary>
-    public string Email { get; set; }
-
-    /// <summary>
     /// Gets or sets salt for password.
     /// </summary>
     public string Salt { get; set; }

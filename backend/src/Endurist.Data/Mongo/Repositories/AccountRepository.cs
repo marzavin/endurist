@@ -11,9 +11,9 @@ public class AccountRepository : RepositoryBase<AccountDocument>
     public AccountRepository(MongoStorageConfiguration settings)
         : base(settings) { }
 
-    public virtual Task<AccountDocument> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    public virtual Task<AccountDocument> GetByNameAsync(string name, CancellationToken cancellationToken = default)
     {
-        var queryFilter = Builders<AccountDocument>.Filter.Eq(x => x.Email, email);
+        var queryFilter = Builders<AccountDocument>.Filter.Eq(x => x.Name, name);
         return Collection.Find(queryFilter).FirstOrDefaultAsync(cancellationToken);
     }
 }

@@ -31,7 +31,7 @@ public class AccountHandler: HandlerBase,
     {
         var response = new DataResponse<TokenModel>();
 
-        var account = await Storage.Accounts.GetByEmailAsync(request.Email, cancellationToken);
+        var account = await Storage.Accounts.GetByNameAsync(request.Name, cancellationToken);
         if (account is null)
         {
             return response;

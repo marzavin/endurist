@@ -14,7 +14,7 @@ function SignIn() {
   const authProvider = useAuth();
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    email: "",
+    name: "",
     password: ""
   });
   const [loading, setLoading] = useState<boolean>(false);
@@ -22,11 +22,11 @@ function SignIn() {
 
   const handleSubmitEvent = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (input.email !== "" && input.password !== "") {
+    if (input.name !== "" && input.password !== "") {
       setError(false);
       setLoading(true);
       authProvider
-        .signIn({ email: input.email, password: input.password })
+        .signIn({ name: input.name, password: input.password })
         .then((result) => {
           if (result) {
             navigate("/");
@@ -62,10 +62,10 @@ function SignIn() {
                       <i className="app-font-l bi bi-person-fill" />
                     </div>
                     <input
-                      type="email"
+                      type="text"
                       className="form-control"
-                      name="email"
-                      placeholder="Email"
+                      name="name"
+                      placeholder="Username"
                       onChange={handleInput}
                       required
                     />

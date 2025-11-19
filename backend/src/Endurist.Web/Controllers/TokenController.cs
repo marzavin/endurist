@@ -38,7 +38,7 @@ public class TokenController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Token([FromBody]CredentialsModel model, CancellationToken cancellationToken)
     {
-        var request = new CreateTokenRequest(model.Email, model.Password);
+        var request = new CreateTokenRequest(model.Name, model.Password);
         var response = await _mediator.Send(request, cancellationToken);
         if (response?.Data is null)
         {

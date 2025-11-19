@@ -8,7 +8,6 @@ internal static class AccountMapper
     public static void Map(AccountDocument document, AccountModel model)
     {
         model.Id = document.EntityId;
-        model.Email = document.Email;
         model.Name = document.Name;
     }
 }
