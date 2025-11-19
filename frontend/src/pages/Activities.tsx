@@ -17,7 +17,7 @@ function Activities() {
   const dataProvider = useData();
   const [items, setItems] = useState<ActivityPreviewModel[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [sorting, setSorting] = useState<SortingModel>({
+  const [sorting] = useState<SortingModel>({
     key: "startTime",
     descending: true
   });
