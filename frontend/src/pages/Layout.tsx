@@ -8,7 +8,7 @@ function Layout() {
   const authProvider = useAuth();
 
   const themeProvider = useTheme();
-  themeProvider.applyTheme(themeProvider.getTheme());
+  themeProvider.applyTheme();
 
   if (authProvider.getAccount()) {
     return (

@@ -4,7 +4,7 @@ import "./Header.less";
 import { useAuth } from "../services/AuthProvider";
 import ApplicationTheme from "../enums/ApplicationTheme";
 import { useTheme } from "../services/ThemeProvider";
-import { useState } from "react";
+import useLocalStorage from "use-local-storage";
 
 function Header() {
   const authProvider = useAuth();
@@ -12,13 +12,13 @@ function Header() {
   const profile = authProvider.getAccount();
   const profileUrl = `/profiles/${profile?.sub}`;
 
-  const [theme, setTheme] = useState<ApplicationTheme>(
-    themeProvider.getTheme()
+  const [theme] = useLocalStorage<ApplicationTheme>(
+    "theme",
+    ApplicationTheme.Light
   );
 
   function handleThemeChange() {
     themeProvider.switchTheme();
-    setTheme(themeProvider.getTheme());
   }
 
   return (

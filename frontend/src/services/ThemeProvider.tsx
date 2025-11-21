@@ -3,9 +3,8 @@ import useLocalStorage from "use-local-storage";
 import ApplicationTheme from "../enums/ApplicationTheme";
 
 export interface IThemeProvider {
-  getTheme(): ApplicationTheme;
   switchTheme(): void;
-  applyTheme(applicationTheme: ApplicationTheme): void;
+  applyTheme(): void;
 }
 
 const ThemeContext = createContext<IThemeProvider | undefined>(undefined);
@@ -29,20 +28,16 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const themeProvider = {
-    getTheme(): ApplicationTheme {
-      return theme;
-    },
     switchTheme(): void {
       if (theme === ApplicationTheme.Light) {
-        this.applyTheme(ApplicationTheme.Dark);
         setTheme(ApplicationTheme.Dark);
       } else {
-        this.applyTheme(ApplicationTheme.Light);
         setTheme(ApplicationTheme.Light);
       }
+      this.applyTheme();
     },
-    applyTheme(applicationTheme: ApplicationTheme): void {
-      if (applicationTheme === ApplicationTheme.Light) {
+    applyTheme(): void {
+      if (theme === ApplicationTheme.Light) {
         document.querySelector("body")?.removeAttribute("data-theme");
       } else {
         document.querySelector("body")?.setAttribute("data-theme", "dark");
