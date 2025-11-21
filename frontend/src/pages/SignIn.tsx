@@ -2,8 +2,8 @@ import { useState, ChangeEvent, FormEvent, CSSProperties } from "react";
 import logo from "../assets/logo.png";
 import { useAuth } from "../services/AuthProvider";
 import { useNavigate } from "react-router";
-import "./SignIn.less";
 import { PropagateLoader } from "react-spinners";
+import "./SignIn.less";
 
 const override: CSSProperties = {
   display: "block",

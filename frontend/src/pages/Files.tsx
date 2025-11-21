@@ -1,6 +1,6 @@
 import FilePreviewModel from "../interfaces/files/FilePreviewModel";
 import SortingModel from "../interfaces/SortingModel";
-import FilePreviewPanel from "../components/FilePreviewPanel";
+import FileCard from "../components/FileCard";
 import FileUploader from "../components/FileUploader";
 import { useEffect, useState, CSSProperties, ChangeEvent } from "react";
 import { useData } from "../services/DataProvider";
@@ -133,7 +133,7 @@ function Files() {
               key={item.id}
               className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
             >
-              <FilePreviewPanel file={item} />
+              <FileCard file={item} />
             </div>
           ))
         )}

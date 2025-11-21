@@ -6,7 +6,7 @@ interface Props {
   profile: ProfilePreviewModel;
 }
 
-function ProfilePreviewPanel({ profile }: Props) {
+function ProfileCard({ profile }: Props) {
   return (
     <div className="app-card">
       <div className="app-card-row">
@@ -36,4 +36,4 @@ function ProfilePreviewPanel({ profile }: Props) {
   );
 }
 
-export default ProfilePreviewPanel;
+export default ProfileCard;

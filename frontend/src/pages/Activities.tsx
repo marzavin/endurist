@@ -1,5 +1,5 @@
 import ActivityPreviewModel from "../interfaces/activities/ActivityPreviewModel";
-import ActivityPreviewPanel from "../components/ActivityPreviewPanel";
+import ActivityCard from "../components/ActivityCard";
 import { useEffect, useState, CSSProperties } from "react";
 import { useData } from "../services/DataProvider";
 import SortingModel from "../interfaces/SortingModel";
@@ -76,7 +76,7 @@ function Activities() {
               key={item.id}
               className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
             >
-              <ActivityPreviewPanel activity={item} />
+              <ActivityCard activity={item} />
             </div>
           ))
         )}

@@ -7,7 +7,7 @@ interface Props {
   file: FilePreviewModel;
 }
 
-function FilePreviewPanel({ file }: Props) {
+function FileCard({ file }: Props) {
   const dataProvider = useData();
 
   function handleFileDownload() {
@@ -20,10 +20,8 @@ function FilePreviewPanel({ file }: Props) {
         <div>
           <strong>{file.name}</strong>
         </div>
-        <div>
-          <span className="app-badge badge app-info-label rounded-pill">
-            {file.extension}
-          </span>
+        <div className="app-font-s">
+          <span className="app-badge app-info-label">{file.extension}</span>
         </div>
       </div>
       <div className="app-card-row app-font-s">
@@ -81,4 +79,4 @@ function FilePreviewPanel({ file }: Props) {
   );
 }
 
-export default FilePreviewPanel;
+export default FileCard;

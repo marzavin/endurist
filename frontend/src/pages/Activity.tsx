@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useData } from "../services/DataProvider";
 import ActivityGraph from "../components/ActivityGraph";
-import "./Activity.less";
 
 function Activity() {
   const dataProvider = useData();

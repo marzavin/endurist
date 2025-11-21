@@ -8,7 +8,7 @@ interface Props {
   activity: ActivityPreviewModel;
 }
 
-function ActivityPreviewPanel({ activity }: Props) {
+function ActivityCard({ activity }: Props) {
   return (
     <div className="app-card">
       <div className="app-card-row">
@@ -17,20 +17,18 @@ function ActivityPreviewPanel({ activity }: Props) {
             <strong>{ActivityCategory[activity.category]}</strong>
           </a>
         </div>
-        <div>
+        <div className="app-font-s">
           {activity.distance > 42195 ? (
-            <span className="app-badge badge app-error-label rounded-pill">
-              MR
-            </span>
+            <span className="app-badge app-error-label">MR</span>
           ) : null}
           {activity.distance > 21097.5 ? (
-            <span className="app-badge badge app-warning-label">HM</span>
+            <span className="app-badge app-warning-label">HM</span>
           ) : null}
           {activity.distance > 10000 ? (
-            <span className="app-badge badge app-info-label">10K</span>
+            <span className="app-badge app-info-label">10K</span>
           ) : null}
           {activity.distance > 5000 ? (
-            <span className="app-badge badge app-success-label">5K</span>
+            <span className="app-badge app-success-label">5K</span>
           ) : null}
         </div>
       </div>
@@ -66,4 +64,4 @@ function ActivityPreviewPanel({ activity }: Props) {
   );
 }
 
-export default ActivityPreviewPanel;
+export default ActivityCard;

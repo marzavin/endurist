@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useData } from "../services/DataProvider";
 import TrainingVolumeWidget from "../components/widgets/TrainingVolumeWidget";
-import Summary from "../components/Summary";
-import KeyValueModel from "../interfaces/KeyValueModel";
 import { toKilometersLabel } from "../formatters/DistanceFormatter";
 import { toTimeSpanLabel } from "../formatters/DurationFormatter";
+import MetricCard from "../components/MetricCard";
+import MetricModel from "../interfaces/MedricModel";
+//import "./Profile.less";
 
 function Profile() {
   const dataProvider = useData();
@@ -18,28 +19,49 @@ function Profile() {
     duration: 0,
     weeklyVolumes: []
   });
-  const [details, setDetails] = useState<KeyValueModel<string, string>[]>([]);
+  const [metrics, setMetrics] = useState<MetricModel[]>([]);
 
   useEffect(() => {
     if (id !== undefined) {
       dataProvider.getProfile(id).then((result) => {
         setProfile(result);
-        const profileDetails: KeyValueModel<string, string>[] = [
-          { key: "Distance", value: toKilometersLabel(result.distance) },
-          { key: "Duration", value: toTimeSpanLabel(result.duration) }
-        ];
-        setDetails(profileDetails);
+        setMetrics([
+          {
+            name: "Total activities",
+            value: (785).toString(),
+            top: 76
+          },
+          {
+            name: "Total time of activities",
+            value: toTimeSpanLabel(result.duration),
+            top: 38
+          },
+          {
+            name: "Distance covered",
+            value: toKilometersLabel(result.distance),
+            top: 10
+          }
+        ]);
       });
     }
   }, []);
 
   return (
-    <div className="app-profile row">
-      <div className="col-12 col-lg-6">
-        <Summary title={profile.name} properties={details} />
+    <div className="app-profile">
+      <div className="app-list row">
+        {metrics.map((metric) => (
+          <div
+            key={metric.name}
+            className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+          >
+            <MetricCard metric={metric} />
+          </div>
+        ))}
       </div>
-      <div className="col-12 col-lg-6">
-        <TrainingVolumeWidget profileId={profile.id} />
+      <div className="row">
+        <div className="col-12 col-lg-6">
+          <TrainingVolumeWidget profileId={profile.id} />
+        </div>
       </div>
     </div>
   );
