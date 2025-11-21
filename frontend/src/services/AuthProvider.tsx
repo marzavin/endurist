@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext } from "react";
 import axios from "axios";
 import TokenModel from "../interfaces/tokens/TokenModel";
 import CredentialsModel from "../interfaces/tokens/CredentialsModel";
@@ -7,6 +7,7 @@ import AccountModel from "../interfaces/AccountModel";
 import { jwtDecode } from "jwt-decode";
 import ServerResponseModel from "../interfaces/ServerResponseModel";
 import config from "../application.json";
+import useLocalStorage from "use-local-storage";
 
 export interface IAuthProvider {
   signIn(credentialsModel: CredentialsModel): Promise<boolean>;
@@ -18,38 +19,40 @@ export interface IAuthProvider {
 const AuthContext = createContext<IAuthProvider | undefined>(undefined);
 
 export const useAuth = () => {
-  var authContext = useContext(AuthContext);
+  var authContext = useContext<IAuthProvider | undefined>(AuthContext);
 
-  if (!authContext) {
-    throw new Error("useAuth must be used within a AuthProvider");
+  if (authContext === undefined) {
+    throw new Error(
+      "AuthProviderContext was not provided. Make sure your component is a child of the AuthProvider."
+    );
   }
 
   return authContext;
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useLocalStorage<string | null>(
+    "access_token",
+    null
+  );
+  const [refreshToken, setRefreshToken] = useLocalStorage<string | null>(
+    "refresh_token",
+    null
+  );
 
   const processTokenResponse = (tokenModel: TokenModel | null) => {
     if (tokenModel) {
       setAccessToken(tokenModel.accessToken);
       setRefreshToken(tokenModel.refreshToken);
-
-      localStorage.setItem("access_token", tokenModel.accessToken);
-      localStorage.setItem("refresh_token", tokenModel.refreshToken);
     } else {
       setAccessToken(null);
       setRefreshToken(null);
-
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
     }
   };
 
   const authProvider = {
     getAccount(): AccountModel | null {
-      let token = accessToken ?? localStorage.getItem("access_token");
+      let token = accessToken;
       if (!token) {
         return null;
       }
