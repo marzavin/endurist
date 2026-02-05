@@ -6,18 +6,17 @@ import Notifications from "./pages/Notifications";
 import Profiles from "./pages/Profiles";
 import Profile from "./pages/Profile";
 import Files from "./pages/Files";
-import SignIn from "./pages/SignIn";
+import Callback from "./pages/Callback";
 import "./App.less";
-
 import { BrowserRouter, Routes, Route } from "react-router";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/sign-in" element={<SignIn />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="callback" element={<Callback />} />
           <Route path="activities" element={<Activities />} />
           <Route path="activities/:id" element={<Activity />} />
           <Route path="profiles" element={<Profiles />} />

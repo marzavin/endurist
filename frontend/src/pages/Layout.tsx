@@ -1,30 +1,23 @@
-import { Navigate, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import Header from "../components/Header";
 import { ToastContainer } from "react-toastify";
-import { useAuth } from "../services/AuthProvider";
 import { useTheme } from "../services/ThemeProvider";
 
 function Layout() {
-  const authProvider = useAuth();
-
   const themeProvider = useTheme();
   themeProvider.applyTheme(themeProvider.getTheme());
 
-  if (authProvider.getAccount()) {
-    return (
-      <>
-        <Header />
-        <div className="px-0 container-fluid">
-          <main className="app-content">
-            <Outlet />
-          </main>
-          <ToastContainer position="bottom-right" pauseOnHover />
-        </div>
-      </>
-    );
-  }
-
-  return <Navigate to="/sign-in" />;
+  return (
+    <>
+      <Header />
+      <div className="px-0 container-fluid">
+        <main className="app-content">
+          <Outlet />
+        </main>
+        <ToastContainer position="bottom-right" pauseOnHover />
+      </div>
+    </>
+  );
 }
 
 export default Layout;

@@ -1,16 +1,14 @@
 import avatar from "../assets/avatar.png";
 import logo from "../assets/logo.png";
 import "./Header.less";
-import { useAuth } from "../services/AuthProvider";
 import ApplicationTheme from "../enums/ApplicationTheme";
 import { useTheme } from "../services/ThemeProvider";
 import { useState } from "react";
+import { useAuth } from "react-oidc-context";
 
 function Header() {
   const authProvider = useAuth();
   const themeProvider = useTheme();
-  const profile = authProvider.getAccount();
-  const profileUrl = `/profiles/${profile?.sub}`;
 
   const [theme, setTheme] = useState<ApplicationTheme>(
     themeProvider.getTheme()
@@ -73,9 +71,10 @@ function Header() {
               </a>
             </li>
           </ul>
+          <button onClick={() => authProvider.signinRedirect()}>Войти</button>
           <a
             className="app-profile d-inline-block my-2 my-md-0 ms-md-3"
-            href={profileUrl}
+            href="/"
           >
             <img alt="Avatar" src={avatar} />
           </a>
