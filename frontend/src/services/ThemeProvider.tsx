@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react";
-import useLocalStorage from "use-local-storage";
-import ApplicationTheme from "../enums/ApplicationTheme";
+import { createContext, useContext } from 'react';
+import useLocalStorage from 'use-local-storage';
+import ApplicationTheme from '../enums/ApplicationTheme';
 
 export interface IThemeProvider {
   getTheme(): ApplicationTheme;
@@ -15,7 +15,7 @@ export const useTheme = () => {
 
   if (themeContext === undefined) {
     throw new Error(
-      "ThemeProviderContext was not provided. Make sure your component is a child of the ThemeProvider."
+      'ThemeProviderContext was not provided. Make sure your component is a child of the ThemeProvider.'
     );
   }
 
@@ -23,10 +23,7 @@ export const useTheme = () => {
 };
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useLocalStorage<ApplicationTheme>(
-    "theme",
-    ApplicationTheme.Light
-  );
+  const [theme, setTheme] = useLocalStorage<ApplicationTheme>('theme', ApplicationTheme.Light);
 
   const themeProvider = {
     getTheme(): ApplicationTheme {
@@ -43,18 +40,14 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     },
     applyTheme(applicationTheme: ApplicationTheme): void {
       if (applicationTheme === ApplicationTheme.Light) {
-        document.querySelector("body")?.removeAttribute("data-theme");
+        document.querySelector('body')?.removeAttribute('data-theme');
       } else {
-        document.querySelector("body")?.setAttribute("data-theme", "dark");
+        document.querySelector('body')?.setAttribute('data-theme', 'dark');
       }
     }
   };
 
-  return (
-    <ThemeContext.Provider value={themeProvider}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={themeProvider}>{children}</ThemeContext.Provider>;
 };
 
 export default ThemeProvider;

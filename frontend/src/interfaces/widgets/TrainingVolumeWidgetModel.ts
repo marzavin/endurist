@@ -1,4 +1,4 @@
-import KeyValueModel from "../KeyValueModel";
+import KeyValueModel from '../KeyValueModel';
 
 interface TrainingVolumeWidgetModel {
   id: string;

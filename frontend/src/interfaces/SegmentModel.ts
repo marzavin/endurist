@@ -1,5 +1,5 @@
-import KeyValueModel from "./KeyValueModel";
-import SegmentPreviewModel from "./SegmentPreviewModel";
+import KeyValueModel from './KeyValueModel';
+import SegmentPreviewModel from './SegmentPreviewModel';
 
 interface SegmentModel extends SegmentPreviewModel {
   heartRateGraph: KeyValueModel<number, number | null>[];

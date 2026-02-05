@@ -1,16 +1,16 @@
-import ActivityPreviewModel from "../interfaces/activities/ActivityPreviewModel";
-import ActivityPreviewPanel from "../components/ActivityPreviewPanel";
-import { useEffect, useState, CSSProperties } from "react";
-import { useData } from "../services/DataProvider";
-import SortingModel from "../interfaces/SortingModel";
-import { PropagateLoader } from "react-spinners";
-import InfiniteScroll from "react-infinite-scroll-component";
+import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
+import ActivityPreviewPanel from '../components/ActivityPreviewPanel';
+import { useEffect, useState, CSSProperties } from 'react';
+import { useData } from '../services/DataProvider';
+import SortingModel from '../interfaces/SortingModel';
+import { PropagateLoader } from 'react-spinners';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const override: CSSProperties = {
-  display: "block",
-  paddingTop: "3rem",
-  paddingBottom: "3rem",
-  textAlign: "center"
+  display: 'block',
+  paddingTop: '3rem',
+  paddingBottom: '3rem',
+  textAlign: 'center'
 };
 
 function Activities() {
@@ -18,7 +18,7 @@ function Activities() {
   const [items, setItems] = useState<ActivityPreviewModel[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [sorting] = useState<SortingModel>({
-    key: "startTime",
+    key: 'startTime',
     descending: true
   });
   const pageSize: number = 48;
@@ -34,14 +34,12 @@ function Activities() {
   }, [sorting]);
 
   function handleNextPage() {
-    dataProvider
-      .getActivities(items.length, pageSize, sorting)
-      .then((result) => {
-        if (result.length < pageSize) {
-          setHasMore(false);
-        }
-        setItems((previousItems) => [...previousItems, ...result]);
-      });
+    dataProvider.getActivities(items.length, pageSize, sorting).then((result) => {
+      if (result.length < pageSize) {
+        setHasMore(false);
+      }
+      setItems((previousItems) => [...previousItems, ...result]);
+    });
   }
 
   return (
@@ -59,23 +57,14 @@ function Activities() {
         next={handleNextPage}
         hasMore={hasMore}
         loader={
-          <PropagateLoader
-            color="#f48221"
-            cssOverride={override}
-            loading={true}
-          ></PropagateLoader>
+          <PropagateLoader color="#f48221" cssOverride={override} loading={true}></PropagateLoader>
         }
       >
         {items.length === 0 ? (
-          <span className="app-empty-list-label">
-            No information to display.
-          </span>
+          <span className="app-empty-list-label">No information to display.</span>
         ) : (
           items.map((item) => (
-            <div
-              key={item.id}
-              className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
-            >
+            <div key={item.id} className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
               <ActivityPreviewPanel activity={item} />
             </div>
           ))

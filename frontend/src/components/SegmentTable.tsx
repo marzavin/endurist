@@ -1,8 +1,8 @@
-import { toPaceLabel } from "../formatters/PaceFormatter";
-import { toMetersLabel } from "../formatters/DistanceFormatter";
-import dayjs from "dayjs";
-import SegmentPreviewModel from "../interfaces/SegmentPreviewModel";
-import { toTimeSpanLabel } from "../formatters/DurationFormatter";
+import { toPaceLabel } from '../formatters/PaceFormatter';
+import { toMetersLabel } from '../formatters/DistanceFormatter';
+import dayjs from 'dayjs';
+import SegmentPreviewModel from '../interfaces/SegmentPreviewModel';
+import { toTimeSpanLabel } from '../formatters/DurationFormatter';
 
 interface Props {
   items: SegmentPreviewModel[];
@@ -30,7 +30,7 @@ function SegmentTable({ items }: Props) {
           ) : null}
           {items.map((item) => (
             <tr key={item.startTime}>
-              <td>{dayjs(item.startTime).format("YYYY-MM-DD HH:mm")}</td>
+              <td>{dayjs(item.startTime).format('YYYY-MM-DD HH:mm')}</td>
               <td>{toMetersLabel(item.distance)}</td>
               <td>{toTimeSpanLabel(item.duration)}</td>
               <td>{toPaceLabel(item.pace)}</td>

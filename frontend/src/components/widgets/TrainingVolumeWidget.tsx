@@ -1,23 +1,16 @@
-import { CSSProperties, useEffect, useState } from "react";
-import { useData } from "../../services/DataProvider";
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
-import TrainingVolumeWidgetModel from "../../interfaces/widgets/TrainingVolumeWidgetModel";
-import { PropagateLoader } from "react-spinners";
-import { toKilometersLabel } from "../../formatters/DistanceFormatter";
-import dayjs from "dayjs";
+import { CSSProperties, useEffect, useState } from 'react';
+import { useData } from '../../services/DataProvider';
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import TrainingVolumeWidgetModel from '../../interfaces/widgets/TrainingVolumeWidgetModel';
+import { PropagateLoader } from 'react-spinners';
+import { toKilometersLabel } from '../../formatters/DistanceFormatter';
+import dayjs from 'dayjs';
 
 const override: CSSProperties = {
-  display: "block",
-  paddingTop: "3rem",
-  paddingBottom: "3rem",
-  textAlign: "center"
+  display: 'block',
+  paddingTop: '3rem',
+  paddingBottom: '3rem',
+  textAlign: 'center'
 };
 
 interface Props {
@@ -25,14 +18,13 @@ interface Props {
 }
 
 function TrainingVolumeWidget({ profileId }: Props) {
-  const widgetId = "68ade97c10ae0c20fb44152e";
+  const widgetId = '68ade97c10ae0c20fb44152e';
   const dataProvider = useData();
-  const [widgetData, setWidgetData] =
-    useState<TrainingVolumeWidgetModel | null>(null);
+  const [widgetData, setWidgetData] = useState<TrainingVolumeWidgetModel | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (profileId !== undefined && profileId !== "") {
+    if (profileId !== undefined && profileId !== '') {
       setLoading(true);
       dataProvider.getProfileWidget(profileId, widgetId).then((result) => {
         setLoading(false);
@@ -53,9 +45,9 @@ function TrainingVolumeWidget({ profileId }: Props) {
 
   const tooltipLabelFormatter = (value: string) => {
     const startDate = new Date(value);
-    const formattedStartDate = dayjs(startDate).format("YYYY-MM-DD");
-    const endDate = dayjs(startDate).add(6, "day");
-    const formattedEndDate = dayjs(endDate).format("YYYY-MM-DD");
+    const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
+    const endDate = dayjs(startDate).add(6, 'day');
+    const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
     return `from ${formattedStartDate} to ${formattedEndDate}`;
   };
 
@@ -86,10 +78,7 @@ function TrainingVolumeWidget({ profileId }: Props) {
           <BarChart data={widgetData.data.monthly}>
             <XAxis dataKey="key" />
             <YAxis tickFormatter={tickFormatterY} />
-            <Tooltip
-              formatter={tooltipValueFormatter}
-              labelFormatter={tooltipLabelFormatter}
-            />
+            <Tooltip formatter={tooltipValueFormatter} labelFormatter={tooltipLabelFormatter} />
             <Bar dataKey="value" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>

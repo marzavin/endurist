@@ -1,18 +1,16 @@
-import avatar from "../assets/avatar.png";
-import logo from "../assets/logo.png";
-import "./Header.less";
-import ApplicationTheme from "../enums/ApplicationTheme";
-import { useTheme } from "../services/ThemeProvider";
-import { useState } from "react";
-import { useAuth } from "react-oidc-context";
+import avatar from '../assets/avatar.png';
+import logo from '../assets/logo.png';
+import './Header.less';
+import ApplicationTheme from '../enums/ApplicationTheme';
+import { useTheme } from '../services/ThemeProvider';
+import { useState } from 'react';
+import { useAuth } from 'react-oidc-context';
 
 function Header() {
   const authProvider = useAuth();
   const themeProvider = useTheme();
 
-  const [theme, setTheme] = useState<ApplicationTheme>(
-    themeProvider.getTheme()
-  );
+  const [theme, setTheme] = useState<ApplicationTheme>(themeProvider.getTheme());
 
   function handleThemeChange() {
     themeProvider.switchTheme();
@@ -72,10 +70,7 @@ function Header() {
             </li>
           </ul>
           <button onClick={() => authProvider.signinRedirect()}>Войти</button>
-          <a
-            className="app-profile d-inline-block my-2 my-md-0 ms-md-3"
-            href="/"
-          >
+          <a className="app-profile d-inline-block my-2 my-md-0 ms-md-3" href="/">
             <img alt="Avatar" src={avatar} />
           </a>
         </div>

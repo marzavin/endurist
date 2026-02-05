@@ -1,14 +1,14 @@
-import Activity from "./pages/Activity";
-import Activities from "./pages/Activities";
-import Home from "./pages/Home";
-import Layout from "./pages/Layout";
-import Notifications from "./pages/Notifications";
-import Profiles from "./pages/Profiles";
-import Profile from "./pages/Profile";
-import Files from "./pages/Files";
-import Callback from "./pages/Callback";
-import "./App.less";
-import { BrowserRouter, Routes, Route } from "react-router";
+import Activity from './pages/Activity';
+import Activities from './pages/Activities';
+import Home from './pages/Home';
+import Layout from './pages/Layout';
+import Notifications from './pages/Notifications';
+import Profiles from './pages/Profiles';
+import Profile from './pages/Profile';
+import Files from './pages/Files';
+import Callback from './pages/Callback';
+import './App.less';
+import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {
   return (

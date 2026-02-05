@@ -1,13 +1,13 @@
-import { ChangeEvent, useState } from "react";
-import { toast } from "react-toastify";
-import { useData } from "../services/DataProvider";
+import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useData } from '../services/DataProvider';
 
-type UploadStatus = "idle" | "uploading" | "success" | "error";
+type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
 
 function FileUploader() {
   const dataProvider = useData();
   const [file, setFile] = useState<File | null>(null);
-  const [status, setStatus] = useState<UploadStatus>("idle");
+  const [status, setStatus] = useState<UploadStatus>('idle');
 
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
@@ -20,16 +20,16 @@ function FileUploader() {
       return;
     }
 
-    setStatus("uploading");
+    setStatus('uploading');
 
     dataProvider.uploadFile(file).then((result) => {
       if (result.name) {
-        setStatus("success");
+        setStatus('success');
         setFile(null);
-        toast.success("File uploaded successfully!");
+        toast.success('File uploaded successfully!');
       } else {
-        setStatus("error");
-        toast.error("File upload failed! Please try again!");
+        setStatus('error');
+        toast.error('File upload failed! Please try again!');
       }
     });
   }
@@ -37,17 +37,12 @@ function FileUploader() {
   return (
     <div className="app-file-uploader">
       <div className="input-group">
-        <input
-          type="file"
-          accept=".tcx"
-          className="form-control"
-          onChange={handleFileChange}
-        />
+        <input type="file" accept=".tcx" className="form-control" onChange={handleFileChange} />
         <button
           className="btn btn-primary"
           type="button"
           onClick={handleFileUpload}
-          disabled={file === null || status === "uploading"}
+          disabled={file === null || status === 'uploading'}
         >
           Upload
         </button>

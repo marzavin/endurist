@@ -1,7 +1,7 @@
-import { Outlet } from "react-router";
-import Header from "../components/Header";
-import { ToastContainer } from "react-toastify";
-import { useTheme } from "../services/ThemeProvider";
+import { Outlet } from 'react-router';
+import Header from '../components/Header';
+import { ToastContainer } from 'react-toastify';
+import { useTheme } from '../services/ThemeProvider';
 
 function Layout() {
   const themeProvider = useTheme();

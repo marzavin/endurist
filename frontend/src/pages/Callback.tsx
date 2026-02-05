@@ -1,6 +1,6 @@
-import { useAuth } from "react-oidc-context";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useAuth } from 'react-oidc-context';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 function Callback() {
   const auth = useAuth();
@@ -8,7 +8,7 @@ function Callback() {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      navigate("/");
+      navigate('/');
     }
   }, [auth.isAuthenticated]);
 

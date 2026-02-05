@@ -1,4 +1,4 @@
-import PositionModel from "./PositionModel";
+import PositionModel from './PositionModel';
 
 interface MapRouteModel {
   center: PositionModel;

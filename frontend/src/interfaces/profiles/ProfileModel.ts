@@ -1,5 +1,5 @@
-import KeyValueModel from "../KeyValueModel";
-import ProfilePreviewModel from "./ProfilePreviewModel";
+import KeyValueModel from '../KeyValueModel';
+import ProfilePreviewModel from './ProfilePreviewModel';
 
 interface ProfileModel extends ProfilePreviewModel {
   weeklyVolumes: KeyValueModel<string, number>[];

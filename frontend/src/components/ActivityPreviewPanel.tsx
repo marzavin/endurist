@@ -1,8 +1,8 @@
-import ActivityCategory from "../enums/ActivityCategory";
-import ActivityPreviewModel from "../interfaces/activities/ActivityPreviewModel";
-import { toKilometersLabel } from "../formatters/DistanceFormatter";
-import { toTimeSpanLabel } from "../formatters/DurationFormatter";
-import dayjs from "dayjs";
+import ActivityCategory from '../enums/ActivityCategory';
+import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
+import { toKilometersLabel } from '../formatters/DistanceFormatter';
+import { toTimeSpanLabel } from '../formatters/DurationFormatter';
+import dayjs from 'dayjs';
 
 interface Props {
   activity: ActivityPreviewModel;
@@ -19,9 +19,7 @@ function ActivityPreviewPanel({ activity }: Props) {
         </div>
         <div>
           {activity.distance > 42195 ? (
-            <span className="app-badge badge app-error-label rounded-pill">
-              MR
-            </span>
+            <span className="app-badge badge app-error-label rounded-pill">MR</span>
           ) : null}
           {activity.distance > 21097.5 ? (
             <span className="app-badge badge app-warning-label">HM</span>
@@ -40,9 +38,9 @@ function ActivityPreviewPanel({ activity }: Props) {
         </div>
         <div>
           <span>
-            {dayjs(activity.startTime).format("YYYY-MM-DD") +
-              " " +
-              dayjs(activity.startTime).format("HH:mm")}
+            {dayjs(activity.startTime).format('YYYY-MM-DD') +
+              ' ' +
+              dayjs(activity.startTime).format('HH:mm')}
           </span>
         </div>
       </div>

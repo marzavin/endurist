@@ -1,19 +1,19 @@
-import ProfileModel from "../interfaces/profiles/ProfileModel";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { useData } from "../services/DataProvider";
-import TrainingVolumeWidget from "../components/widgets/TrainingVolumeWidget";
-import Summary from "../components/Summary";
-import KeyValueModel from "../interfaces/KeyValueModel";
-import { toKilometersLabel } from "../formatters/DistanceFormatter";
-import { toTimeSpanLabel } from "../formatters/DurationFormatter";
+import ProfileModel from '../interfaces/profiles/ProfileModel';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { useData } from '../services/DataProvider';
+import TrainingVolumeWidget from '../components/widgets/TrainingVolumeWidget';
+import Summary from '../components/Summary';
+import KeyValueModel from '../interfaces/KeyValueModel';
+import { toKilometersLabel } from '../formatters/DistanceFormatter';
+import { toTimeSpanLabel } from '../formatters/DurationFormatter';
 
 function Profile() {
   const dataProvider = useData();
   const { id } = useParams();
   const [profile, setProfile] = useState<ProfileModel>({
-    id: "",
-    name: "",
+    id: '',
+    name: '',
     distance: 0,
     duration: 0,
     weeklyVolumes: []
@@ -25,8 +25,8 @@ function Profile() {
       dataProvider.getProfile(id).then((result) => {
         setProfile(result);
         const profileDetails: KeyValueModel<string, string>[] = [
-          { key: "Distance", value: toKilometersLabel(result.distance) },
-          { key: "Duration", value: toTimeSpanLabel(result.duration) }
+          { key: 'Distance', value: toKilometersLabel(result.distance) },
+          { key: 'Duration', value: toTimeSpanLabel(result.duration) }
         ];
         setDetails(profileDetails);
       });

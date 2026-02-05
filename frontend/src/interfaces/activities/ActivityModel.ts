@@ -1,6 +1,6 @@
-import ActivityPreviewModel from "./ActivityPreviewModel";
-import KeyValueModel from "../KeyValueModel";
-import SegmentPreviewModel from "../SegmentPreviewModel";
+import ActivityPreviewModel from './ActivityPreviewModel';
+import KeyValueModel from '../KeyValueModel';
+import SegmentPreviewModel from '../SegmentPreviewModel';
 
 interface ActivityModel extends ActivityPreviewModel {
   segments: SegmentPreviewModel[];

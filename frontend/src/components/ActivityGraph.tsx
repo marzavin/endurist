@@ -1,13 +1,6 @@
-import {
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from "recharts";
-import KeyValueModel from "../interfaces/KeyValueModel";
-import { toTimeSpanLabel } from "../formatters/DurationFormatter";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import KeyValueModel from '../interfaces/KeyValueModel';
+import { toTimeSpanLabel } from '../formatters/DurationFormatter';
 
 interface Props {
   title: string;
@@ -40,18 +33,13 @@ function ActivityGraph({ title, graph, unitOfMeasure }: Props) {
           <LineChart data={graph}>
             <XAxis dataKey="key" tickFormatter={tickFormatterX} />
             <YAxis />
-            <Tooltip
-              formatter={tooltipValueFormatter}
-              labelFormatter={tooltipLabelFormatter}
-            />
+            <Tooltip formatter={tooltipValueFormatter} labelFormatter={tooltipLabelFormatter} />
             <Line dataKey="value" fill="#8884d8" dot={false} />
           </LineChart>
         </ResponsiveContainer>
       ) : (
         <div>
-          <div className="col-12 d-flex justify-content-center">
-            No information to display.
-          </div>
+          <div className="col-12 d-flex justify-content-center">No information to display.</div>
         </div>
       )}
     </div>

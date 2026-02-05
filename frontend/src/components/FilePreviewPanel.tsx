@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
-import FileStatus from "../enums/FileStatus";
-import FilePreviewModel from "../interfaces/files/FilePreviewModel";
-import { useData } from "../services/DataProvider";
+import dayjs from 'dayjs';
+import FileStatus from '../enums/FileStatus';
+import FilePreviewModel from '../interfaces/files/FilePreviewModel';
+import { useData } from '../services/DataProvider';
 
 interface Props {
   file: FilePreviewModel;
@@ -21,9 +21,7 @@ function FilePreviewPanel({ file }: Props) {
           <strong>{file.name}</strong>
         </div>
         <div>
-          <span className="app-badge badge app-info-label rounded-pill">
-            {file.extension}
-          </span>
+          <span className="app-badge badge app-info-label rounded-pill">{file.extension}</span>
         </div>
       </div>
       <div className="app-card-row app-font-s">
@@ -48,9 +46,9 @@ function FilePreviewPanel({ file }: Props) {
         </div>
         <div>
           <span>
-            {dayjs(file.uploadedAt).format("YYYY-MM-DD") +
-              " " +
-              dayjs(file.uploadedAt).format("HH:mm")}
+            {dayjs(file.uploadedAt).format('YYYY-MM-DD') +
+              ' ' +
+              dayjs(file.uploadedAt).format('HH:mm')}
           </span>
         </div>
       </div>
@@ -60,19 +58,15 @@ function FilePreviewPanel({ file }: Props) {
         </div>
         <div>
           <span>
-            {dayjs(file.processedAt).format("YYYY-MM-DD") +
-              " " +
-              dayjs(file.processedAt).format("HH:mm")}
+            {dayjs(file.processedAt).format('YYYY-MM-DD') +
+              ' ' +
+              dayjs(file.processedAt).format('HH:mm')}
           </span>
         </div>
       </div>
       <div className="app-card-row">
         <div>
-          <a
-            className="app-card-link"
-            title="Download source file"
-            onClick={handleFileDownload}
-          >
+          <a className="app-card-link" title="Download source file" onClick={handleFileDownload}>
             <i className="bi bi-download" />
           </a>
         </div>

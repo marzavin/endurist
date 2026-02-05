@@ -1,17 +1,17 @@
-import FilePreviewModel from "../interfaces/files/FilePreviewModel";
-import SortingModel from "../interfaces/SortingModel";
-import FilePreviewPanel from "../components/FilePreviewPanel";
-import FileUploader from "../components/FileUploader";
-import { useEffect, useState, CSSProperties, ChangeEvent } from "react";
-import { useData } from "../services/DataProvider";
-import { PropagateLoader } from "react-spinners";
-import InfiniteScroll from "react-infinite-scroll-component";
+import FilePreviewModel from '../interfaces/files/FilePreviewModel';
+import SortingModel from '../interfaces/SortingModel';
+import FilePreviewPanel from '../components/FilePreviewPanel';
+import FileUploader from '../components/FileUploader';
+import { useEffect, useState, CSSProperties, ChangeEvent } from 'react';
+import { useData } from '../services/DataProvider';
+import { PropagateLoader } from 'react-spinners';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const override: CSSProperties = {
-  display: "block",
-  paddingTop: "3rem",
-  paddingBottom: "3rem",
-  textAlign: "center"
+  display: 'block',
+  paddingTop: '3rem',
+  paddingBottom: '3rem',
+  textAlign: 'center'
 };
 
 function Files() {
@@ -19,7 +19,7 @@ function Files() {
   const [items, setItems] = useState<FilePreviewModel[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [sorting, setSorting] = useState<SortingModel>({
-    key: "uploadedAt",
+    key: 'uploadedAt',
     descending: true
   });
   const pageSize: number = 48;
@@ -68,7 +68,7 @@ function Files() {
               name="order-radio"
               id="order-uploaded"
               autoComplete="off"
-              checked={sorting.key === "uploadedAt"}
+              checked={sorting.key === 'uploadedAt'}
               onChange={handleRadioChange}
               value="uploadedAt"
             />
@@ -81,14 +81,11 @@ function Files() {
               name="order-radio"
               id="order-processed"
               autoComplete="off"
-              checked={sorting.key === "processedAt"}
+              checked={sorting.key === 'processedAt'}
               onChange={handleRadioChange}
               value="processedAt"
             />
-            <label
-              className="btn btn-outline-primary"
-              htmlFor="order-processed"
-            >
+            <label className="btn btn-outline-primary" htmlFor="order-processed">
               Processed
             </label>
             <input
@@ -97,14 +94,11 @@ function Files() {
               name="order-radio"
               id="order-activity-started"
               autoComplete="off"
-              checked={sorting.key === "activityStartedAt"}
+              checked={sorting.key === 'activityStartedAt'}
               onChange={handleRadioChange}
               value="activityStartedAt"
             />
-            <label
-              className="btn btn-outline-primary"
-              htmlFor="order-activity-started"
-            >
+            <label className="btn btn-outline-primary" htmlFor="order-activity-started">
               Activity Started
             </label>
           </div>
@@ -116,23 +110,14 @@ function Files() {
         next={handleNextPage}
         hasMore={hasMore}
         loader={
-          <PropagateLoader
-            color="#f48221"
-            cssOverride={override}
-            loading={true}
-          ></PropagateLoader>
+          <PropagateLoader color="#f48221" cssOverride={override} loading={true}></PropagateLoader>
         }
       >
         {items.length === 0 ? (
-          <span className="app-empty-list-label">
-            No information to display.
-          </span>
+          <span className="app-empty-list-label">No information to display.</span>
         ) : (
           items.map((item) => (
-            <div
-              key={item.id}
-              className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
-            >
+            <div key={item.id} className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
               <FilePreviewPanel file={item} />
             </div>
           ))

@@ -1,36 +1,24 @@
-import React, { createContext, useContext } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import config from "../application.json";
-import ActivityModel from "../interfaces/activities/ActivityModel";
-import ActivityPreviewModel from "../interfaces/activities/ActivityPreviewModel";
-import ProfilePreviewModel from "../interfaces/profiles/ProfilePreviewModel";
-import ServerResponseModel from "../interfaces/ServerResponseModel";
-import FilePreviewModel from "../interfaces/files/FilePreviewModel";
-import SortingModel from "../interfaces/SortingModel";
-import ProfileModel from "../interfaces/profiles/ProfileModel";
-import WidgetModel from "../interfaces/widgets/WidgetModel";
-import FileUploadModel from "../interfaces/files/FileUploadModel";
-import useLocalStorage from "use-local-storage";
+import React, { createContext, useContext } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import config from '../application.json';
+import ActivityModel from '../interfaces/activities/ActivityModel';
+import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
+import ProfilePreviewModel from '../interfaces/profiles/ProfilePreviewModel';
+import ServerResponseModel from '../interfaces/ServerResponseModel';
+import FilePreviewModel from '../interfaces/files/FilePreviewModel';
+import SortingModel from '../interfaces/SortingModel';
+import ProfileModel from '../interfaces/profiles/ProfileModel';
+import WidgetModel from '../interfaces/widgets/WidgetModel';
+import FileUploadModel from '../interfaces/files/FileUploadModel';
+import useLocalStorage from 'use-local-storage';
 
 export interface IDataProvider {
-  getActivities(
-    skip: number,
-    take: number,
-    sorting: SortingModel
-  ): Promise<ActivityPreviewModel[]>;
+  getActivities(skip: number, take: number, sorting: SortingModel): Promise<ActivityPreviewModel[]>;
   getActivity(activityId: string): Promise<ActivityModel>;
-  getProfiles(
-    skip: number,
-    take: number,
-    sorting: SortingModel
-  ): Promise<ProfilePreviewModel[]>;
+  getProfiles(skip: number, take: number, sorting: SortingModel): Promise<ProfilePreviewModel[]>;
   getProfile(profileId: string): Promise<ProfileModel>;
-  getFiles(
-    skip: number,
-    take: number,
-    sorting: SortingModel
-  ): Promise<FilePreviewModel[]>;
+  getFiles(skip: number, take: number, sorting: SortingModel): Promise<FilePreviewModel[]>;
   uploadFile(file: File): Promise<FileUploadModel>;
   downloadFile(fileId: string, fileName: string): Promise<void>;
   getProfileWidget(profileId: string, widgetId: string): Promise<WidgetModel>;
@@ -44,7 +32,7 @@ export const useData = () => {
 
   if (context === undefined) {
     throw new Error(
-      "DataProviderContext was not provided. Make sure your component is a child of the DataProvider."
+      'DataProviderContext was not provided. Make sure your component is a child of the DataProvider.'
     );
   }
 
@@ -53,13 +41,13 @@ export const useData = () => {
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const serverBaseUrl = config.apiUrl;
-  const serverErrorText = "An error occurred during execution your request.";
-  const [accessToken] = useLocalStorage<string | null>("access_token", null);
+  const serverErrorText = 'An error occurred during execution your request.';
+  const [accessToken] = useLocalStorage<string | null>('access_token', null);
 
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use((config) => {
     if (accessToken) {
-      config.headers["Authorization"] = "Bearer " + accessToken;
+      config.headers['Authorization'] = 'Bearer ' + accessToken;
     }
     return config;
   });
@@ -71,11 +59,9 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
       sorting: SortingModel
     ): Promise<ActivityPreviewModel[]> {
       return axiosInstance
-        .get<ServerResponseModel<ActivityPreviewModel[]>>(
-          sorting
-            ? `${serverBaseUrl}/api/activities?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
-            : `${serverBaseUrl}/api/activities?paging.skip=${skip}&paging.take=${take}`
-        )
+        .get<
+          ServerResponseModel<ActivityPreviewModel[]>
+        >(sorting ? `${serverBaseUrl}/api/activities?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}` : `${serverBaseUrl}/api/activities?paging.skip=${skip}&paging.take=${take}`)
         .then(
           function (response) {
             return response.data.data;
@@ -89,9 +75,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     },
     async getActivity(activityId: string): Promise<ActivityModel> {
       return axiosInstance
-        .get<ServerResponseModel<ActivityModel>>(
-          `${serverBaseUrl}/api/activities/${activityId}`
-        )
+        .get<ServerResponseModel<ActivityModel>>(`${serverBaseUrl}/api/activities/${activityId}`)
         .then(
           function (response) {
             return response.data.data;
@@ -100,7 +84,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
             console.log(error);
             toast.error(serverErrorText);
             return {
-              startTime: "",
+              startTime: '',
               distance: 0,
               duration: 0,
               pace: 0,
@@ -124,11 +108,9 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
       sorting: SortingModel
     ): Promise<ProfilePreviewModel[]> {
       return axiosInstance
-        .get<ServerResponseModel<ProfilePreviewModel[]>>(
-          sorting
-            ? `${serverBaseUrl}/api/profiles?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
-            : `${serverBaseUrl}/api/profiles?paging.skip=${skip}&paging.take=${take}`
-        )
+        .get<
+          ServerResponseModel<ProfilePreviewModel[]>
+        >(sorting ? `${serverBaseUrl}/api/profiles?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}` : `${serverBaseUrl}/api/profiles?paging.skip=${skip}&paging.take=${take}`)
         .then(
           function (response) {
             return response.data.data;
@@ -142,9 +124,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     },
     async getProfile(profileId: string): Promise<ProfileModel> {
       return axiosInstance
-        .get<ServerResponseModel<ProfileModel>>(
-          `${serverBaseUrl}/api/profiles/${profileId}`
-        )
+        .get<ServerResponseModel<ProfileModel>>(`${serverBaseUrl}/api/profiles/${profileId}`)
         .then(
           function (response) {
             return response.data.data;
@@ -154,7 +134,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
             toast.error(serverErrorText);
             return {
               id: profileId,
-              name: "",
+              name: '',
               distance: 0,
               duration: 0,
               weeklyVolumes: []
@@ -162,17 +142,11 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
           }
         );
     },
-    async getFiles(
-      skip: number,
-      take: number,
-      sorting: SortingModel
-    ): Promise<FilePreviewModel[]> {
+    async getFiles(skip: number, take: number, sorting: SortingModel): Promise<FilePreviewModel[]> {
       return axiosInstance
-        .get<ServerResponseModel<FilePreviewModel[]>>(
-          sorting
-            ? `${serverBaseUrl}/api/files?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}`
-            : `${serverBaseUrl}/api/files?paging.skip=${skip}&paging.take=${take}`
-        )
+        .get<
+          ServerResponseModel<FilePreviewModel[]>
+        >(sorting ? `${serverBaseUrl}/api/files?paging.skip=${skip}&paging.take=${take}&sorting.key=${sorting.key}&sorting.descending=${sorting.descending}` : `${serverBaseUrl}/api/files?paging.skip=${skip}&paging.take=${take}`)
         .then(
           function (response) {
             return response.data.data;
@@ -186,18 +160,14 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     },
     async uploadFile(file: File): Promise<FileUploadModel> {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
 
       return axiosInstance
-        .post<ServerResponseModel<FileUploadModel>>(
-          `${serverBaseUrl}/api/files/upload`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
+        .post<ServerResponseModel<FileUploadModel>>(`${serverBaseUrl}/api/files/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
-        )
+        })
         .then(
           function (response) {
             return response.data.data;
@@ -205,22 +175,22 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
           function (error) {
             console.log(error);
             toast.error(serverErrorText);
-            return { name: "", size: 0, fileStatus: 2 };
+            return { name: '', size: 0, fileStatus: 2 };
           }
         );
     },
     async downloadFile(fileId: string, fileName: string): Promise<void> {
       return axiosInstance
         .get(`${serverBaseUrl}/api/files/${fileId}/download`, {
-          responseType: "blob"
+          responseType: 'blob'
         })
         .then(
           function (response) {
             const url = URL.createObjectURL(response.data);
-            const a = document.createElement("a");
+            const a = document.createElement('a');
             a.href = url;
             a.download = fileName;
-            a.style.display = "none";
+            a.style.display = 'none';
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -232,14 +202,11 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
           }
         );
     },
-    async getProfileWidget(
-      profileId: string,
-      widgetId: string
-    ): Promise<WidgetModel> {
+    async getProfileWidget(profileId: string, widgetId: string): Promise<WidgetModel> {
       return axiosInstance
-        .get<ServerResponseModel<WidgetModel>>(
-          `${serverBaseUrl}/api/profiles/${profileId}/widgets/${widgetId}`
-        )
+        .get<
+          ServerResponseModel<WidgetModel>
+        >(`${serverBaseUrl}/api/profiles/${profileId}/widgets/${widgetId}`)
         .then(
           function (response) {
             return response.data.data;
@@ -248,21 +215,18 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
             console.log(error);
             toast.error(serverErrorText);
             return {
-              id: "",
-              name: "",
-              data: "{}"
+              id: '',
+              name: '',
+              data: '{}'
             };
           }
         );
     },
-    async getActivityWidget(
-      activityId: string,
-      widgetId: string
-    ): Promise<WidgetModel> {
+    async getActivityWidget(activityId: string, widgetId: string): Promise<WidgetModel> {
       return axiosInstance
-        .get<ServerResponseModel<WidgetModel>>(
-          `${serverBaseUrl}/api/activities/${activityId}/widgets/${widgetId}`
-        )
+        .get<
+          ServerResponseModel<WidgetModel>
+        >(`${serverBaseUrl}/api/activities/${activityId}/widgets/${widgetId}`)
         .then(
           function (response) {
             return response.data.data;
@@ -271,18 +235,16 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
             console.log(error);
             toast.error(serverErrorText);
             return {
-              id: "",
-              name: "",
-              data: "{}"
+              id: '',
+              name: '',
+              data: '{}'
             };
           }
         );
     }
   };
 
-  return (
-    <DataContext.Provider value={dataProvider}>{children}</DataContext.Provider>
-  );
+  return <DataContext.Provider value={dataProvider}>{children}</DataContext.Provider>;
 };
 
 export default DataProvider;

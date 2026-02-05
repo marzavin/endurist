@@ -1,5 +1,5 @@
-import ActivityCategory from "../../enums/ActivityCategory";
-import SegmentPreviewModel from "../SegmentPreviewModel";
+import ActivityCategory from '../../enums/ActivityCategory';
+import SegmentPreviewModel from '../SegmentPreviewModel';
 
 interface ActivityPreviewModel extends SegmentPreviewModel {
   id: string;
