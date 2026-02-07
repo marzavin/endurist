@@ -1,10 +1,11 @@
-import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
-import ActivityPreviewPanel from '../components/ActivityPreviewPanel';
 import { useEffect, useState, CSSProperties } from 'react';
-import { useData } from '../services/DataProvider';
-import SortingModel from '../interfaces/SortingModel';
-import { PropagateLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { PropagateLoader } from 'react-spinners';
+
+import ActivityPreviewPanel from '../components/ActivityPreviewPanel';
+import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
+import SortingModel from '../interfaces/SortingModel';
+import { useData } from '../services/DataProvider';
 
 const override: CSSProperties = {
   display: 'block',
@@ -31,7 +32,7 @@ function Activities() {
       }
       setItems(result);
     });
-  }, [sorting]);
+  }, [sorting, dataProvider]);
 
   function handleNextPage() {
     dataProvider.getActivities(items.length, pageSize, sorting).then((result) => {

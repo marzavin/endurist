@@ -1,6 +1,7 @@
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import KeyValueModel from '../interfaces/KeyValueModel';
+
 import { toTimeSpanLabel } from '../formatters/DurationFormatter';
+import KeyValueModel from '../interfaces/KeyValueModel';
 
 interface Props {
   title: string;

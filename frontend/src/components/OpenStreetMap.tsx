@@ -2,6 +2,7 @@ import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
 import MapRouteModel from '../interfaces/MapRouteModel';
 
 function OpenStreetMap({ center }: MapRouteModel) {

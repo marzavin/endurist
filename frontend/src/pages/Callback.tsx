@@ -1,5 +1,5 @@
-import { useAuth } from 'react-oidc-context';
 import { useEffect } from 'react';
+import { useAuth } from 'react-oidc-context';
 import { useNavigate } from 'react-router';
 
 function Callback() {
@@ -10,7 +10,7 @@ function Callback() {
     if (auth.isAuthenticated) {
       navigate('/');
     }
-  }, [auth.isAuthenticated]);
+  }, [auth.isAuthenticated, navigate]);
 
   if (auth.isLoading) {
     return <div>Signing in...</div>;

@@ -1,8 +1,9 @@
-import { toPaceLabel } from '../formatters/PaceFormatter';
-import { toMetersLabel } from '../formatters/DistanceFormatter';
 import dayjs from 'dayjs';
-import SegmentPreviewModel from '../interfaces/SegmentPreviewModel';
+
+import { toMetersLabel } from '../formatters/DistanceFormatter';
 import { toTimeSpanLabel } from '../formatters/DurationFormatter';
+import { toPaceLabel } from '../formatters/PaceFormatter';
+import SegmentPreviewModel from '../interfaces/SegmentPreviewModel';
 
 interface Props {
   items: SegmentPreviewModel[];

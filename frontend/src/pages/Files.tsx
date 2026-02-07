@@ -1,11 +1,12 @@
-import FilePreviewModel from '../interfaces/files/FilePreviewModel';
-import SortingModel from '../interfaces/SortingModel';
+import { useEffect, useState, CSSProperties, ChangeEvent } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { PropagateLoader } from 'react-spinners';
+
 import FilePreviewPanel from '../components/FilePreviewPanel';
 import FileUploader from '../components/FileUploader';
-import { useEffect, useState, CSSProperties, ChangeEvent } from 'react';
+import FilePreviewModel from '../interfaces/files/FilePreviewModel';
+import SortingModel from '../interfaces/SortingModel';
 import { useData } from '../services/DataProvider';
-import { PropagateLoader } from 'react-spinners';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 const override: CSSProperties = {
   display: 'block',
@@ -32,7 +33,7 @@ function Files() {
       }
       setItems(result);
     });
-  }, [sorting]);
+  }, [sorting, dataProvider]);
 
   function handleNextPage() {
     dataProvider.getFiles(items.length, pageSize, sorting).then((result) => {

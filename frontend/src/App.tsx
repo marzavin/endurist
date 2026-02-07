@@ -1,14 +1,16 @@
-import Activity from './pages/Activity';
+import { BrowserRouter, Routes, Route } from 'react-router';
+
 import Activities from './pages/Activities';
+import Activity from './pages/Activity';
+import Callback from './pages/Callback';
+import Files from './pages/Files';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
 import Notifications from './pages/Notifications';
-import Profiles from './pages/Profiles';
 import Profile from './pages/Profile';
-import Files from './pages/Files';
-import Callback from './pages/Callback';
+import Profiles from './pages/Profiles';
+
 import './App.less';
-import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {
   return (

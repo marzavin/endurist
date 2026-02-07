@@ -1,8 +1,9 @@
+import dayjs from 'dayjs';
+
 import ActivityCategory from '../enums/ActivityCategory';
-import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
 import { toKilometersLabel } from '../formatters/DistanceFormatter';
 import { toTimeSpanLabel } from '../formatters/DurationFormatter';
-import dayjs from 'dayjs';
+import ActivityPreviewModel from '../interfaces/activities/ActivityPreviewModel';
 
 interface Props {
   activity: ActivityPreviewModel;

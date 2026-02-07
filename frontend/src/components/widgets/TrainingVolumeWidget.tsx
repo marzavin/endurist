@@ -1,10 +1,11 @@
-import { CSSProperties, useEffect, useState } from 'react';
-import { useData } from '../../services/DataProvider';
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import TrainingVolumeWidgetModel from '../../interfaces/widgets/TrainingVolumeWidgetModel';
-import { PropagateLoader } from 'react-spinners';
-import { toKilometersLabel } from '../../formatters/DistanceFormatter';
 import dayjs from 'dayjs';
+import { CSSProperties, useEffect, useState } from 'react';
+import { PropagateLoader } from 'react-spinners';
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+
+import { toKilometersLabel } from '../../formatters/DistanceFormatter';
+import TrainingVolumeWidgetModel from '../../interfaces/widgets/TrainingVolumeWidgetModel';
+import { useData } from '../../services/DataProvider';
 
 const override: CSSProperties = {
   display: 'block',
@@ -37,7 +38,7 @@ function TrainingVolumeWidget({ profileId }: Props) {
         setWidgetData(widgetModel);
       });
     }
-  }, [profileId]);
+  }, [profileId, dataProvider]);
 
   const tooltipValueFormatter = (value: number) => {
     return [toKilometersLabel(value), null];

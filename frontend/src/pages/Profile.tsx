@@ -1,12 +1,13 @@
-import ProfileModel from '../interfaces/profiles/ProfileModel';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useData } from '../services/DataProvider';
-import TrainingVolumeWidget from '../components/widgets/TrainingVolumeWidget';
+
 import Summary from '../components/Summary';
-import KeyValueModel from '../interfaces/KeyValueModel';
+import TrainingVolumeWidget from '../components/widgets/TrainingVolumeWidget';
 import { toKilometersLabel } from '../formatters/DistanceFormatter';
 import { toTimeSpanLabel } from '../formatters/DurationFormatter';
+import KeyValueModel from '../interfaces/KeyValueModel';
+import ProfileModel from '../interfaces/profiles/ProfileModel';
+import { useData } from '../services/DataProvider';
 
 function Profile() {
   const dataProvider = useData();
@@ -31,7 +32,7 @@ function Profile() {
         setDetails(profileDetails);
       });
     }
-  }, []);
+  }, [id, dataProvider]);
 
   return (
     <div className="app-profile row">

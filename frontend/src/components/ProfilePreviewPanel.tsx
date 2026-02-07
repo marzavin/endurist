@@ -1,6 +1,6 @@
-import ProfilePreviewModel from '../interfaces/profiles/ProfilePreviewModel';
-import { toTimeSpanLabel } from '../formatters/DurationFormatter';
 import { toKilometersLabel } from '../formatters/DistanceFormatter';
+import { toTimeSpanLabel } from '../formatters/DurationFormatter';
+import ProfilePreviewModel from '../interfaces/profiles/ProfilePreviewModel';
 
 interface Props {
   profile: ProfilePreviewModel;

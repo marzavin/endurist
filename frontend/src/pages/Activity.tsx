@@ -1,9 +1,10 @@
-import ActivityModel from '../interfaces/activities/ActivityModel';
-import SegmentTable from '../components/SegmentTable';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useData } from '../services/DataProvider';
+
 import ActivityGraph from '../components/ActivityGraph';
+import SegmentTable from '../components/SegmentTable';
+import ActivityModel from '../interfaces/activities/ActivityModel';
+import { useData } from '../services/DataProvider';
 import './Activity.less';
 
 function Activity() {
@@ -33,7 +34,7 @@ function Activity() {
         setActivity(result);
       });
     }
-  }, []);
+  }, [id, dataProvider]);
 
   return (
     <div className="app-activity row">

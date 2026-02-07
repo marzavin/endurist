@@ -1,7 +1,8 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
+import importPlugin from 'eslint-plugin-import';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 
@@ -15,14 +16,29 @@ export default tseslint.config(
       globals: globals.browser
     },
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
+      'react-hooks': reactHooksPlugin,
+      'react-refresh': reactRefreshPlugin,
+      import: importPlugin
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react/prop-types': 'off',
-      'import/order': ['error', { alphabetize: { order: 'asc' } }]
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object',
+            'type'
+          ],
+          alphabetize: { order: 'asc', caseInsensitive: true },
+          'newlines-between': 'always'
+        }
+      ]
     }
   }
 );

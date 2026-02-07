@@ -1,10 +1,11 @@
+import { useState } from 'react';
+import { useAuth } from 'react-oidc-context';
+
 import avatar from '../assets/avatar.png';
 import logo from '../assets/logo.png';
 import './Header.less';
 import ApplicationTheme from '../enums/ApplicationTheme';
 import { useTheme } from '../services/ThemeProvider';
-import { useState } from 'react';
-import { useAuth } from 'react-oidc-context';
 
 function Header() {
   const authProvider = useAuth();
