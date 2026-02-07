@@ -6,7 +6,7 @@ import FilePreviewPanel from '../components/FilePreviewPanel';
 import FileUploader from '../components/FileUploader';
 import FilePreviewModel from '../interfaces/files/FilePreviewModel';
 import SortingModel from '../interfaces/SortingModel';
-import { useData } from '../services/DataProvider';
+import { useData } from '../services/useData';
 
 const override: CSSProperties = {
   display: 'block',

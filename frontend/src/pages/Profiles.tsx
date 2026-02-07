@@ -5,7 +5,7 @@ import { PropagateLoader } from 'react-spinners';
 import ProfilePreviewPanel from '../components/ProfilePreviewPanel';
 import ProfilePreviewModel from '../interfaces/profiles/ProfilePreviewModel';
 import SortingModel from '../interfaces/SortingModel';
-import { useData } from '../services/DataProvider';
+import { useData } from '../services/useData';
 
 const override: CSSProperties = {
   display: 'block',

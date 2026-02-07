@@ -7,7 +7,7 @@ import { toKilometersLabel } from '../formatters/DistanceFormatter';
 import { toTimeSpanLabel } from '../formatters/DurationFormatter';
 import KeyValueModel from '../interfaces/KeyValueModel';
 import ProfileModel from '../interfaces/profiles/ProfileModel';
-import { useData } from '../services/DataProvider';
+import { useData } from '../services/useData';
 
 function Profile() {
   const dataProvider = useData();

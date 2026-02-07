@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useData } from '../services/DataProvider';
+import { useData } from '../services/useData';
 
 type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
 

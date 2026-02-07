@@ -1,22 +1,12 @@
-import { useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 
+import ThemeSwitcher from './ThemeSwitcher';
 import avatar from '../assets/avatar.png';
 import logo from '../assets/logo.png';
 import './Header.less';
-import ApplicationTheme from '../enums/ApplicationTheme';
-import { useTheme } from '../services/ThemeProvider';
 
 function Header() {
   const authProvider = useAuth();
-  const themeProvider = useTheme();
-
-  const [theme, setTheme] = useState<ApplicationTheme>(themeProvider.getTheme());
-
-  function handleThemeChange() {
-    themeProvider.switchTheme();
-    setTheme(themeProvider.getTheme());
-  }
 
   return (
     <header className="app-header app-border-bottom navbar navbar-expand-md">
@@ -56,13 +46,7 @@ function Header() {
           <hr className="d-md-none" />
           <ul className="navbar-nav flex-row flex-wrap ms-md-auto">
             <li className="nav-item col-12 col-md-auto">
-              <a className="nav-link" onClick={handleThemeChange}>
-                {theme === ApplicationTheme.Light ? (
-                  <i className=".app-font-l bi bi-moon" />
-                ) : (
-                  <i className=".app-font-l bi bi-sun" />
-                )}
-              </a>
+              <ThemeSwitcher />
             </li>
             <li className="nav-item col-12 col-md-auto">
               <a className="nav-link" href="/notifications">

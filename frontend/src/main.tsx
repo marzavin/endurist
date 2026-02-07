@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import App from './App.tsx';
 import DataProvider from './services/DataProvider.tsx';
-import ThemeProvider from './services/ThemeProvider.tsx';
+import { ThemeProvider } from './services/ThemeProvider.tsx';
 
 const oidcConfig = {
   authority: 'http://localhost:9191/realms/endurist',

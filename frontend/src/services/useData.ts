@@ -7,7 +7,7 @@ export const useData = () => {
 
   if (!context) {
     throw new Error(
-      'DataProviderContext was not provided. Make sure your component is a child of the DataProvider.'
+      'DataContext was not provided. Make sure your component is a child of the DataProvider.'
     );
   }
 

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import FileStatus from '../enums/FileStatus';
 import FilePreviewModel from '../interfaces/files/FilePreviewModel';
-import { useData } from '../services/DataProvider';
+import { useData } from '../services/useData';
 
 interface Props {
   file: FilePreviewModel;

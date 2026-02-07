@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import ActivityGraph from '../components/ActivityGraph';
 import SegmentTable from '../components/SegmentTable';
 import ActivityModel from '../interfaces/activities/ActivityModel';
-import { useData } from '../services/DataProvider';
+import { useData } from '../services/useData';
 import './Activity.less';
 
 function Activity() {

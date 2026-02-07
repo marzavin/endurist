@@ -7,7 +7,7 @@ export const useTheme = () => {
 
   if (!context) {
     throw new Error(
-      'ThemeProviderContext was not provided. Make sure your component is a child of the ThemeProvider.'
+      'ThemeContext was not provided. Make sure your component is a child of the ThemeProvider.'
     );
   }
 
