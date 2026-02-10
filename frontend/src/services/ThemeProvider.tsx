@@ -1,16 +1,10 @@
-import React, { createContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
 
+import { ThemeContext } from './ThemeContext';
 import ApplicationTheme from '../enums/ApplicationTheme';
 
-interface IThemeContext {
-  theme: ApplicationTheme;
-  toggleTheme: () => void;
-}
-
-const ThemeContext = createContext<IThemeContext | undefined>(undefined);
-
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useLocalStorage<ApplicationTheme>('app_theme', ApplicationTheme.Light);
 
   useEffect(() => {
@@ -27,3 +21,5 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
+
+export default ThemeProvider;

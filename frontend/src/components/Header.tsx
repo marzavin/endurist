@@ -50,14 +50,22 @@ function Header() {
             </li>
             <li className="nav-item col-12 col-md-auto">
               <a className="nav-link" href="/notifications">
-                <i className=".app-font-l bi bi-bell" />
+                <i className="app-font-l bi bi-bell" />
               </a>
             </li>
+            {!authProvider.isAuthenticated && (
+              <li className="nav-item col-12 col-md-auto">
+                <a className="nav-link" onClick={() => authProvider.signinRedirect()}>
+                  <i className="app-font-l bi bi-door-open" />
+                </a>
+              </li>
+            )}
           </ul>
-          <button onClick={() => authProvider.signinRedirect()}>Войти</button>
-          <a className="app-profile d-inline-block my-2 my-md-0 ms-md-3" href="/">
-            <img alt="Avatar" src={avatar} />
-          </a>
+          {authProvider.isAuthenticated && (
+            <a className="app-profile d-inline-block my-2 my-md-0 ms-md-3" href="/">
+              <img alt="Avatar" src={avatar} />
+            </a>
+          )}
         </div>
       </nav>
     </header>

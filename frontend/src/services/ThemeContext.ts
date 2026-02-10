@@ -2,9 +2,9 @@ import { createContext } from 'react';
 
 import ApplicationTheme from '../enums/ApplicationTheme';
 
-export interface ThemeContextType {
+export interface IThemeProvider {
   theme: ApplicationTheme;
   toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<IThemeProvider | undefined>(undefined);
