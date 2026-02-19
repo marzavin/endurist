@@ -51,11 +51,6 @@ function Profiles() {
         </div>
         <div className="col-md-auto col-12"></div>
       </div>
-      {items.length === 0 ? (
-        <div className="row">
-          <div className="col-12">No information to display.</div>
-        </div>
-      ) : null}
       <InfiniteScroll
         className="app-list row"
         dataLength={items.length}
@@ -69,14 +64,20 @@ function Profiles() {
           ></PropagateLoader>
         }
       >
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
-          >
-            <ProfilePreviewPanel profile={item} />
-          </div>
-        ))}
+        {items.length === 0 ? (
+          <span className="app-empty-list-label">
+            No information to display.
+          </span>
+        ) : (
+          items.map((item) => (
+            <div
+              key={item.id}
+              className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+            >
+              <ProfilePreviewPanel profile={item} />
+            </div>
+          ))
+        )}
       </InfiniteScroll>
     </div>
   );

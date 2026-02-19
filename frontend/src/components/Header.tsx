@@ -2,24 +2,23 @@ import avatar from "../assets/avatar.png";
 import logo from "../assets/logo.png";
 import "./Header.less";
 import { useAuth } from "../services/AuthProvider";
-import { useState } from "react";
 import ApplicationTheme from "../enums/ApplicationTheme";
+import { useTheme } from "../services/ThemeProvider";
+import { useState } from "react";
 
 function Header() {
   const authProvider = useAuth();
+  const themeProvider = useTheme();
   const profile = authProvider.getAccount();
   const profileUrl = `/profiles/${profile?.sub}`;
 
-  const [theme, setTheme] = useState<ApplicationTheme>(ApplicationTheme.Light);
+  const [theme, setTheme] = useState<ApplicationTheme>(
+    themeProvider.getTheme()
+  );
 
   function handleThemeChange() {
-    if (theme === ApplicationTheme.Light) {
-      document.querySelector("body")?.setAttribute("data-theme", "dark");
-      setTheme(ApplicationTheme.Dark);
-    } else {
-      document.querySelector("body")?.removeAttribute("data-theme");
-      setTheme(ApplicationTheme.Light);
-    }
+    themeProvider.switchTheme();
+    setTheme(themeProvider.getTheme());
   }
 
   return (

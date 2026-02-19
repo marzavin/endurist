@@ -6,13 +6,13 @@ namespace Endurist.Core.Accounts.Requests;
 
 public class CreateTokenRequest : IRequest<DataResponse<TokenModel>>
 {
-    public CreateTokenRequest(string email, string password)
+    public CreateTokenRequest(string name, string password)
     {
-        Email = email;
+        Name = name;
         Password = password;;
     }
 
-    public string Email { get; }
+    public string Name { get; }
 
     public string Password { get; }
 }

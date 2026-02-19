@@ -11,6 +11,7 @@ import SortingModel from "../interfaces/SortingModel";
 import ProfileModel from "../interfaces/profiles/ProfileModel";
 import WidgetModel from "../interfaces/widgets/WidgetModel";
 import FileUploadModel from "../interfaces/files/FileUploadModel";
+import useLocalStorage from "use-local-storage";
 
 export interface IDataProvider {
   getActivities(
@@ -40,23 +41,25 @@ const DataContext = createContext<IDataProvider | undefined>(undefined);
 
 export const useData = () => {
   const context = useContext<IDataProvider | undefined>(DataContext);
+
   if (context === undefined) {
     throw new Error(
       "DataProviderContext was not provided. Make sure your component is a child of the DataProvider."
     );
   }
+
   return context;
 };
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const serverBaseUrl = config.apiUrl;
   const serverErrorText = "An error occurred during execution your request.";
+  const [accessToken] = useLocalStorage<string | null>("access_token", null);
 
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use((config) => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
+    if (accessToken) {
+      config.headers["Authorization"] = "Bearer " + accessToken;
     }
     return config;
   });
