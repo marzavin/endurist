@@ -47,22 +47,6 @@ function TrainingVolumeWidget({ profileId }: Props) {
     }
   }, [profileId]);
 
-  const tooltipValueFormatter = (value: number) => {
-    return [toKilometersLabel(value), null];
-  };
-
-  const tooltipLabelFormatter = (value: string) => {
-    const startDate = new Date(value);
-    const formattedStartDate = dayjs(startDate).format("YYYY-MM-DD");
-    const endDate = dayjs(startDate).add(6, "day");
-    const formattedEndDate = dayjs(endDate).format("YYYY-MM-DD");
-    return `from ${formattedStartDate} to ${formattedEndDate}`;
-  };
-
-  const tickFormatterY = (value: any) => {
-    return (value / 1000).toString();
-  };
-
   return (
     <div className="app-widget">
       <div className="app-widget-header row">
@@ -85,10 +69,22 @@ function TrainingVolumeWidget({ profileId }: Props) {
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={widgetData.data.monthly}>
             <XAxis dataKey="key" />
-            <YAxis tickFormatter={tickFormatterY} />
+            <YAxis
+              tickFormatter={(value) => {
+                return (value / 1000).toString();
+              }}
+            />
             <Tooltip
-              formatter={tooltipValueFormatter}
-              labelFormatter={tooltipLabelFormatter}
+              formatter={(value) => {
+                return [toKilometersLabel(Number(value)), null];
+              }}
+              labelFormatter={(value) => {
+                const startDate = new Date(value);
+                const formattedStartDate = dayjs(startDate).format('YYYY-MM-DD');
+                const endDate = dayjs(startDate).add(6, 'day');
+                const formattedEndDate = dayjs(endDate).format('YYYY-MM-DD');
+                return `from ${formattedStartDate} to ${formattedEndDate}`;
+              }}
             />
             <Bar dataKey="value" fill="#8884d8" />
           </BarChart>
