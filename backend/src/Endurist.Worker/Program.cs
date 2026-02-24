@@ -3,8 +3,6 @@ using Endurist.Data;
 using Endurist.Data.Mongo.Repositories;
 using Endurist.Hosting.Settings;
 using Endurist.Worker.Tasks.Profiles.TrainingVolume;
-using SideEffect.Messaging;
-using SideEffect.Messaging.Redis;
 using System.Reflection;
 
 namespace Endurist.Worker;

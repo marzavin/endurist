@@ -5,8 +5,6 @@ using Endurist.Web.Registrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
-using SideEffect.Messaging;
-using SideEffect.Messaging.Redis;
 using System.Reflection;
 
 const string AllowedOriginsPolicy = "AllowedOrigins";
