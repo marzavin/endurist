@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SideEffect.DataTransfer" Version="0.4.2" />
+		<PackageReference Include="SideEffect.DataTransfer" Version="0.5.1" />
 	</ItemGroup>
 
 </Project>

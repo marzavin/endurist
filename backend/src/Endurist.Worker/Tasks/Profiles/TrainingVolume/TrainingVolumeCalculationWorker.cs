@@ -1,6 +1,5 @@
 using Endurist.Core.Events;
 using Endurist.Data;
-using SideEffect.Messaging;
 
 namespace Endurist.Worker.Tasks.Profiles.TrainingVolume;
 
