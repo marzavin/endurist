@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
@@ -18,13 +18,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
 		<PackageReference Include="SideEffect.Messaging.RabbitMQ" Version="0.5.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Endurist.Contracts\Endurist.Contracts.csproj" />
-		<ProjectReference Include="..\Endurist.Core\Endurist.Core.csproj" />
+		<ProjectReference Include="..\Endurist.Data\Endurist.Data.csproj" />
 		<ProjectReference Include="..\Endurist.ServiceDefaults\Endurist.ServiceDefaults.csproj" />
 	</ItemGroup>
 

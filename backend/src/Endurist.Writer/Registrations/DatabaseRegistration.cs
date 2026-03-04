@@ -2,7 +2,7 @@ using Endurist.Data;
 using Endurist.Data.Mongo.Repositories;
 using Endurist.Data.Mongo.Settings;
 
-namespace Endurist.Worker.Registrations;
+namespace Endurist.Writer.Registrations;
 
 /// <summary>
 /// Configuration for application storage.

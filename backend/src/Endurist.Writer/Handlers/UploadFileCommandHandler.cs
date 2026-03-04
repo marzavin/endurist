@@ -9,7 +9,7 @@ using SideEffect.Files.XML;
 using SideEffect.Messaging;
 using SideEffect.Messaging.PubSub;
 
-namespace Endurist.Worker.Handlers;
+namespace Endurist.Writer.Handlers;
 
 internal class UploadFileCommandHandler : EventHandlerBase<UploadFileCommand>
 {

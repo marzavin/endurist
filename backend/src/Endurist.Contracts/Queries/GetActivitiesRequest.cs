@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Endurist.Contracts.Queries;
 
-namespace Endurist.Contracts.Queries;
-
-public class GetActivitiesRequest : QueryBase<GetActivitiesResponse>
-{
-}
+public class GetActivitiesRequest : QueryBase<GetActivitiesResponse>;

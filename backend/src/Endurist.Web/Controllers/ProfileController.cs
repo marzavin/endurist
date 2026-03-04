@@ -13,7 +13,6 @@ namespace Endurist.Web.Controllers;
 /// API controller to handle profile requests.
 /// </summary>
 [ApiController]
-[Authorize]
 [Route("api/profiles")]
 [Produces("application/json")]
 public class ProfileController : ControllerBase

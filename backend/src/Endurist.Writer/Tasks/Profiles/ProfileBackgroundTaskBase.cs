@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Endurist.Worker.Tasks.Profiles;
+namespace Endurist.Writer.Tasks.Profiles;
 
 internal abstract class ProfileBackgroundTaskBase<TInput> : BackgroundTaskBase<TInput>
     where TInput : ProfileTaskInputBase

@@ -12,7 +12,7 @@ using SideEffect.Sport.Activities;
 using SideEffect.Sport.Activities.Files.TCX;
 using SideEffect.Sport.Activities.Models;
 
-namespace Endurist.Worker.Handlers;
+namespace Endurist.Writer.Handlers;
 
 internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
 {

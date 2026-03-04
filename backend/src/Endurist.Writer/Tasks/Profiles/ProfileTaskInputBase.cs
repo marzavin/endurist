@@ -1,4 +1,4 @@
-namespace Endurist.Worker.Tasks.Profiles;
+namespace Endurist.Writer.Tasks.Profiles;
 
 public class ProfileTaskInputBase : TaskInputBase
 {

@@ -1,3 +1,3 @@
-namespace Endurist.Worker.Tasks;
+namespace Endurist.Writer.Tasks;
 
 public abstract class TaskInputBase;

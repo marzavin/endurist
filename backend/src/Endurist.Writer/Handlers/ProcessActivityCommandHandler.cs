@@ -4,7 +4,7 @@ using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
 using SideEffect.Messaging.PubSub;
 
-namespace Endurist.Worker.Handlers;
+namespace Endurist.Writer.Handlers;
 
 internal class ProcessActivityCommandHandler : EventHandlerBase<ProcessActivityCommand>
 {

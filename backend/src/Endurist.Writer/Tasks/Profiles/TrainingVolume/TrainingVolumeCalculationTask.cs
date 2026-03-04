@@ -5,7 +5,7 @@ using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Filters;
 using MongoDB.Bson;
 
-namespace Endurist.Worker.Tasks.Profiles.TrainingVolume;
+namespace Endurist.Writer.Tasks.Profiles.TrainingVolume;
 
 internal class TrainingVolumeCalculationTask : ProfileBackgroundTaskBase<TrainingVolumeCalculationInput>
 {

@@ -13,7 +13,6 @@ namespace Endurist.Web.Controllers;
 /// API controller to handle file requests.
 /// </summary>
 [ApiController]
-[Authorize]
 [Route("api/files")]
 [Produces("application/json")]
 
@@ -57,6 +56,7 @@ public class FileController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="FileUploadModel"/> for more information.</returns>
     [HttpPost("upload")]
+    [Authorize]
     [ProducesResponseType<DataResponse<FileUploadModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFileAsync(
         IFormFile file,

@@ -55,6 +55,8 @@ services.Configure<ForwardedHeadersOptions>(options => {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
 
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
 app.UseForwardedHeaders();
@@ -62,6 +64,8 @@ app.UseForwardedHeaders();
 app.UseCors(AllowedOriginsPolicy);
 
 app.MapDefaultEndpoints();
+
+app.MapOpenApi();
 
 app.UseAuthorization();
 

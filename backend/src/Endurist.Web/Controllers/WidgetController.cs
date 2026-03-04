@@ -11,7 +11,6 @@ namespace Endurist.Web.Controllers;
 /// API controller to handle widget requests.
 /// </summary>
 [ApiController]
-[Authorize]
 [Produces("application/json")]
 public class WidgetController : ControllerBase
 {

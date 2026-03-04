@@ -1,12 +1,12 @@
 <Solution>
   <Project Path="src/Endurist.AppHost/Endurist.AppHost.csproj" />
   <Project Path="src/Endurist.Common/Endurist.Common.csproj" />
-  <Project Path="src/Endurist.Contracts/Endurist.Contracts.csproj" Id="4271970b-1ad7-49e7-ad01-1ab027c84073" />
+  <Project Path="src/Endurist.Contracts/Endurist.Contracts.csproj" />
   <Project Path="src/Endurist.Core/Endurist.Core.csproj" />
   <Project Path="src/Endurist.Data/Endurist.Data.csproj" />
-  <Project Path="src/Endurist.Hosting/Endurist.Hosting.csproj" />
-  <Project Path="src/Endurist.ServiceDefaults/Endurist.ServiceDefaults.csproj" Id="e21220eb-727e-4119-aca2-c8cc3a51fec8" />
+  <Project Path="src/Endurist.Reader/Endurist.Reader.csproj" />
+  <Project Path="src/Endurist.ServiceDefaults/Endurist.ServiceDefaults.csproj" />
   <Project Path="src/Endurist.Web/Endurist.Web.csproj" />
-  <Project Path="src/Endurist.Worker/Endurist.Worker.csproj" />
+  <Project Path="src/Endurist.Writer/Endurist.Writer.csproj" />
   <Project Path="src/SideEffect.Sport/SideEffect.Sport.csproj" />
 </Solution>

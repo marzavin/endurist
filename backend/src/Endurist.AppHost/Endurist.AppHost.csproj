@@ -18,8 +18,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Endurist.Reader\Endurist.Reader.csproj" />
 		<ProjectReference Include="..\Endurist.Web\Endurist.Web.csproj" />
-		<ProjectReference Include="..\Endurist.Worker\Endurist.Worker.csproj" />
+		<ProjectReference Include="..\Endurist.Writer\Endurist.Writer.csproj" />
 	</ItemGroup>
 
 </Project>

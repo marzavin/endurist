@@ -1,4 +1,4 @@
-namespace Endurist.Worker.Tasks;
+namespace Endurist.Writer.Tasks;
 
 internal abstract class BackgroundTaskBase<TInput>
     where TInput : TaskInputBase
