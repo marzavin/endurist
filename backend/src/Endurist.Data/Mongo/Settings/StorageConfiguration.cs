@@ -1,9 +1,9 @@
-namespace Endurist.Hosting.Settings;
+namespace Endurist.Data.Mongo.Settings;
 
 /// <summary>
 /// Configuration of Mongo DB data storage.
 /// </summary>
-public class MongoStorageConfiguration
+public class StorageConfiguration
 {
     /// <summary>
     /// Gets or sets connection string to Mongo DB storage.

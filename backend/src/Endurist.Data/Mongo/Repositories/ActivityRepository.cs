@@ -1,6 +1,6 @@
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Filters;
-using Endurist.Hosting.Settings;
+using Endurist.Data.Mongo.Settings;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SideEffect.Extensions;
@@ -12,7 +12,7 @@ public class ActivityRepository : RepositoryBase<ActivityDocument>
 {
     protected override string CollectionName => "activities";
 
-    public ActivityRepository(MongoStorageConfiguration settings)
+    public ActivityRepository(StorageConfiguration settings)
         : base(settings) { }
 
     protected override Dictionary<string, Expression<Func<ActivityDocument, object>>> SortingFields =>

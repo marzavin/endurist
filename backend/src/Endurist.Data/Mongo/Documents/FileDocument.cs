@@ -19,6 +19,8 @@ public class FileDocument : DocumentBase
 
     public FileStatus Status { get; set; }
 
+    public ObjectId? CopyOfId { get; set; }
+
     public string Error { get; set; }
 
     public ObjectId ProfileId { get; set; }

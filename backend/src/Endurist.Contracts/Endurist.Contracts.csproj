@@ -4,11 +4,14 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latestmajor</LangVersion>
-		<IsAspireSharedProject>true</IsAspireSharedProject>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />	
+	  <PackageReference Include="SideEffect.Messaging" Version="0.5.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Endurist.Common\Endurist.Common.csproj" />
 	</ItemGroup>
 
 </Project>

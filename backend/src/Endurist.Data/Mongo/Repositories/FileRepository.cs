@@ -1,7 +1,7 @@
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Enums;
 using Endurist.Data.Mongo.Filters;
-using Endurist.Hosting.Settings;
+using Endurist.Data.Mongo.Settings;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SideEffect.Extensions;
@@ -13,7 +13,7 @@ public class FileRepository : RepositoryBase<FileDocument>
 {
     protected override string CollectionName => "files";
 
-    public FileRepository(MongoStorageConfiguration settings)
+    public FileRepository(StorageConfiguration settings)
         : base(settings) { }
 
     protected override Dictionary<string, Expression<Func<FileDocument, object>>> SortingFields =>
@@ -27,6 +27,11 @@ public class FileRepository : RepositoryBase<FileDocument>
     public FilterDefinition<FileDocument> BuildFilter(FileFilter filter)
     {
         var queryFilter = Builders<FileDocument>.Filter.Empty;
+
+        if (!filter.IdEq.IsEmpty())
+        {
+            queryFilter &= Builders<FileDocument>.Filter.Eq(x => x.Id, ObjectId.Parse(filter.IdEq));
+        }
 
         if (!filter.ProfileIdIn.IsEmpty())
         {
@@ -47,10 +52,10 @@ public class FileRepository : RepositoryBase<FileDocument>
         return queryFilter;
     }
 
-    public async Task<bool> DocumentExistsByHashAsync(string hash)
+    public async Task<FileDocument> GetByHashAsync(string hash)
     {
         var queryFilter = Builders<FileDocument>.Filter.Eq(x => x.Hash, hash);
-        return (await Collection.Find(queryFilter).CountDocumentsAsync()) > 0;
+        return await Collection.Find(queryFilter).FirstOrDefaultAsync();
     }
 
     public async Task<FileDocument> SetStatusAndReturnAsync(FilterDefinition<FileDocument> filter, FileStatus status, CancellationToken cancellationToken)

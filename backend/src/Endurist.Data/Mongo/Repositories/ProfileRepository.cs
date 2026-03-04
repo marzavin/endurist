@@ -1,6 +1,6 @@
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Filters;
-using Endurist.Hosting.Settings;
+using Endurist.Data.Mongo.Settings;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
@@ -10,7 +10,7 @@ public class ProfileRepository : RepositoryBase<ProfileDocument>
 {
     protected override string CollectionName => "profiles";
 
-    public ProfileRepository(MongoStorageConfiguration settings)
+    public ProfileRepository(StorageConfiguration settings)
         : base(settings) { }
 
     protected override Dictionary<string, Expression<Func<ProfileDocument, object>>> SortingFields =>

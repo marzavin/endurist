@@ -1,45 +1,48 @@
+using Endurist.Contracts.Commands;
 using Endurist.Core.Services;
-using Endurist.Data;
-using Endurist.Data.Mongo.Repositories;
 using Endurist.Hosting.Settings;
-using Endurist.Worker.Tasks.Profiles.TrainingVolume;
+using Endurist.ServiceDefaults;
+using Endurist.Worker.Handlers;
+using Endurist.Worker.Registrations;
+using SideEffect.Messaging.RabbitMQ;
 using System.Reflection;
 
 namespace Endurist.Worker;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
 
-        var builder = Host.CreateApplicationBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.AddServiceDefaults("Endurist Worker Service");
 
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        services.AddConfiguration<MongoStorageConfiguration>(configuration, "MongoStorage");
         services.AddConfiguration<FileStorageConfiguration>(configuration, "FileStorage");
-        services.AddConfiguration<RedisStorageConfiguration>(configuration, "RedisStorage");
+
+        var rabbitConnection = builder.Configuration.GetConnectionString("rabbitmq");
+        var settings = new MessageHubSettings { ConnectionString = rabbitConnection };
+
+        builder.Services.AddRabbitMQMessageHub(settings, (options) =>
+        {
+            options.Registry.AddPublishSubscribeHandler<UploadFileCommand, UploadFileCommandHandler>();
+            options.Registry.AddPublishSubscribeHandler<ProcessFileCommand, ProcessFileCommandHandler>();
+            options.Registry.AddPublishSubscribeHandler<ProcessActivityCommand, ProcessActivityCommandHandler>();
+            options.Registry.AddPublishSubscribeHandler<ProcessProfileCommand, ProcessProfileCommandHandler>();
+        });
 
         services.AddSingleton<IEncryptionService, EncryptionService>();
 
-        services.AddSingleton<IServiceBus, RedisServiceBus>();
+        builder.AddMongoStorage();
 
-        services.AddTransient<AccountRepository>();
-        services.AddTransient<ActivityRepository>();
-        services.AddTransient<FileRepository>();
-        services.AddTransient<ProfileRepository>();
-        services.AddTransient<ProfileWidgetRepository>();
-        services.AddTransient<TokenRepository>();
-        services.AddTransient<WidgetRepository>();
-        services.AddTransient<Storage>();
+        var app = builder.Build();
 
-        services.AddHostedService<FileAnalysisWorker>();
-        services.AddHostedService<FileUploadWorker>();
-        services.AddHostedService<TrainingVolumeCalculationWorker>();
+        app.MapDefaultEndpoints();
 
-        var host = builder.Build();
-        host.Run();
+        await app.RunAsync();
     }
 }

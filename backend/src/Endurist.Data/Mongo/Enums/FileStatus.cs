@@ -6,5 +6,6 @@ public enum FileStatus
     UploadFailed = 2,
     Processing = 3,
     Parsed = 4,
-    ParsingFailed = 5
+    ParsingFailed = 5,
+    Duplicated = 6
 }

@@ -1,6 +1,6 @@
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Filters;
-using Endurist.Hosting.Settings;
+using Endurist.Data.Mongo.Settings;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SideEffect.Extensions;
@@ -11,7 +11,7 @@ public class ProfileWidgetRepository : RepositoryBase<ProfileWidgetDocument>
 {
     protected override string CollectionName => "profileWidgets";
 
-    public ProfileWidgetRepository(MongoStorageConfiguration settings)
+    public ProfileWidgetRepository(StorageConfiguration settings)
         : base(settings)
     { }
 

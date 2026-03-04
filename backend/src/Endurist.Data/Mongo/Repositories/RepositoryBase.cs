@@ -1,5 +1,5 @@
 using Endurist.Data.Mongo.Documents;
-using Endurist.Hosting.Settings;
+using Endurist.Data.Mongo.Settings;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SideEffect.DataTransfer.Paging;
@@ -15,7 +15,7 @@ public abstract class RepositoryBase
 
     protected abstract string CollectionName { get; }
 
-    protected RepositoryBase(MongoStorageConfiguration settings)
+    protected RepositoryBase(StorageConfiguration settings)
     {
         ArgumentNullException.ThrowIfNull(settings);
 
@@ -31,7 +31,7 @@ public abstract class RepositoryBase<TDocument> : RepositoryBase
 {
     protected IMongoCollection<TDocument> Collection => Database.GetCollection<TDocument>(CollectionName);
 
-    protected RepositoryBase(MongoStorageConfiguration settings)
+    protected RepositoryBase(StorageConfiguration settings)
         : base(settings)
     { }
 

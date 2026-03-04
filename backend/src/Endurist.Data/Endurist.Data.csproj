@@ -7,9 +7,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MongoDB.Driver" Version="3.6.0" />
-		<PackageReference Include="SideEffect.DataTransfer" Version="0.5.1" />
-		<PackageReference Include="SideEffect.Extensions" Version="0.5.1" />
+		<PackageReference Include="MongoDB.Driver" Version="3.7.0" />
+		<PackageReference Include="SideEffect.DataTransfer" Version="0.5.2" />
+		<PackageReference Include="SideEffect.Extensions" Version="0.5.2" />
 	</ItemGroup>
 
 	<ItemGroup>

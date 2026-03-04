@@ -1,4 +1,5 @@
-using Endurist.Core.Events;
+﻿using Endurist.Common.Exceptions;
+using Endurist.Contracts.Commands;
 using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Enums;
@@ -6,80 +7,70 @@ using Endurist.Data.Mongo.Filters;
 using Endurist.Data.Mongo.Interfaces;
 using SideEffect.Extensions;
 using SideEffect.Messaging;
+using SideEffect.Messaging.PubSub;
 using SideEffect.Sport.Activities;
 using SideEffect.Sport.Activities.Files.TCX;
 using SideEffect.Sport.Activities.Models;
 
-namespace Endurist.Worker;
+namespace Endurist.Worker.Handlers;
 
-internal class FileAnalysisWorker : BackgroundService
+internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
 {
-    private const int Interval = 1000;
-
     private readonly Storage _storage;
-    private readonly IServiceBus _serviceBus;
-    private readonly ILogger<FileAnalysisWorker> _logger;
-    
-    public FileAnalysisWorker(Storage storage, IServiceBus serviceBus, ILogger<FileAnalysisWorker> logger)
+
+    private readonly IMessageHubClient _hubClient;
+
+    private readonly ILogger _logger;
+
+    public ProcessFileCommandHandler(Storage storage, IMessageHubClient hubClient, ILogger<ProcessFileCommandHandler> logger)
     {
         _storage = storage ?? throw new ArgumentNullException(nameof(storage));
-        _serviceBus = serviceBus ?? throw new ArgumentNullException(nameof(serviceBus));
+        _hubClient = hubClient ?? throw new ArgumentNullException(nameof(hubClient));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    public override async Task HandleAsync(ProcessFileCommand message, CancellationToken cancellationToken = default)
     {
-        while (!cancellationToken.IsCancellationRequested)
+        var file = await GetFileToProcessAsync(message.Id, cancellationToken)
+            ?? throw new EntityNotFoundException(typeof(FileDocument), message.Id);
+
+        var data = Convert.FromBase64String(file.Content);
+        var tcx = new TrainingCenterFileContainer(data);
+
+        DateTime? activityStartedAt = null;
+
+        var activities = await tcx.LoadAsync();
+        if (!activities.IsEmpty())
         {
-            if (_logger.IsEnabled(LogLevel.Information))
+            await DeleteActivitiesFromFileAsync(file.EntityId, cancellationToken);
+
+            foreach (var activity in activities)
             {
-                _logger.LogInformation("File processing worker running at: {time}", DateTimeOffset.Now);
-            }
+                var document = await MapAndInsertActivityAsync(file, activity, cancellationToken);
 
-            var fileToProcess = await GetFileToProcessAsync(cancellationToken);
-            if (fileToProcess is not null)
-            {
-                var data = Convert.FromBase64String(fileToProcess.Content);
-                var tcx = new TrainingCenterFileContainer(data);
-
-                DateTime? activityStartedAt = null;
-
-                var activities = await tcx.LoadAsync();
-                if (!activities.IsEmpty())
+                if (activityStartedAt is null || document.StartTime < activityStartedAt)
                 {
-                    await DeleteActivitiesFromFileAsync(fileToProcess.EntityId, cancellationToken);
-
-                    foreach (var activity in activities)
-                    {
-                        var document = await MapAndInsertActivityAsync(fileToProcess, activity, cancellationToken);
-
-                        if (activityStartedAt is null || document.StartTime < activityStartedAt)
-                        {
-                            activityStartedAt = document.StartTime;
-                        }
-                    }            
+                    activityStartedAt = document.StartTime;
                 }
-
-                //TODO:AMZ: Process negative case here
-                await SetProcessingResultAsync(fileToProcess, null, activityStartedAt, cancellationToken);
             }
-
-            await Task.Delay(Interval, cancellationToken);
         }
+
+        //TODO: Process negative case here
+        await SetProcessingResultAsync(file, null, activityStartedAt, cancellationToken);
     }
 
-    private async Task<FileDocument> GetFileToProcessAsync(CancellationToken cancellationToken = default)
+    private async Task<FileDocument> GetFileToProcessAsync(string id, CancellationToken cancellationToken = default)
     {
-        var filter = new FileFilter { StatusIn = [FileStatus.Uploaded] };
+        var filter = new FileFilter { IdEq = id, StatusIn = [FileStatus.Uploaded] };
         var queryFilter = _storage.Files.BuildFilter(filter);
 
         return await _storage.Files.SetStatusAndReturnAsync(queryFilter, FileStatus.Processing, cancellationToken);
     }
 
     private async Task SetProcessingResultAsync(
-        FileDocument file, 
-        string message, 
-        DateTime? activityStartedAt, 
+        FileDocument file,
+        string message,
+        DateTime? activityStartedAt,
         CancellationToken cancellationToken = default)
     {
         if (message.IsEmpty())
@@ -132,9 +123,15 @@ internal class FileAnalysisWorker : BackgroundService
 
         await _storage.Activities.InsertAsync(document, cancellationToken);
 
-        await _serviceBus.PublishEventAsync(new TrainingVolumeCalculationEvent { ProfileId = file.ProfileId.ToString() }, cancellationToken);
+        await InitiateActivityProcessingAsync(document.EntityId, cancellationToken);
 
         return document;
+    }
+
+    private async Task InitiateActivityProcessingAsync(string id, CancellationToken cancellationToken)
+    {
+        var processFileEvent = new ProcessActivityCommand { Id = id };
+        await _hubClient.PublishEventAsync(processFileEvent, cancellationToken);
     }
 
     private static SegmentDocument MapSegment(int startIndex, int finishIndex, List<TrackPoint> track)
@@ -153,6 +150,7 @@ internal class FileAnalysisWorker : BackgroundService
         var startPoint = track.First();
         var finishPoint = track.Last();
 
+        //TODO: Move to activity processing flow
         segment.StartTime = startPoint.Timestamp;
         segment.StartPosition = startPoint.Position;
         segment.FinishTime = finishPoint.Timestamp;
