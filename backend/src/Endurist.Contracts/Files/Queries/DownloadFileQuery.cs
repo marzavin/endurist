@@ -4,7 +4,8 @@ namespace Endurist.Contracts.Files.Queries;
 
 public class DownloadFileQuery : QueryBase<QueryReply<FileDownloadModel>>
 {
-    public DownloadFileQuery(string fileId)
+    public DownloadFileQuery(string userId, string fileId)
+        : base(userId)
     {
         FileId = fileId;
     }

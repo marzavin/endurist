@@ -4,7 +4,8 @@ namespace Endurist.Contracts.Widgets.Queries;
 
 public class GetProfileWidgetQuery : QueryBase<QueryReply<WidgetModel>>
 {
-    public GetProfileWidgetQuery(string profileId, string widgetId)
+    public GetProfileWidgetQuery(string userId, string profileId, string widgetId)
+        : base(userId)
     {
         ProfileId = profileId;
         WidgetId = widgetId;

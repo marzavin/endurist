@@ -2,7 +2,8 @@
 
 public sealed class ProcessProfileCommand : CommandBase
 {
-    public ProcessProfileCommand(string profileId)
+    public ProcessProfileCommand(string userId, string profileId)
+        : base(userId)
     {
         ProfileId = profileId;
     }

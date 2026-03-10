@@ -4,7 +4,8 @@ namespace Endurist.Contracts.Activities.Queries;
 
 public class GetActivityQuery : QueryBase<QueryReply<ActivityModel>>
 {
-    public GetActivityQuery(string activityId)
+    public GetActivityQuery(string userId, string activityId)
+        : base(userId)
     {
         ActivityId = activityId;
     }

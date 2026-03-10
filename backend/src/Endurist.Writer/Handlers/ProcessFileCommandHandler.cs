@@ -48,7 +48,7 @@ internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
 
             foreach (var activity in activities)
             {
-                var document = await MapAndInsertActivityAsync(file, activity, cancellationToken);
+                var document = await MapAndInsertActivityAsync(message.UserId, file, activity, cancellationToken);
 
                 if (activityStartedAt is null || document.StartTime < activityStartedAt)
                 {
@@ -99,7 +99,7 @@ internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
         await _storage.Activities.DeleteAsync(queryFilter, cancellationToken);
     }
 
-    private async Task<ActivityDocument> MapAndInsertActivityAsync(FileDocument file, Activity activity, CancellationToken cancellationToken = default)
+    private async Task<ActivityDocument> MapAndInsertActivityAsync(string userId, FileDocument file, Activity activity, CancellationToken cancellationToken = default)
     {
         var category = TryParseActivityCategory(activity.Category);
         if (!category.HasValue)
@@ -125,14 +125,14 @@ internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
 
         await _storage.Activities.InsertAsync(document, cancellationToken);
 
-        await InitiateActivityProcessingAsync(document.EntityId, cancellationToken);
+        await InitiateActivityProcessingAsync(userId, document.EntityId, cancellationToken);
 
         return document;
     }
 
-    private async Task InitiateActivityProcessingAsync(string id, CancellationToken cancellationToken)
+    private async Task InitiateActivityProcessingAsync(string userId, string activityId, CancellationToken cancellationToken)
     {
-        var processFileEvent = new ProcessActivityCommand(id);
+        var processFileEvent = new ProcessActivityCommand(userId, activityId);
         await _hubClient.PublishEventAsync(processFileEvent, cancellationToken);
     }
 

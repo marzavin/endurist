@@ -28,7 +28,7 @@ public class WidgetController(ExecutionContext executionContext, IMessageHubClie
         [FromRoute] string widgetId,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetProfileWidgetQuery(profileId, widgetId);
+        var query = new GetProfileWidgetQuery(ExecutionContext.UserId, profileId, widgetId);
         var reply = await Hub.ExecuteRequestAsync<GetProfileWidgetQuery, QueryReply<WidgetModel>>(query, cancellationToken);
         return Ok(reply);
     }
@@ -47,7 +47,7 @@ public class WidgetController(ExecutionContext executionContext, IMessageHubClie
         [FromRoute] string widgetId,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetActivityWidgetQuery(activityId, widgetId);
+        var query = new GetActivityWidgetQuery(ExecutionContext.UserId, activityId, widgetId);
         var reply = await Hub.ExecuteRequestAsync<GetActivityWidgetQuery, QueryReply<WidgetModel>>(query, cancellationToken);
         return Ok(reply);
     }

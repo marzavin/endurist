@@ -34,7 +34,7 @@ public class FileController(ExecutionContext executionContext, IMessageHubClient
         [FromQuery] SortingInfo sorting,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetFilesQuery(paging, sorting);
+        var query = new GetFilesQuery(ExecutionContext.UserId, paging, sorting);
         var reply = await Hub.ExecuteRequestAsync<GetFilesQuery, QueryPageReply<FilePreviewModel>>(query, cancellationToken);
         return Ok(reply);
     }
@@ -59,7 +59,7 @@ public class FileController(ExecutionContext executionContext, IMessageHubClient
             await file.CopyToAsync(stream, cancellationToken);
         }
 
-        var command = new UploadFileCommand(file.FileName, filePath);
+        var command = new UploadFileCommand(ExecutionContext.UserId, file.FileName, filePath);
         await Hub.PublishEventAsync(command, cancellationToken);
 
         if (System.IO.File.Exists(filePath))
@@ -81,7 +81,7 @@ public class FileController(ExecutionContext executionContext, IMessageHubClient
         [FromRoute] string fileId,
         CancellationToken cancellationToken = default)
     {
-        var query = new DownloadFileQuery(fileId);
+        var query = new DownloadFileQuery(ExecutionContext.UserId, fileId);
         var reply = await Hub.ExecuteRequestAsync<DownloadFileQuery, QueryReply<FileDownloadModel>>(query, cancellationToken);
 
         var bytes = await System.IO.File.ReadAllBytesAsync(reply.Data.FilePath, cancellationToken);

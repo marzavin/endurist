@@ -31,7 +31,7 @@ public class ActivityController(ExecutionContext executionContext, IMessageHubCl
         [FromQuery] SortingInfo sorting,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetActivitiesQuery(paging, sorting);
+        var query = new GetActivitiesQuery(ExecutionContext.UserId, paging, sorting);
         var reply = await Hub.ExecuteRequestAsync<GetActivitiesQuery, QueryPageReply<ActivityPreviewModel>>(query, cancellationToken);
         return Ok(reply);
     }
@@ -48,7 +48,7 @@ public class ActivityController(ExecutionContext executionContext, IMessageHubCl
         [FromRoute] string activityId,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetActivityQuery(activityId);
+        var query = new GetActivityQuery(ExecutionContext.UserId, activityId);
         var reply = await Hub.ExecuteRequestAsync<GetActivityQuery, QueryReply<ActivityModel>>(query, cancellationToken);
         return Ok(reply);
     }
@@ -67,7 +67,7 @@ public class ActivityController(ExecutionContext executionContext, IMessageHubCl
         [FromRoute] int segmentIndex,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetSegmentQuery(activityId, segmentIndex);
+        var query = new GetSegmentQuery(ExecutionContext.UserId, activityId, segmentIndex);
         var reply = await Hub.ExecuteRequestAsync<GetSegmentQuery, QueryReply<SegmentModel>>(query, cancellationToken);
         return Ok(reply);
     }

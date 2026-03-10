@@ -6,7 +6,8 @@ namespace Endurist.Contracts.Profiles.Queries;
 
 public class GetProfilesQuery : QueryBase<QueryPageReply<ProfilePreviewModel>>
 {
-    public GetProfilesQuery(PagingInfo paging = null, SortingInfo sorting = null)
+    public GetProfilesQuery(string userId, PagingInfo paging = null, SortingInfo sorting = null)
+        : base(userId)
     {     
         Paging = paging;
         Sorting = sorting;

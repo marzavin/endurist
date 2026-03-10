@@ -2,7 +2,8 @@
 
 public sealed class ProcessActivityCommand : CommandBase
 {
-    public ProcessActivityCommand(string activityId)
+    public ProcessActivityCommand(string userId, string activityId)
+        : base(userId)
     {
         ActivityId = activityId;
     }

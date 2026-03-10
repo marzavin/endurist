@@ -2,7 +2,8 @@
 
 public sealed class UploadFileCommand : CommandBase
 {
-    public UploadFileCommand(string name, string path)
+    public UploadFileCommand(string userId, string name, string path)
+        : base(userId)
     {
         Name = name;
         Path = path;

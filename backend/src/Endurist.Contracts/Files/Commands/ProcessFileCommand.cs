@@ -2,7 +2,8 @@
 
 public sealed class ProcessFileCommand : CommandBase
 {
-    public ProcessFileCommand(string fileId)
+    public ProcessFileCommand(string userId, string fileId)
+        : base(userId)
     {
         FileId = fileId;
     }

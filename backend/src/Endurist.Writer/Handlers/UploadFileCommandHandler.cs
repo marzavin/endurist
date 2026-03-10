@@ -80,15 +80,15 @@ internal class UploadFileCommandHandler : EventHandlerBase<UploadFileCommand>
 
         if (file.Status == FileStatus.Uploaded)
         {
-            await InitiateFileProcessingAsync(file.EntityId, cancellationToken);
+            await InitiateFileProcessingAsync(message.UserId, file.EntityId, cancellationToken);
         }
 
         //TODO: Move file to another folder (processed/failed)
     }
 
-    private async Task InitiateFileProcessingAsync(string id, CancellationToken cancellationToken)
+    private async Task InitiateFileProcessingAsync(string userId, string fileId, CancellationToken cancellationToken)
     {
-        var processFileEvent = new ProcessFileCommand(id);
+        var processFileEvent = new ProcessFileCommand(userId, fileId);
         await _hubClient.PublishEventAsync(processFileEvent, cancellationToken);
     }
 

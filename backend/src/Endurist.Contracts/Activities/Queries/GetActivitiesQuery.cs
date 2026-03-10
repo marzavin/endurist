@@ -6,7 +6,8 @@ namespace Endurist.Contracts.Activities.Queries;
 
 public class GetActivitiesQuery : QueryBase<QueryPageReply<ActivityPreviewModel>>
 {
-    public GetActivitiesQuery(PagingInfo paging = null, SortingInfo sorting = null)
+    public GetActivitiesQuery(string userId, PagingInfo paging = null, SortingInfo sorting = null)
+        : base(userId)
     {     
         Paging = paging;
         Sorting = sorting;

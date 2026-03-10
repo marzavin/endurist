@@ -6,7 +6,8 @@ namespace Endurist.Contracts.Files.Queries;
 
 public class GetFilesQuery : QueryBase<QueryPageReply<FilePreviewModel>>
 {
-    public GetFilesQuery(PagingInfo paging = null, SortingInfo sorting = null)
+    public GetFilesQuery(string userId, PagingInfo paging = null, SortingInfo sorting = null)
+        : base(userId)
     {
         Paging = paging;
         Sorting = sorting;

@@ -31,7 +31,7 @@ public class ProfileController(ExecutionContext executionContext, IMessageHubCli
         [FromQuery] SortingInfo sorting,
         CancellationToken cancellationToken = default)
     {
-        var query = new GetProfilesQuery(paging, sorting);
+        var query = new GetProfilesQuery(ExecutionContext.UserId, paging, sorting);
         var reply = await Hub.ExecuteRequestAsync<GetProfilesQuery, QueryPageReply<ProfilePreviewModel>>(query, cancellationToken);
         return Ok(reply);
     }
@@ -46,7 +46,7 @@ public class ProfileController(ExecutionContext executionContext, IMessageHubCli
     [ProducesResponseType<QueryReply<ProfileModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetProfileAsync([FromRoute] string profileId, CancellationToken cancellationToken = default)
     {
-        var query = new GetProfileQuery(profileId);
+        var query = new GetProfileQuery(ExecutionContext.UserId, profileId);
         var reply = await Hub.ExecuteRequestAsync<GetProfileQuery, QueryReply<ProfileModel>>(query, cancellationToken);
         return Ok(reply);
     }
