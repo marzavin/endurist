@@ -1,8 +1,6 @@
-using Endurist.Common.Models;
-using Endurist.Core.Activities.Models;
-using Endurist.Core.Activities.Requests;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
+using Endurist.Contracts;
+using Endurist.Contracts.Activities.Queries;
+using Endurist.Models.Activities;
 using Microsoft.AspNetCore.Mvc;
 using SideEffect.DataTransfer.Paging;
 using SideEffect.DataTransfer.Sorting;
@@ -16,23 +14,9 @@ namespace Endurist.Web.Controllers;
 [ApiController]
 [Route("api/activities")]
 [Produces("application/json")]
-public class ActivityController : ControllerBase
+public class ActivityController(ExecutionContext executionContext, IMessageHubClient hub) 
+    : MessageHubControllerBase(executionContext, hub)
 {
-    private readonly IMediator _mediator;
-
-    private readonly IMessageHubClient _hubClient;
-
-    /// <summary>
-    /// Initializes new instance of <see cref="ActivityController"/>.
-    /// </summary>
-    /// <param name="mediator">See <see cref="IMediator"/> for more information.</param>
-    /// <exception cref="ArgumentNullException">Throws an exception in case of any parameter is null.</exception>
-    public ActivityController(IMediator mediator, IMessageHubClient hubClient)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _hubClient = hubClient ?? throw new ArgumentNullException(nameof(hubClient));
-    }
-
     /// <summary>
     /// GET request to retrieve the list of activities.
     /// </summary>
@@ -41,15 +25,15 @@ public class ActivityController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="ActivityPreviewModel"/> for more information.</returns>
     [HttpGet]
-    [ProducesResponseType<DataPageResponse<ActivityPreviewModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryPageReply<ActivityPreviewModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetActivitiesAsync(
         [FromQuery] PagingInfo paging,
         [FromQuery] SortingInfo sorting,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetActivitiesRequest(paging, sorting);
-        var response = await _mediator.Send(request, cancellationToken);
-        return Ok(response);
+        var query = new GetActivitiesQuery(paging, sorting);
+        var reply = await Hub.ExecuteRequestAsync<GetActivitiesQuery, QueryPageReply<ActivityPreviewModel>>(query, cancellationToken);
+        return Ok(reply);
     }
 
     /// <summary>
@@ -59,14 +43,14 @@ public class ActivityController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="ActivityModel"/> for more information.</returns>
     [HttpGet("{activityId:mongoId}")]
-    [ProducesResponseType<DataResponse<ActivityModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryReply<ActivityModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetActivityAsync(
         [FromRoute] string activityId,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetActivityRequest(activityId);
-        var response = await _mediator.Send(request, cancellationToken);
-        return Ok(response);
+        var query = new GetActivityQuery(activityId);
+        var reply = await Hub.ExecuteRequestAsync<GetActivityQuery, QueryReply<ActivityModel>>(query, cancellationToken);
+        return Ok(reply);
     }
 
     /// <summary>
@@ -77,14 +61,14 @@ public class ActivityController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="SegmentModel"/> for more information.</returns>
     [HttpGet("{activityId:mongoId}/segments/{segmentIndex:index}")]
-    [ProducesResponseType<DataResponse<SegmentModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryReply<SegmentModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSegmentAsync(
         [FromRoute] string activityId,
         [FromRoute] int segmentIndex,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetSegmentRequest(activityId, segmentIndex);
-        var response = await _mediator.Send(request, cancellationToken);
-        return Ok(response);
+        var query = new GetSegmentQuery(activityId, segmentIndex);
+        var reply = await Hub.ExecuteRequestAsync<GetSegmentQuery, QueryReply<SegmentModel>>(query, cancellationToken);
+        return Ok(reply);
     }
 }

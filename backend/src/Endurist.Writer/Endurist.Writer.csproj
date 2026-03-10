@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SideEffect.Messaging.RabbitMQ" Version="0.5.2" />
+		<PackageReference Include="SideEffect.Messaging.RabbitMQ" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,4 @@
-using Endurist.Data.Mongo.Enums;
+using Endurist.Models.Activities;
 
 namespace Endurist.Data.Mongo.Filters;
 

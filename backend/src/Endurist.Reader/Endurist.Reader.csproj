@@ -18,11 +18,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SideEffect.Messaging.RabbitMQ" Version="0.5.2" />
+		<PackageReference Include="SideEffect.Messaging.RabbitMQ" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Endurist.Contracts\Endurist.Contracts.csproj" />
+		<ProjectReference Include="..\Endurist.Core\Endurist.Core.csproj" />
 		<ProjectReference Include="..\Endurist.Data\Endurist.Data.csproj" />
 		<ProjectReference Include="..\Endurist.ServiceDefaults\Endurist.ServiceDefaults.csproj" />
 	</ItemGroup>

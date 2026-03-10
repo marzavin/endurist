@@ -1,4 +1,4 @@
-using Endurist.Data.Mongo.Enums;
+using Endurist.Models.Files;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 

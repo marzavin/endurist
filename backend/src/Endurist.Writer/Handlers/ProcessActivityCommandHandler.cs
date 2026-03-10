@@ -1,5 +1,5 @@
-﻿using Endurist.Common.Exceptions;
-using Endurist.Contracts.Commands;
+﻿using Endurist.Contracts.Activities.Commands;
+using Endurist.Contracts.Exceptions;
 using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
 using SideEffect.Messaging.PubSub;
@@ -17,8 +17,8 @@ internal class ProcessActivityCommandHandler : EventHandlerBase<ProcessActivityC
 
     public override async Task HandleAsync(ProcessActivityCommand message, CancellationToken cancellationToken = default)
     {
-        var activity = await _storage.Activities.GetByIdAsync(message.Id, cancellationToken)
-            ?? throw new EntityNotFoundException(typeof(ActivityDocument), message.Id);
+        var activity = await _storage.Activities.GetByIdAsync(message.ActivityId, cancellationToken)
+            ?? throw new EntityNotFoundException(typeof(ActivityDocument), message.ActivityId);
 
         //await _storage.Activities.UpdateAsync(activity, cancellationToken);
     }

@@ -1,9 +1,9 @@
-﻿using Endurist.Common.Models;
-using Endurist.Contracts.Commands;
+﻿using Endurist.Contracts.Files.Commands;
 using Endurist.Core.Services;
 using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
-using Endurist.Data.Mongo.Enums;
+using Endurist.Models;
+using Endurist.Models.Files;
 using MongoDB.Bson;
 using SideEffect.Files.XML;
 using SideEffect.Messaging;
@@ -88,7 +88,7 @@ internal class UploadFileCommandHandler : EventHandlerBase<UploadFileCommand>
 
     private async Task InitiateFileProcessingAsync(string id, CancellationToken cancellationToken)
     {
-        var processFileEvent = new ProcessFileCommand { Id = id };
+        var processFileEvent = new ProcessFileCommand(id);
         await _hubClient.PublishEventAsync(processFileEvent, cancellationToken);
     }
 

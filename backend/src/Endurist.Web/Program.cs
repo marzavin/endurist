@@ -1,10 +1,10 @@
-using Endurist.Core.Services;
 using Endurist.ServiceDefaults;
 using Endurist.Web.Middlewares;
 using Endurist.Web.Registrations;
 using Microsoft.AspNetCore.HttpOverrides;
 using SideEffect.Messaging.RabbitMQ;
 using System.Reflection;
+using ExecutionContext = Endurist.Web.ExecutionContext;
 
 const string AllowedOriginsPolicy = "AllowedOrigins";
 
@@ -35,17 +35,13 @@ services.AddRouteConstraints();
 
 services.AddAuthorization();
 
-services.AddSingleton<IEncryptionService, EncryptionService>();
-
 var rabbitConnection = builder.Configuration.GetConnectionString("rabbitmq");
 var settings = new MessageHubSettings { ConnectionString = rabbitConnection };
 
 builder.Services.AddRabbitMQMessageHub(settings);
 
 services.AddHttpContextAccessor();
-services.AddScoped<Endurist.Core.Services.ExecutionContext>();
-
-services.AddWidgets();
+services.AddScoped<ExecutionContext>();
 
 services.AddControllers();
 

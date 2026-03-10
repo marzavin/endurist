@@ -7,12 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MongoDB.Driver" Version="3.7.0" />
-		<PackageReference Include="SideEffect.DataTransfer" Version="0.5.2" />
-		<PackageReference Include="SideEffect.Extensions" Version="0.5.2" />
+		<PackageReference Include="MongoDB.Driver" />
+		<PackageReference Include="SideEffect.Extensions" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Endurist.Models\Endurist.Models.csproj" />
 		<ProjectReference Include="..\SideEffect.Sport\SideEffect.Sport.csproj" />
 	</ItemGroup>
 

@@ -1,9 +1,12 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
   <Project Path="src/Endurist.AppHost/Endurist.AppHost.csproj" />
-  <Project Path="src/Endurist.Common/Endurist.Common.csproj" />
   <Project Path="src/Endurist.Contracts/Endurist.Contracts.csproj" />
   <Project Path="src/Endurist.Core/Endurist.Core.csproj" />
   <Project Path="src/Endurist.Data/Endurist.Data.csproj" />
+  <Project Path="src/Endurist.Models/Endurist.Models.csproj" />
   <Project Path="src/Endurist.Reader/Endurist.Reader.csproj" />
   <Project Path="src/Endurist.ServiceDefaults/Endurist.ServiceDefaults.csproj" />
   <Project Path="src/Endurist.Web/Endurist.Web.csproj" />

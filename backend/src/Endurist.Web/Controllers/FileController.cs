@@ -1,11 +1,12 @@
-using Endurist.Common.Models;
-using Endurist.Core.Files.Models;
-using Endurist.Core.Files.Requests;
-using MediatR;
+using Endurist.Contracts;
+using Endurist.Contracts.Files.Commands;
+using Endurist.Contracts.Files.Queries;
+using Endurist.Models.Files;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SideEffect.DataTransfer.Paging;
 using SideEffect.DataTransfer.Sorting;
+using SideEffect.Messaging;
 
 namespace Endurist.Web.Controllers;
 
@@ -16,20 +17,9 @@ namespace Endurist.Web.Controllers;
 [Route("api/files")]
 [Produces("application/json")]
 
-public class FileController : ControllerBase
+public class FileController(ExecutionContext executionContext, IMessageHubClient hub) 
+    : MessageHubControllerBase(executionContext, hub)
 {
-    private readonly IMediator _mediator;
-
-    /// <summary>
-    /// Initializes new instance of <see cref="FileController"/>.
-    /// </summary>
-    /// <param name="mediator">See <see cref="IMediator"/> for more information.</param>
-    /// <exception cref="ArgumentNullException">Throws an exception in case of any parameter is null.</exception>
-    public FileController(IMediator mediator)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
-
     /// <summary>
     /// GET request to retrieve the list of source files.
     /// </summary>
@@ -38,15 +28,15 @@ public class FileController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="FilePreviewModel"/> for more information.</returns>
     [HttpGet]
-    [ProducesResponseType<DataPageResponse<FilePreviewModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryPageReply<FilePreviewModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetFilesAsync(
         [FromQuery] PagingInfo paging,
         [FromQuery] SortingInfo sorting,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetFilesRequest(paging, sorting);
-        var response = await _mediator.Send(request, cancellationToken);
-        return Ok(response);
+        var query = new GetFilesQuery(paging, sorting);
+        var reply = await Hub.ExecuteRequestAsync<GetFilesQuery, QueryPageReply<FilePreviewModel>>(query, cancellationToken);
+        return Ok(reply);
     }
 
     /// <summary>
@@ -57,7 +47,7 @@ public class FileController : ControllerBase
     /// <returns>See <see cref="FileUploadModel"/> for more information.</returns>
     [HttpPost("upload")]
     [Authorize]
-    [ProducesResponseType<DataResponse<FileUploadModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryReply<FileUploadModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFileAsync(
         IFormFile file,
         CancellationToken cancellationToken = default)
@@ -69,15 +59,15 @@ public class FileController : ControllerBase
             await file.CopyToAsync(stream, cancellationToken);
         }
 
-        var request = new UploadFileRequest(file.FileName, filePath);
-        var response = await _mediator.Send(request, cancellationToken);
+        var command = new UploadFileCommand(file.FileName, filePath);
+        await Hub.PublishEventAsync(command, cancellationToken);
 
         if (System.IO.File.Exists(filePath))
         {
             System.IO.File.Delete(filePath);
         }
 
-        return Ok(response);
+        return NoContent();
     }
 
     /// <summary>
@@ -91,12 +81,12 @@ public class FileController : ControllerBase
         [FromRoute] string fileId,
         CancellationToken cancellationToken = default)
     {
-        var request = new DownloadFileRequest(fileId);
-        var response = await _mediator.Send(request, cancellationToken);
+        var query = new DownloadFileQuery(fileId);
+        var reply = await Hub.ExecuteRequestAsync<DownloadFileQuery, QueryReply<FileDownloadModel>>(query, cancellationToken);
 
-        var bytes = await System.IO.File.ReadAllBytesAsync(response.Data.FilePath, cancellationToken);
-        System.IO.File.Delete(response.Data.FilePath);
+        var bytes = await System.IO.File.ReadAllBytesAsync(reply.Data.FilePath, cancellationToken);
+        System.IO.File.Delete(reply.Data.FilePath);
 
-        return File(bytes, "application/xml", fileDownloadName: $"{response.Data.Name}.{response.Data.Extension}");
+        return File(bytes, "application/xml", fileDownloadName: $"{reply.Data.Name}.{reply.Data.Extension}");
     }
 }

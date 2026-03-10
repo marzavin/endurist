@@ -18,13 +18,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
-		<PackageReference Include="SideEffect.Messaging.RabbitMQ" Version="0.5.2" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+		<PackageReference Include="SideEffect.Messaging.RabbitMQ" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Endurist.Contracts\Endurist.Contracts.csproj" />
-		<ProjectReference Include="..\Endurist.Core\Endurist.Core.csproj" />
 		<ProjectReference Include="..\Endurist.ServiceDefaults\Endurist.ServiceDefaults.csproj" />
 	</ItemGroup>
 

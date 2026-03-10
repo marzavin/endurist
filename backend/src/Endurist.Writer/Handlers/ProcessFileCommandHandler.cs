@@ -1,10 +1,12 @@
-﻿using Endurist.Common.Exceptions;
-using Endurist.Contracts.Commands;
+﻿using Endurist.Contracts.Activities.Commands;
+using Endurist.Contracts.Exceptions;
+using Endurist.Contracts.Files.Commands;
 using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
-using Endurist.Data.Mongo.Enums;
 using Endurist.Data.Mongo.Filters;
 using Endurist.Data.Mongo.Interfaces;
+using Endurist.Models.Activities;
+using Endurist.Models.Files;
 using SideEffect.Extensions;
 using SideEffect.Messaging;
 using SideEffect.Messaging.PubSub;
@@ -31,8 +33,8 @@ internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
 
     public override async Task HandleAsync(ProcessFileCommand message, CancellationToken cancellationToken = default)
     {
-        var file = await GetFileToProcessAsync(message.Id, cancellationToken)
-            ?? throw new EntityNotFoundException(typeof(FileDocument), message.Id);
+        var file = await GetFileToProcessAsync(message.FileId, cancellationToken)
+            ?? throw new EntityNotFoundException(typeof(FileDocument), message.FileId);
 
         var data = Convert.FromBase64String(file.Content);
         var tcx = new TrainingCenterFileContainer(data);
@@ -130,7 +132,7 @@ internal class ProcessFileCommandHandler : EventHandlerBase<ProcessFileCommand>
 
     private async Task InitiateActivityProcessingAsync(string id, CancellationToken cancellationToken)
     {
-        var processFileEvent = new ProcessActivityCommand { Id = id };
+        var processFileEvent = new ProcessActivityCommand(id);
         await _hubClient.PublishEventAsync(processFileEvent, cancellationToken);
     }
 

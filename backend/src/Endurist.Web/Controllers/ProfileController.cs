@@ -1,11 +1,10 @@
-using Endurist.Common.Models;
-using Endurist.Core.Profiles.Models;
-using Endurist.Core.Profiles.Requests;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
+using Endurist.Contracts;
+using Endurist.Contracts.Profiles.Queries;
+using Endurist.Models.Profiles;
 using Microsoft.AspNetCore.Mvc;
 using SideEffect.DataTransfer.Paging;
 using SideEffect.DataTransfer.Sorting;
+using SideEffect.Messaging;
 
 namespace Endurist.Web.Controllers;
 
@@ -15,20 +14,9 @@ namespace Endurist.Web.Controllers;
 [ApiController]
 [Route("api/profiles")]
 [Produces("application/json")]
-public class ProfileController : ControllerBase
+public class ProfileController(ExecutionContext executionContext, IMessageHubClient hub) 
+    : MessageHubControllerBase(executionContext, hub)
 {
-    private readonly IMediator _mediator;
-
-    /// <summary>
-    /// Initializes new instance of <see cref="ProfileController"/>.
-    /// </summary>
-    /// <param name="mediator">See <see cref="IMediator"/> for more information.</param>
-    /// <exception cref="ArgumentNullException">Throws an exception in case of any parameter is null.</exception>
-    public ProfileController(IMediator mediator)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
-
     /// <summary>
     /// GET request to retrieve the list of profiles.
     /// </summary>
@@ -37,15 +25,15 @@ public class ProfileController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="ProfilePreviewModel"/> for more information.</returns>
     [HttpGet]
-    [ProducesResponseType<DataPageResponse<ProfilePreviewModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryPageReply<ProfilePreviewModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetProfilesAsync(
         [FromQuery] PagingInfo paging,
         [FromQuery] SortingInfo sorting,
         CancellationToken cancellationToken = default)
     {
-        var request = new GetProfilesRequest(paging, sorting);
-        var response = await _mediator.Send(request, cancellationToken);
-        return Ok(response);
+        var query = new GetProfilesQuery(paging, sorting);
+        var reply = await Hub.ExecuteRequestAsync<GetProfilesQuery, QueryPageReply<ProfilePreviewModel>>(query, cancellationToken);
+        return Ok(reply);
     }
 
     /// <summary>
@@ -55,11 +43,11 @@ public class ProfileController : ControllerBase
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="ProfileModel"/> for more information.</returns>
     [HttpGet("{profileId:mongoId}")]
-    [ProducesResponseType<DataResponse<ProfileModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<QueryReply<ProfileModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetProfileAsync([FromRoute] string profileId, CancellationToken cancellationToken = default)
     {
-        var request = new GetProfileRequest(profileId);
-        var response = await _mediator.Send(request, cancellationToken);
-        return Ok(response);
+        var query = new GetProfileQuery(profileId);
+        var reply = await Hub.ExecuteRequestAsync<GetProfileQuery, QueryReply<ProfileModel>>(query, cancellationToken);
+        return Ok(reply);
     }
 }

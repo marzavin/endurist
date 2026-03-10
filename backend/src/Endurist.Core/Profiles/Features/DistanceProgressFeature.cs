@@ -1,5 +1,5 @@
-using Endurist.Core.Profiles.Models;
 using Endurist.Data.Mongo.Documents;
+using Endurist.Models.Profiles;
 using SideEffect.DataTransfer.Models;
 using SideEffect.Extensions;
 

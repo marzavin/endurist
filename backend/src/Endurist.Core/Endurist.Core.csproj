@@ -7,14 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MediatR" Version="12.5.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.9" />
-		<PackageReference Include="SideEffect.Messaging" Version="0.5.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Endurist.Common\Endurist.Common.csproj" />
 		<ProjectReference Include="..\Endurist.Data\Endurist.Data.csproj" />
+		<ProjectReference Include="..\Endurist.Models\Endurist.Models.csproj" />
 	</ItemGroup>
 
 </Project>

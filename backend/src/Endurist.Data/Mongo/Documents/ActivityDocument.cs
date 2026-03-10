@@ -1,5 +1,5 @@
-using Endurist.Data.Mongo.Enums;
 using Endurist.Data.Mongo.Interfaces;
+using Endurist.Models.Activities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SideEffect.Sport.Activities.Models;

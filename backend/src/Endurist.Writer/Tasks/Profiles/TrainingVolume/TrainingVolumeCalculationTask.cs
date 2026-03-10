@@ -1,5 +1,5 @@
 using Endurist.Core;
-using Endurist.Core.Widgets.Features;
+using Endurist.Core.Widgets;
 using Endurist.Data;
 using Endurist.Data.Mongo.Documents;
 using Endurist.Data.Mongo.Filters;
