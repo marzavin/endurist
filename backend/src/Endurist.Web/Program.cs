@@ -61,7 +61,17 @@ app.UseCors(AllowedOriginsPolicy);
 
 app.MapDefaultEndpoints();
 
-app.MapOpenApi();
+if (!app.Environment.IsProduction())
+{
+    app.MapOpenApi();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI V1");
+        options.OAuthClientId("endurist-api");
+        options.OAuthUsePkce();
+    });
+}
 
 app.UseAuthorization();
 

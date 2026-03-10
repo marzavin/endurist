@@ -20,5 +20,6 @@
 		<PackageVersion Include="SideEffect.Files" Version="0.5.2" />
 		<PackageVersion Include="SideEffect.Messaging" Version="0.5.2" />
 		<PackageVersion Include="SideEffect.Messaging.RabbitMQ" Version="0.5.2" />
+		<PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.4" />
 	</ItemGroup>
 </Project>
