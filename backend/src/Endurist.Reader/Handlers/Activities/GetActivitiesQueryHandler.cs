@@ -30,7 +30,7 @@ internal sealed class GetActivitiesQueryHandler : RequestHandlerBase<GetActiviti
                 Duration = document.Duration
             };
 
-        var filter = new ActivityFilter { ProfileIdIn = [message.UserId] };
+        var filter = new ActivityFilter();
         var queryFilter = _storage.Activities.BuildFilter(filter);
 
         var items = await _storage.Activities.SearchAsync(mapper, queryFilter, message.Paging, message.Sorting, cancellationToken);

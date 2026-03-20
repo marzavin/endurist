@@ -5,6 +5,7 @@ using Endurist.Data.Mongo.Documents;
 using Endurist.Models;
 using Endurist.Models.Files;
 using MongoDB.Bson;
+using SideEffect.Extensions;
 using SideEffect.Files.XML;
 using SideEffect.Messaging;
 using SideEffect.Messaging.PubSub;
@@ -37,14 +38,14 @@ internal class UploadFileCommandHandler : EventHandlerBase<UploadFileCommand>
     {
         var filePath = message.Path;
 
-        var extension = Path.GetExtension(filePath);
-        var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+        var extension = Path.GetExtension(message.Name);
+        var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(message.Name);
 
         var file = new FileDocument
         {
             Name = fileNameWithoutExtension,
             Extension = string.IsNullOrWhiteSpace(extension) ? null : extension.Trim('.').ToLower(),
-            ProfileId = ObjectId.Parse(message.UserId),
+            ProfileId = message.UserId.IsEmpty() ? ObjectId.Empty : ObjectId.Parse(message.UserId),
             UploadedAt = DateTime.UtcNow
         };
 
@@ -67,7 +68,7 @@ internal class UploadFileCommandHandler : EventHandlerBase<UploadFileCommand>
                 file.Status = FileStatus.Duplicated;
                 file.CopyOfId = existingFile.Id;
 
-                _logger.LogWarning("File '{file}' is already uploaded to the database.", Path.GetFileName(filePath));
+                _logger.LogWarning("File '{file}' is already uploaded to the database.", Path.GetFileName(message.Name));
             }
         }
         else
@@ -82,6 +83,11 @@ internal class UploadFileCommandHandler : EventHandlerBase<UploadFileCommand>
         {
             await InitiateFileProcessingAsync(message.UserId, file.EntityId, cancellationToken);
         }
+
+        //if (System.IO.File.Exists(filePath))
+        //{
+        //    System.IO.File.Delete(filePath);
+        //}
 
         //TODO: Move file to another folder (processed/failed)
     }

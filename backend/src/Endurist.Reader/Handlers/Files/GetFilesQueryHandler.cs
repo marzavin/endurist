@@ -33,7 +33,7 @@ internal sealed class GetFilesQueryHandler : RequestHandlerBase<GetFilesQuery, Q
                 ActivityStartedAt = document.ActivityStartedAt
             };
 
-        var filter = new FileFilter { ProfileIdIn = [message.UserId] };
+        var filter = new FileFilter();
         var queryFilter = _storage.Files.BuildFilter(filter);
 
         var items = await _storage.Files.SearchAsync(mapper, queryFilter, message.Paging, message.Sorting, cancellationToken);

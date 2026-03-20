@@ -62,11 +62,6 @@ public class FileController(ExecutionContext executionContext, IMessageHubClient
         var command = new UploadFileCommand(ExecutionContext.UserId, file.FileName, filePath);
         await Hub.PublishEventAsync(command, cancellationToken);
 
-        if (System.IO.File.Exists(filePath))
-        {
-            System.IO.File.Delete(filePath);
-        }
-
         return NoContent();
     }
 
